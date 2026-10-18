@@ -6,7 +6,30 @@ OmniEdit Pro guides an agent from source inspection through a verified delivery,
 
 This repository contains reusable instructions, not an editor application or a rendering engine. Install once at user scope; invoke it from unrelated projects. No upstream skills or heavyweight video dependencies are installed with it.
 
-## Install in one command
+## Method 1 — Paste into your coding agent
+
+Copy the entire block below into your AI coding agent. The agent can download the repository, detect its supported skill directory, and install all required files for your user account.
+
+```text
+https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill
+
+Install OmniEdit Pro from this GitHub repository. Detect my current AI coding
+environment, choose its supported Agent Skills installation method, and follow
+INSTALL.md. Install the complete omni-edit-pro skill at user/global scope,
+including SKILL.md, LICENSE, and every reference file. Check for an existing
+installation before replacing files and verify the installation prerequisites.
+Confirm that the installed files are complete and that OmniEdit Pro is
+discoverable in my agent, or explain any host reload or verification step needed.
+Use /omni-edit-pro where supported or tell me the correct equivalent invocation
+(such as $omni-edit-pro in Codex). Make it available across my projects without
+modifying the current project. Do not install heavyweight video-processing
+dependencies, download models, or create a video project until I explicitly
+request an editing task.
+```
+
+Agents should follow [INSTALL.md](INSTALL.md). Local shell and filesystem access are required to perform the installation. Verification checks the complete installed folder; host discovery should also be confirmed through the agent's skill list or picker when available. Python is not required to install this instruction-only skill; video-processing prerequisites are checked when you start an editing task.
+
+## Method 2 — Install in one command
 
 Requirements: a compatible coding agent, Git, network access, and Node.js/npm supported by the Skills CLI. The tested CLI release, **1.7.2**, requires **Node.js 22.20.0 or newer**. A manual folder installation needs no Node.js.
 
@@ -27,19 +50,9 @@ npx skills list --global
 
 Use `npx.cmd` in PowerShell if its script execution policy blocks `npx`. Add `--copy` if symlinks are unsuitable. For reproducible installation with this release's CLI, replace `skills` with `skills@1.7.2`.
 
-## Or install with one prompt
+## Method 3 — Download and install manually
 
-Copy this into your AI coding agent:
-
-> Install OmniEdit Pro from https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill.
->
-> Detect my current AI coding environment and install the complete `omni-edit-pro` Agent Skill at user/global scope using the officially supported method.
->
-> Verify that all skill instructions and references are installed correctly and that the skill is discoverable.
->
-> Use `/omni-edit-pro` where supported or explain the correct equivalent invocation for my agent.
->
-> Make it available across my projects without modifying the current project. Do not install heavyweight video-processing dependencies or create a video project until I explicitly request an editing task.
+[Download the repository ZIP](https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill/archive/refs/heads/main.zip), extract it outside your current project, and copy the entire `skills/omni-edit-pro/` folder into your agent's supported **user-level** skill directory. Keep its `SKILL.md`, `LICENSE`, and all ten reference files together. Follow [INSTALL.md](INSTALL.md) to choose the destination, check for conflicts, and verify discovery. You can also give the downloaded folder to your coding agent and ask it to follow that guide.
 
 ## Choose an individual agent
 
@@ -135,6 +148,7 @@ The skill detects what exists and asks before installing heavyweight dependencie
 ```text
 .
 ├── README.md
+├── INSTALL.md
 ├── LICENSE
 ├── ATTRIBUTIONS.md
 ├── .gitignore
@@ -158,7 +172,7 @@ The lightweight entrypoint loads focused references only when needed. There are 
 
 ## Validation
 
-Release checks passed for frontmatter/naming, all internal Markdown links, the exact 16-file repository allowlist, secret/path scans, and CLI discovery. Skills CLI 1.7.2 on Node 24.19.0 installed all 12 skill files with matching hashes in eight isolated agent-target tests, preserving unrelated working directories. Automatic selection's PromptScript warning and the Antigravity/Windows Devin path differences are documented above.
+Package checks passed for frontmatter/naming, all internal Markdown links, the 17-file repository allowlist, and secret/path scans. The README installation prompt and `INSTALL.md` describe the same complete 12-file skill package. Skills CLI 1.7.2 on Node 24.19.0 installed all 12 skill files with matching hashes in eight isolated agent-target tests, preserving unrelated working directories. Automatic selection's PromptScript warning and the Antigravity/Windows Devin path differences are documented above.
 
 After publication, discovery and all eight explicit-agent installations were repeated from the GitHub repository shorthand. All 12 installed files matched the published content after normalizing Windows line endings. An isolated `npx skills add` installation targeting Codex also passed with a fresh npm cache. The generic automatic-selection form installed the skill and reproduced the documented PromptScript warning.
 
