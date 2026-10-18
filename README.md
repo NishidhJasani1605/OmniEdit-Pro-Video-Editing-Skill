@@ -160,6 +160,8 @@ The lightweight entrypoint loads focused references only when needed. There are 
 
 Release checks passed for frontmatter/naming, all internal Markdown links, the exact 16-file repository allowlist, secret/path scans, and CLI discovery. Skills CLI 1.7.2 on Node 24.19.0 installed all 12 skill files with matching hashes in eight isolated agent-target tests, preserving unrelated working directories. Automatic selection's PromptScript warning and the Antigravity/Windows Devin path differences are documented above.
 
+After publication, discovery and all eight explicit-agent installations were repeated from the GitHub repository shorthand. All 12 installed files matched the published content after normalizing Windows line endings. An isolated `npx skills add` installation targeting Codex also passed with a fresh npm cache. The generic automatic-selection form installed the skill and reproduced the documented PromptScript warning.
+
 The local Codex app-server parsed and listed the skill as enabled using an explicit isolated skill root. This verifies native parsing/discovery; it does not establish automatic global-root discovery or a completed model invocation. Other host applications were not launched. Scenario checks covered conflicting duration requests, rational frame timing, missing dependencies and asset-rights uncertainty. These checks validate packaging and instruction behavior; **no real video render or professional editing-quality benchmark is claimed by this release**.
 
 ## License and acknowledgments
