@@ -6,7 +6,7 @@ Read after source inspection and transcript review, before acquiring assets or b
 
 Watch representative passages with audio, including the opening, a dense explanation, an emotional turn, and the ending. Inspect existing cuts, shot changes, demonstrations, captions, and graphics before proposing additions. Describe what the audience needs to understand, what the speaker already communicates visually, and where supporting imagery would add information. Distinguish deliberate quiet from a technical defect; pauses and reactions may carry meaning.
 
-For talking-head and narrated footage, retain the original footage as the continuous underlying track where applicable. Preserve all dialogue, its order, timing, and lip-sync unless the user explicitly requests an editorial change. Full-frame supporting visuals can temporarily cover that track without changing its playback. Do not create jump cuts, remove pauses, or shorten speech to fit a graphic. Other genres follow the user's creative brief.
+For talking-head and narrated footage, retain the original footage as the continuous underlying track where applicable. Preserve all dialogue, order, timing and lip-sync unless the user explicitly requests an editorial change. Use the selected [style](editing-styles.md): B-roll belongs in Split's explanation region or as a suitable limited graphic, not an unauthorized full-frame replacement for Overlay or the presenter. Do not create jump cuts, remove pauses or shorten speech to fit a graphic.
 
 ## Choose a coherent direction
 
@@ -32,6 +32,12 @@ Choose an asset only when it explains, demonstrates, locates, compares, or suppl
 
 ## Compose and pace
 
-Guide attention with a dominant subject, useful negative space, balanced scale, and consistent screen direction. Preserve eye lines, headroom, gestures, and relevant objects when reframing. Match exposure, white balance, and saturation across sources before adding a stylized grade; avoid changing evidentiary color relationships in charts or demonstrations.
+Guide attention with a dominant subject, useful negative space, balanced scale and consistent screen direction. Preserve full source framing in Split/Overlay and the whole visible subject in Cutout. Reposition/resize the graphic layout instead of zooming or cropping the original. Match exposure, white balance and saturation across sources before a stylized grade; avoid changing evidentiary color relationships in charts or demonstrations.
 
 Let scene duration follow the spoken thought, visual complexity, and reading time. Budget entrance, readable hold, and exit separately. Prototype the densest passage before extending the system across the video. Review whether the audience can listen, read, and follow motion simultaneously, then simplify any overloaded moment.
+
+## Strong openings and useful explanations
+
+Use the opening's actual meaning to establish context with a clear title, question or diagram. Do not fabricate a claim, move later speech forward, remove a pause or create a loop solely for retention. Show a source-grounded payoff when the speaker reaches it. For short-form viewing, prioritize legible type, immediate topic clarity and uncluttered information over compulsory effects every few seconds.
+
+Plan explanations as entities, actions and outcomes: introduce the relevant object, reveal its relationship or process when spoken, then show the supported consequence. Keep useful context visible while highlighting the active step. A conceptual illustration is not documentary footage. Adapt generic cards into topic-specific visual explanations rather than filling every scene with the same decorative box. No template, asset generator or paid service is mandatory.

@@ -8,7 +8,7 @@ Keep full-quality source audio separate from recognition audio. Listen before de
 
 ## Prepare one deterministic render
 
-Use the existing project's installed Remotion APIs and versioned dependencies. Derive all layers, audio offsets, composition dimensions, frame rate and duration from the same validated timeline. Resolve local asset paths, fonts and asynchronous loads before capture. Rendering a frame should not depend on wall-clock time, network races or unseeded randomness.
+Use the selected free/local compositor and versioned dependencies; when using Remotion, inspect its installed APIs. Derive all layers, audio offsets, dimensions, frame rate and duration from the same validated timeline. Resolve local assets, fonts and asynchronous loads before capture. Rendering a frame should not depend on wall-clock time, network races or unseeded randomness. The normal edit request includes final export; do not stop at an interactive preview unless the user requested preview-only work.
 
 Choose codec, container, pixel format, audio codec/rate/channel layout, dimensions and color output for the requested destination. H.264/AAC MP4 is a common compatibility choice, not a universal master format. Use a suitable alpha-capable format only when transparency is required. Handle HDR and log material with a deliberate, tested color transform; do not fix washed-out colors by blindly increasing saturation or mislabeling color metadata.
 
@@ -20,7 +20,7 @@ remotion render "src/index.ts" OmniEdit "out/preview.mp4" --frames=0-149
 remotion render "src/index.ts" OmniEdit "out/final.mp4"
 ```
 
-These are templates: replace paths, composition ID and frame range using the actual project. Invoke the local binary or approved project runner, and inspect its version/help before using options. A CLI frame range can have inclusive endpoints, whereas the internal timeline uses exclusive ends; convert explicitly. A render may download a browser if missing, so complete dependency checks first.
+These are command examples, not bundled files: replace paths, composition ID and frame range with the actual project. Render previews and full candidates under `Working Files/<video-id>/` first; the example `out/final.mp4` is a candidate, not an accepted final. Invoke the local binary or approved project runner and inspect its version/help before options. A CLI frame range can have inclusive endpoints, whereas the internal timeline uses exclusive ends; convert explicitly. A render may download a browser if missing, so complete dependency checks first.
 
 ## Preview and recover
 
@@ -30,6 +30,6 @@ If rendering fails, isolate the smallest failing frame range. Check missing asse
 
 After final rendering, probe the output and decode it end to end for errors. Compare its frames and audio duration with the planned duration, allowing only documented frame/sample or encoder padding. Never use a shortest-stream option blindly when muxing preserved narration; it can discard the end. Verify the muxed output, not just the intermediate composition. Stream copying may preserve audio encoding when compatible, but is not a guarantee of identical playback timing.
 
-Deliver the final media and requested caption/project files with credits and concise QA notes. Mention output specifications, any processing applied, known limitations, and whether full playback review occurred. Keep source footage and editable dependencies available for revision.
+Follow [Delivery](delivery.md) to promote only checked exports into `Final Output Videos/<video-id>/`. Link requested caption/project files, credits and QA notes from the working area. Mention output specifications, processing, known limitations and playback review coverage. Keep source footage and editable dependencies available for revision.
 
 Sources: [Remotion CLI](https://www.remotion.dev/docs/cli), [renderMedia](https://www.remotion.dev/docs/renderer/render-media), [FFmpeg filters](https://ffmpeg.org/ffmpeg-filters.html).

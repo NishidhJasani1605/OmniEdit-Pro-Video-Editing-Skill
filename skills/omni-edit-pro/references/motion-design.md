@@ -4,9 +4,9 @@ Read when implementing animated text, diagrams, callouts, or camera moves. Use t
 
 ## Keep animation reproducible
 
-Use one Remotion composition timeline for footage, graphics, captions, and audio. Derive visible animation state from the requested frame and fixed inputs so frames render consistently when visited out of order. Avoid wall-clock timers, CSS animation timelines, render-order counters, and unseeded randomness. Remotion explicitly recommends frame-driven animation through [`useCurrentFrame()`](https://www.remotion.dev/docs/animating-properties).
+Use the selected local engine's single authoritative composition timeline for footage, graphics, captions, and audio. Derive visible animation state from the requested frame and fixed inputs so frames render consistently when visited out of order. Avoid wall-clock timers, CSS animation timelines, render-order counters, and unseeded randomness. When using Remotion, its frame-driven animation guidance uses [`useCurrentFrame()`](https://www.remotion.dev/docs/animating-properties). The following Remotion API details apply only to that engine; preserve the timing invariants in an alternative engine.
 
-Determine the installed Remotion version before choosing APIs. Use compatible timed components to position each event; direct `Sequence` remains supported, although current documentation favors timing props on appropriate components. Keep placement and visibility intervals explicit. See the official [timing component reference](https://www.remotion.dev/docs/sequence).
+When using Remotion, determine its installed version before choosing APIs. Use compatible timed components such as `Sequence` to position events, consulting the selected version's documentation. Keep placement and visibility intervals explicit. See the official [timing component reference](https://www.remotion.dev/docs/sequence).
 
 Distinguish composition frames from component-local frames. Inside a timed parent, [`useCurrentFrame()`](https://www.remotion.dev/docs/use-current-frame) is relative to that parent's start; nested timing can shift it further. Convert an absolute transcript cue once, then animate in the appropriate local frame space. Do not subtract a start offset twice.
 
@@ -24,7 +24,15 @@ Animate typography as readable words or meaningful phrases. Preserve language sh
 
 Build SVG-style diagrams from verified relationships and values. Animate reveals, connectors, highlights, and labels from the same frame clock. Preserve units, denominators, axis ranges, sign, dates, source notes, and uncertainty. Do not use decorative growth that suggests an unobserved trend, change a chart baseline during a comparison, or scale symbols in a way that misstates magnitude. Label illustrative diagrams as conceptual when they are not measurements.
 
-Use pans and zooms to guide attention toward a relevant detail. Establish the subject first, retain enough context to understand the move, and check the source resolution at maximum enlargement. Avoid constant drift, gratuitous rotations, rapid flashes, and motion behind dense text.
+Use motion within diagrams or supporting graphics to guide attention toward a relevant detail. Do not pan/zoom/crop the original presenter footage under these presets. Establish the graphic's context first and keep text readable. Avoid constant drift, gratuitous rotations, rapid flashes and motion behind dense text.
+
+## Speech-led craft
+
+Set one compact motion vocabulary for the video: a principal easing family, entrance/exit rhythm, stagger style, intensity and typography hierarchy. Keep one primary focal element; supporting motion should be quieter. A source thought can justify a completely still hold. Typical short entrances around 0.3–0.5 seconds and shorter exits are starting points, not universal timing rules; tune them to speech and reading time.
+
+For calm explanations reveal a line or phrase together; emphasize selected words when verified timing supports it. Character reveals are reserved for short strings and must preserve shaping/graphemes. Avoid a spring bounce on every word. Use masks/wipes only within graphics, not to crop the speaker. Stagger a list to express order or dependency, not arbitrary visual activity.
+
+Reveal diagram entities, connectors and outcomes when their meanings are spoken. An empty container or non-revealing structural lead can precede speech intentionally, but do not expose a decisive number, negation, answer or conclusion prematurely. Count-ups must represent real values; progress/day badges must come from actual source meaning. Draw-on illustrations should reach a readable completed state. Waveform bars representing sound must use the actual audio, not invented activity.
 
 ## Preview the whole event
 

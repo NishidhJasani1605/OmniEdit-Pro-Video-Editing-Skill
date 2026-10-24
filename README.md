@@ -1,185 +1,365 @@
-# OmniEdit Pro — Professional AI Video Editing Agent Skill
+# OmniEdit Pro
 
-**One portable skill for planning, editing, captioning, compositing, and finishing video with an AI coding agent.**
+**An instruction-only AI skill suite for editing one video or a whole batch, with separate video teams, smooth animations, and protected speaker framing.**
 
-OmniEdit Pro guides an agent from source inspection through a verified delivery, using Remotion for composition and FFmpeg/FFprobe for media preparation and checks. It supports talking-head videos, podcasts, YouTube, Shorts and Reels, lessons, explainers, product demos, promotional videos, interviews, documentaries and other genres supported by the available tools.
+Choose **horizontal 16:9** or **vertical 9:16**, then choose **Split**, **Cutout**, or **Overlay**. Use a direct preset when you know what you want, or let the main skill ask two simple questions. All mode requests every combination for each video.
 
-This repository contains reusable instructions, not an editor application or a rendering engine. Install once at user scope; invoke it from unrelated projects. No upstream skills or heavyweight video dependencies are installed with it.
+**Version:** 2.0.0 · **Package:** Markdown instructions and license notices · **License:** MIT
 
-## Method 1 — Paste into your coding agent
+The skill guides a capable AI agent through the edit. The agent can write processing code and use free local tools in your editing workspace. This repository contains no processing scripts, models, media, or editor application.
 
-Copy the entire block below into your AI coding agent. The agent can download the repository, detect its supported skill directory, and install all required files for your user account.
+## Contents
+
+- [Quick start](#quick-start)
+- [Install the suite](#install-the-suite)
+- [Choose a skill](#choose-a-skill)
+- [The three editing styles](#the-three-editing-styles)
+- [The two compulsory questions](#the-two-compulsory-questions)
+- [Example requests](#example-requests)
+- [A separate team for every video](#a-separate-team-for-every-video)
+- [Quality and animation rules](#quality-and-animation-rules)
+- [Free local processing](#free-local-processing)
+- [Final output folders](#final-output-folders)
+- [Sources and adaptations](#sources-and-adaptations)
+- [Validation and current limits](#validation-and-current-limits)
+- [Project guide](#project-guide)
+- [Frequently asked questions](#frequently-asked-questions)
+
+## Quick start
+
+1. Install the complete suite using one of the methods below.
+2. Supply your video files or accessible paths and an editing workspace.
+3. Select `omni-pro-edit` to answer the two questions, a direct preset to choose immediately, or `omni-pro-edit-all` for all six versions.
+4. The agent checks its tools, creates a separate job/team for each video, edits, reviews, and exports.
+5. Find checked videos in **Final Output Videos**, separated by source video.
+
+For example, select `omni-pro-edit-vertical-overlay` and say:
+
+> Edit these three videos separately. Add smooth animations that explain what each speaker says. Keep the full original frame and dialogue. Use this folder as the editing workspace.
+
+The agent needs access to the files and an environment capable of running the required local tools. Native agent-team support comes from the host.
+
+## Install the suite
+
+### Option 1 — Ask your agent to install it
+
+Copy this prompt into your coding agent:
 
 ```text
+Install the complete OmniEdit Pro suite from:
 https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill
 
-Install OmniEdit Pro from this GitHub repository. Detect my current AI coding
-environment, choose its supported Agent Skills installation method, and follow
-INSTALL.md. Install the complete omni-edit-pro skill at user/global scope,
-including SKILL.md, LICENSE, and every reference file. Check for an existing
-installation before replacing files and verify the installation prerequisites.
-Confirm that the installed files are complete and that OmniEdit Pro is
-discoverable in my agent, or explain any host reload or verification step needed.
-Use /omni-edit-pro where supported or tell me the correct equivalent invocation
-(such as $omni-edit-pro in Codex). Make it available across my projects without
-modifying the current project. Do not install heavyweight video-processing
-dependencies, download models, or create a video project until I explicitly
-request an editing task.
+Read INSTALL.md. Detect this agent's supported user-level skill location
+so I can use the suite across projects. Preserve any existing local edits.
+Install all nine sibling skill folders, including the shared omni-edit-pro
+core, every reference file, and each license notice from the same revision.
+Verify the installed files and shared-core links, then check host discovery.
+Tell me the correct invocation for this host.
+
+Install only the skill instructions at this stage. Do not start a video
+edit or install video tools, browser runtimes, or model weights.
 ```
 
-Agents should follow [INSTALL.md](INSTALL.md). Local shell and filesystem access are required to perform the installation. Verification checks the complete installed folder; host discovery should also be confirmed through the agent's skill list or picker when available. Python is not required to install this instruction-only skill; video-processing prerequisites are checked when you start an editing task.
+Detailed installation, updating, and verification steps are in [INSTALL.md](INSTALL.md).
 
-## Method 2 — Install in one command
+### Option 2 — Use the Skills CLI
 
-Requirements: a compatible coding agent, Git, network access, and Node.js/npm supported by the Skills CLI. The tested CLI release, **1.7.2**, requires **Node.js 22.20.0 or newer**. A manual folder installation needs no Node.js.
+The CLI needs Git and a compatible Node.js/npm runtime. First check for an existing installation and preserve local changes.
 
-**Before running:** inspect your host's user/shared skill roots for an existing `omni-edit-pro` and preserve any edits. The CLI may replace same-name files and may skip confirmation inside agent environments. Resolve conflicts before installation; see the [installation guide](skills/omni-edit-pro/references/agent-compatibility.md).
+This example selects the Codex CLI target and all nine skills explicitly:
 
 ```sh
-npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --skill omni-edit-pro --global
+npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --global --agent codex --skill omni-edit-pro omni-pro-edit omni-pro-edit-horizontal-split omni-pro-edit-horizontal-cutout omni-pro-edit-horizontal-overlay omni-pro-edit-vertical-split omni-pro-edit-vertical-cutout omni-pro-edit-vertical-overlay omni-pro-edit-all
 ```
 
-Choose your agent when prompted. `--global` means your user account, not a system-wide administrator install. It keeps skill files outside the current project. For predictable installation, use the explicit `--agent` command below: in our isolated test, CLI 1.7.2's automatic selection installed the skill but also printed a PromptScript global-install warning despite returning success. Antigravity and Windows Devin have path caveats: use the manual route below rather than assuming the CLI destination is recognized.
+Replace `codex` with your host's verified CLI agent ID. The [compatibility guide](skills/omni-edit-pro/references/agent-compatibility.md) records host-specific conventions and caveats; verify them for your installed host version. Use `npx.cmd` in PowerShell if its script policy blocks `npx.ps1`. Use `--copy` when filesystem links are unsuitable.
 
-To inspect discovery and your installed skills:
+For a smaller installation, include **both the shared core and your chosen preset**:
 
 ```sh
-npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --list
-npx skills list --global
+npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --global --agent codex --skill omni-edit-pro omni-pro-edit-vertical-overlay
 ```
 
-Use `npx.cmd` in PowerShell if its script execution policy blocks `npx`. Add `--copy` if symlinks are unsuitable. For reproducible installation with this release's CLI, replace `skills` with `skills@1.7.2`.
+The previously checked Skills CLI 1.7.2 requires Node.js 22.20.0 or newer. Check requirements when selecting another CLI release. Installing instructions does not install video-processing dependencies.
 
-## Method 3 — Download and install manually
+### Option 3 — Download and copy manually
 
-[Download the repository ZIP](https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill/archive/refs/heads/main.zip), extract it outside your current project, and copy the entire `skills/omni-edit-pro/` folder into your agent's supported **user-level** skill directory. Keep its `SKILL.md`, `LICENSE`, and all ten reference files together. Follow [INSTALL.md](INSTALL.md) to choose the destination, check for conflicts, and verify discovery. You can also give the downloaded folder to your coding agent and ask it to follow that guide.
+[Download the repository ZIP](https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill/archive/refs/heads/main.zip), extract it, and copy all nine folders inside `skills/` into your agent's supported user-level skill directory as siblings.
 
-## Choose an individual agent
+Keep the full `omni-edit-pro` core, including its `references/` directory, and every selected preset's `SKILL.md` and `LICENSE`. Reload the host if needed and check its skill list. Manual copying needs no Node.js or Python.
 
-After the conflict check, run the appropriate command:
+**Preset dependency:** the eight new entries load the sibling `omni-edit-pro` shared core. They must come from the same release. If the core is missing, the preset reports an incomplete installation before processing anything.
 
-```sh
-# OpenAI Codex
-npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --skill omni-edit-pro --global --agent codex
+## Choose a skill
 
-# Claude Code
-npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --skill omni-edit-pro --global --agent claude-code
+| Skill | Orientation | Style / behavior |
+| --- | --- | --- |
+| [`omni-pro-edit`](skills/omni-pro-edit/SKILL.md) | Ask if missing | Main entry; asks only for missing choices |
+| [`omni-pro-edit-horizontal-split`](skills/omni-pro-edit-horizontal-split/SKILL.md) | Horizontal 16:9 | Speaker footage beside explanations |
+| [`omni-pro-edit-horizontal-cutout`](skills/omni-pro-edit-horizontal-cutout/SKILL.md) | Horizontal 16:9 | Isolated speaker over graphics |
+| [`omni-pro-edit-horizontal-overlay`](skills/omni-pro-edit-horizontal-overlay/SKILL.md) | Horizontal 16:9 | Original footage with animations on top |
+| [`omni-pro-edit-vertical-split`](skills/omni-pro-edit-vertical-split/SKILL.md) | Vertical 9:16 | Speaker footage above/below explanations |
+| [`omni-pro-edit-vertical-cutout`](skills/omni-pro-edit-vertical-cutout/SKILL.md) | Vertical 9:16 | Isolated speaker over graphics |
+| [`omni-pro-edit-vertical-overlay`](skills/omni-pro-edit-vertical-overlay/SKILL.md) | Vertical 9:16 | Original footage with animations on top |
+| [`omni-pro-edit-all`](skills/omni-pro-edit-all/SKILL.md) | Both | All three styles in each orientation: six versions per video |
+| [`omni-edit-pro`](skills/omni-edit-pro/SKILL.md) | Ask if missing | Original compatible entry and shared workflow |
 
-# Cursor
-npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --skill omni-edit-pro --global --agent cursor
+Use your host's skill picker or supported command syntax. Slash commands work in supporting hosts; Codex can use `$omni-pro-edit` or its skill picker. The exact invocation and capabilities depend on the host, not just the model or IDE name.
 
-# Kimi Code CLI
-npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --skill omni-edit-pro --global --agent kimi-code-cli
+## The three editing styles
 
-# GitHub Copilot / compatible VS Code clients
-npx skills add NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill --skill omni-edit-pro --global --agent github-copilot
-```
+| Style | What you see | Horizontal arrangement | Vertical arrangement |
+| --- | --- | --- | --- |
+| **1. Split** | Original video in one region; explanations in another | Speaker footage left or right | Speaker footage above or below |
+| **2. Cutout** | Speaker's background removed; their real silhouette sits over graphics | Speaker placed to suit the scene, usually lower/central | Speaker placed to suit the tall scene, usually lower/central |
+| **3. Overlay** | Original video and background kept together; graphics appear over clear areas | Original footage remains the main image | Original footage remains the main image, fitted to the tall canvas |
 
-| Agent | Activate after installation |
+**Split:** fit the complete original source inside the speaker region. Choose its size to keep the person clear; diagrams, cards, labels, illustrations, and relevant clips use the explanation region.
+
+**Cutout:** remove the background while protecting the person's face, hair, hands, shoulders, movement, and source detail. There is no separate rectangular presenter panel. Review moving edges and difficult gestures before accepting the result.
+
+**Overlay:** keep the original footage and background together. Add useful cards, badges, captions, diagrams, and other animations without pushing the video to one side or removing its background.
+
+A change of aspect ratio may need padding or a smaller fitted image. Preserve the full frame, adjust the graphics first, and review the speaker at the intended viewing size. Unchanged apparent person size, no cropping, and full-screen coverage cannot always be achieved together.
+
+See [styles and framing](skills/omni-edit-pro/references/editing-styles.md) for the exact acceptance rules.
+
+## The two compulsory questions
+
+For an editing request, if orientation is missing from your prompt and you have not explicitly selected a preset, the agent first asks:
+
+> Do you want a wide video for YouTube (horizontal 16:9) or a tall video for Reels/Shorts (vertical 9:16)?
+
+It waits for your answer. If style is still missing, it then asks:
+
+> Which style do you want: 1. Split — speaker beside or above/below explanations; 2. Cutout — speaker with the background removed over graphics; or 3. Overlay — original video with animations on top?
+
+It waits again before processing.
+
+| Your request | What happens |
 | --- | --- |
-| Codex | `$omni-edit-pro`, or `/skills` and select it |
-| Claude Code, Cursor, supporting Copilot clients | `/omni-edit-pro`, or let the agent select it from your request |
-| Kimi Code CLI | `/skill:omni-edit-pro` |
-| Antigravity App / CLI | `/omni-edit-pro`; IDE also offers Customizations > Skills |
-| Devin CLI | `/omni-edit-pro`; Desktop/Cascade uses `@omni-edit-pro` |
-| DeepSeek Harness with skill components enabled | `/omni-edit-pro`; documented, not runtime-tested here |
+| Neither choice supplied | Ask orientation first, then style |
+| Orientation supplied | Ask only style |
+| Style supplied | Ask only orientation |
+| Both supplied or a direct preset explicitly selected | Start without repeating the questions |
+| All preset explicitly selected | Request all six combinations |
+| Clear prompt override of a preset | Follow the explicit user choice |
+| Preset matched automatically by the host/model | Use the actual prompt; ask for missing choices |
+| Explain, install, or improve the skill | Do that task without starting an edit |
 
-For **Antigravity**, copy the complete `skills/omni-edit-pro` folder to `~/.gemini/config/skills/` for App/IDE, or `~/.gemini/antigravity-cli/skills/` for CLI. For **Devin CLI**, use its documented native directory or `~/.agents/skills/`; the native Windows path is `%APPDATA%/devin/skills/`. For **DeepSeek Harness**, use its configured filesystem skill root, normally `~/.dsh/skills/` or `~/.agents/skills/`. These are distinct products and surfaces, not promises about every cloud or chat interface.
+No media probing, transcription, editing-team dispatch, or rendering starts while a required selection is unanswered. A timeout or preselected UI option is not an answer. Batch-wide choices apply once to all videos unless you give different choices for specific videos.
 
-The [compatibility guide](skills/omni-edit-pro/references/agent-compatibility.md) links each platform's official documentation, explains path discrepancies, and gives complete manual installation and conflict-handling steps. It also covers DeepSeek as a model backend, other Agent Skills hosts, remote environments and discovery troubleshooting.
+No separate question-asking skill is needed. These rules live in [selection.md](skills/omni-edit-pro/references/selection.md).
 
-## What it brings to an edit
+## Example requests
 
-- Source inspection: streams, FPS, aspect ratio, color, audio, existing cuts and semantic observations.
-- Speech analysis: transcription, reviewed word or phrase timestamps, narration understanding and frame-based cue placement.
-- Creative direction: genre-appropriate pacing, shot composition, typography, color and restrained transitions.
-- Visual support: relevant B-roll, sourced images, original diagrams, illustrations and licensed assets.
-- Motion and layouts: kinetic text, infographics, SVG-style animation, callouts, camera movement, face-safe captions, PiP and split screen.
-- Finishing: original audio preservation, deliberate mixing/color treatment, previews, technical checks, visual review and listening review.
+These examples use slash syntax; use the equivalent skill picker or command supported by your host.
 
-For talking-head and narrated content, the default is **all original dialogue, in order, on its original timeline**. The presenter track stays continuous underneath supporting visuals when applicable. Pause trimming, jump cuts, speech regeneration and retiming require explicit creative instructions. Other genres follow your brief. Timing is bounded by output frames and the accuracy of the available alignment, not a promise of impossible millisecond precision.
-
-## Try it
-
-In Codex:
+**Let the skill ask:**
 
 ```text
-$omni-edit-pro Edit my supplied interview for YouTube. Preserve every word,
-pause, and lip-sync. Add accurate phrase captions and selective supporting
-visuals. Inspect the source first, use the existing local tools, and ask
-before installing large dependencies. Put the editable project and exports
-in the workspace I specify.
+/omni-pro-edit
+Edit these three attached videos separately.
+Use my Video Project folder as the workspace.
 ```
 
-In a slash-command host:
+**Choose one result directly:**
 
 ```text
-/omni-edit-pro Create a portrait product explainer from my footage and
-narration. Use clear diagrams and a readable presenter window. Keep the
-narration intact, verify asset rights, preview difficult sections, then
-deliver the final video and editable project.
+/omni-pro-edit-vertical-overlay
+Edit this video as a Reel with useful animated cards and captions.
+Keep the complete original frame and original dialogue.
 ```
 
-For discovery testing without starting an edit:
+**Choose the speaker position:**
 
 ```text
-Use omni-edit-pro to explain your workflow for a narrated video.
-Do not install dependencies, create a project, or render anything.
+/omni-pro-edit-horizontal-split
+Keep the original video on the left and explain the spoken ideas
+with diagrams on the right. Preserve the person's full framing.
 ```
 
-## Tools needed when editing
-
-The agent needs local file/terminal access and a workspace for generated project code. Rendering normally uses compatible Node.js, React and Remotion packages plus a supported browser. FFmpeg/FFprobe can be available system tools or compatible tools supplied by the chosen runtime. Speech tasks can use an available WhisperX, whisper.cpp, another suitable recognizer/aligner, or a reviewed supplied transcript. GPU acceleration and models are optional according to the chosen engine.
-
-The skill detects what exists and asks before installing heavyweight dependencies. Hosted APIs, stock services, models and media can have separate costs, terms and authorization requirements. No particular API key or paid service is mandatory. Remotion has [separate engine licensing](https://www.remotion.dev/license); this skill's MIT license does not replace it.
-
-## Troubleshooting and limits
-
-- **Skill missing:** verify the complete folder and correct user scope, reload the host, inspect its picker, and check for same-name project skills. Global files on one machine do not automatically reach remote agents.
-- **No footage:** the agent can prepare a provisional brief but needs source files for a real edit.
-- **No renderer:** it reports missing tools and can prepare the plan. A simpler FFmpeg fallback is appropriate only if it satisfies the task.
-- **Poor or missing word timing:** use reviewed phrase captions or obtain alignment; do not invent precise word timestamps.
-- **Unsupported media or render failure:** preserve originals, diagnose a small interval, and verify any compatible intermediate before continuing.
-- **Unclear asset rights:** replace the asset or obtain permission before a cleared final delivery.
-- **No audiovisual review tools:** exports must disclose the review gap. A successful render command is not proof of professional quality.
-
-## Structure
+**Request every combination:**
 
 ```text
-.
-├── README.md
-├── INSTALL.md
-├── LICENSE
-├── ATTRIBUTIONS.md
-├── .gitignore
-└── skills/omni-edit-pro/
-    ├── SKILL.md
-    ├── LICENSE
-    └── references/
-        ├── workflow.md
-        ├── environment.md
-        ├── transcription-sync.md
-        ├── visual-planning.md
-        ├── broll-assets.md
-        ├── motion-design.md
-        ├── layouts-effects.md
-        ├── audio-rendering.md
-        ├── quality-assurance.md
-        └── agent-compatibility.md
+/omni-pro-edit-all
+Make all six versions of each supplied video.
+Use separate teams and save checked videos in Final Output Videos.
 ```
 
-The lightweight entrypoint loads focused references only when needed. There are no installers, application source files, media, model weights or upstream repositories in the published package. Future editing projects are created separately in the user's chosen workspace.
+Two input videos in All mode request **12 final videos**. Five request **30**. A single preset requests one result per input. Asking for both orientations with only Overlay requests two versions per input, not all six.
 
-## Validation
+## A separate team for every video
 
-Package checks passed for frontmatter/naming, all internal Markdown links, the 17-file repository allowlist, and secret/path scans. The README installation prompt and `INSTALL.md` describe the same complete 12-file skill package. Skills CLI 1.7.2 on Node 24.19.0 installed all 12 skill files with matching hashes in eight isolated agent-target tests, preserving unrelated working directories. Automatic selection's PromptScript warning and the Antigravity/Windows Devin path differences are documented above.
+Each video receives a unique job ID, its own working folder, and specialist assignments linked to that video.
 
-After publication, discovery and all eight explicit-agent installations were repeated from the GitHub repository shorthand. All 12 installed files matched the published content after normalizing Windows line endings. An isolated `npx skills add` installation targeting Codex also passed with a fresh npm cache. The generic automatic-selection form installed the skill and reproduced the documented PromptScript warning.
+| Specialist role | Responsibility |
+| --- | --- |
+| Video lead | Own the plan, source identity, timeline integration, and delivery status |
+| Speech and captions | Review wording, uncertainty, timestamps, and caption cues |
+| Visual direction and assets | Choose the visual treatment and relevant, cleared supporting material |
+| Layout and animation | Build the selected style and synchronize readable motion |
+| Cutout specialist | Isolate the speaker locally and check detail, edges, and movement |
+| Audio and export | Preserve narration, prepare sound, render previews and candidates |
+| Independent reviewer | Check requirements plus actual visual, audio, and timing quality |
 
-The local Codex app-server parsed and listed the skill as enabled using an explicit isolated skill root. This verifies native parsing/discovery; it does not establish automatic global-root discovery or a completed model invocation. Other host applications were not launched. Scenario checks covered conflicting duration requests, rational frame timing, missing dependencies and asset-rights uncertainty. These checks validate packaging and instruction behavior; **no real video render or professional editing-quality benchmark is claimed by this release**.
+Assignments use real native subagent tools and real task handles. Roles describe responsibilities; they do not imply certified expertise.
 
-## License and acknowledgments
+The coordinator runs independent work in parallel where the host permits it and queues the rest. Agent slots, GPU memory, render capacity, and storage set concurrency. Videos with the same filename still get different identities and folders.
 
-Original OmniEdit Pro material is [MIT licensed](LICENSE), with the notice also bundled inside the installable skill. Research drew on Remotion's official skills, iart.ai's B-roll and motion-design skills, Ethan Woo's video-editing skills, and Nana AI's talking-head packaging skill. The result is a new coordinated workflow, not concatenated upstream instructions.
+If nested agents are unavailable, the top-level coordinator dispatches specialists. If native subagents are unavailable entirely, the skill explains that limitation and asks whether to use one agent with the same role checklists or wait for a team-capable environment. It never labels imaginary workers as a team.
 
-See [ATTRIBUTIONS.md](ATTRIBUTIONS.md) for inspected revisions, license findings, capability boundaries and integration decisions. Installation is independent of all five upstream skills. The package follows the [Agent Skills specification](https://agentskills.io/specification).
+The workflow adapts **Dispatching Parallel Agents** and **Subagent-Driven Development**. You do not need to install an additional orchestration library or those upstream skills. See [per-video teams](skills/omni-edit-pro/references/batch-teams.md).
+
+## Quality and animation rules
+
+| Requirement | What the agent must do |
+| --- | --- |
+| Protect framing | Preserve the full decoded source in Split/Overlay; avoid unwanted crop, stretch, zoom, or face enlargement |
+| Protect Cutout detail | Keep real subject appearance and motion; reject missing hands/hair, halos, flicker, holes, or soft faces |
+| Preserve speech | Keep dialogue, order, pauses, original timing, and lip-sync unless you explicitly request changes |
+| Animate meaning | Choose graphics from reviewed speech; reveal ideas when they are spoken |
+| Keep motion readable | Use smooth entrances, enough reading time, clear exits, and a consistent visual style |
+| Protect the person | Avoid covering faces, essential gestures, existing source text, or captions |
+| Preserve factual meaning | Use real values for charts/badges; use actual audio for measurement-like waveforms |
+| Review each version | Check horizontal and vertical compositions independently |
+| Deliver honestly | Keep unreviewed or failed candidates out of the final folder |
+
+The agent may use diagrams, original illustrations, information cards, typography, suitable B-roll, subtitles, progress badges, or other elements that fit the actual video. It should simplify crowded scenes instead of forcing effects into every moment.
+
+No automatic pause removal, jump cuts, regenerated speech, or source punch-ins are part of the default workflow. A user can request specific editorial changes. Strong presentation and audience engagement are goals; virality is not guaranteed.
+
+## Free local processing
+
+The workflow uses free local media processing and suitable assets:
+
+- Prefer a compatible local Remotion setup when its terms permit the intended use without payment, with FFmpeg/FFprobe for preparation and checks.
+- Use a capable free local compositor if Remotion is unavailable or requires payment for that use.
+- Use available local transcription/alignment, a supplied transcript, or manually reviewed cues.
+- Reuse user-cleared assets, compatible free assets, or original graphics created by the agent.
+- Keep generated code, dependencies, caches, and media in the editing workspace.
+
+For **Cutout**, the agent assesses the actual footage and local options: supplied alpha/masks, genuine chroma key, suitable local matting/segmentation, or code-assisted tracking/rotoscoping. Simple rectangular cropping cannot isolate a person's silhouette.
+
+The agent tests a difficult passage before processing the full video. If a free local method still fails quality checks, it reports the Cutout limitation and preserves a labeled preview. Split and Overlay work continues independently. In All mode, four completed variants plus two failed Cutouts remain a partial six-variant request.
+
+There is no automatic paid API, credit-service, paid-stock, or hosted-processing fallback. The chosen AI host may have its own subscription or usage charges; the skill does not change those terms. Runtime tools, weights, fonts, and media also have their own licenses.
+
+See [environment decisions](skills/omni-edit-pro/references/environment.md) and [local Cutout](skills/omni-edit-pro/references/local-cutout.md).
+
+## Final output folders
+
+Checked videos use the exact folder name **Final Output Videos**, unless you explicitly request a different destination.
+
+```text
+<editing-workspace>/
+├── Final Output Videos/
+│   ├── video-001-interview/
+│   │   ├── video-001-interview-horizontal-split-v001.mp4
+│   │   ├── video-001-interview-horizontal-cutout-v001.mp4
+│   │   ├── video-001-interview-horizontal-overlay-v001.mp4
+│   │   ├── video-001-interview-vertical-split-v001.mp4
+│   │   ├── video-001-interview-vertical-cutout-v001.mp4
+│   │   └── video-001-interview-vertical-overlay-v001.mp4
+│   └── video-002-lesson/
+│       └── ...checked versions of the second video
+└── Working Files/
+    ├── batch-progress.md
+    └── video-001-interview/
+        ├── plan.md
+        ├── source-analysis/
+        ├── assets/
+        ├── project/
+        ├── previews/
+        ├── candidate-exports/
+        └── review/
+```
+
+The six-file example applies to All mode after every version passes. A single preset produces only its requested variant. New version numbers preserve earlier finals.
+
+The agent renders full candidates in Working Files, reviews them, then promotes checked files to Final Output Videos. Missing audiovisual review means **needs review**, not complete. Captions, editable projects, credits, and review evidence are linked separately from their working folders.
+
+For every requested video/version, the delivery report includes status, exact file path when available, dimensions, frame rate, duration, checks performed, and remaining limitations. Editing does not automatically publish or upload the videos.
+
+## Sources and adaptations
+
+The suite was informed by **nine repositories containing ten selected source entries**. Both delegation skills come from Superpowers.
+
+| Source | Contribution |
+| --- | --- |
+| [Official Remotion Skills](https://github.com/remotion-dev/skills) | Composition, captions, media, timing, and rendering guidance |
+| [iArt Motion Design](https://github.com/iart-ai/motion-design-skills) | Art direction, smooth motion, composition, and visual hierarchy |
+| [iArt Talking-Head B-roll](https://github.com/iart-ai/b-roll-skills) | Relevant speech-based visuals and continuous narration |
+| [AI Self-Media Packaging](https://github.com/zhouyuechuan2025-ui/ai-self-media-video-packaging-skill) | Presenter layouts, cards, flow diagrams, and illustration ideas |
+| [iArt TikTok Video](https://github.com/iart-ai/tiktok-video-skills) | Vertical presentation, captions, lower thirds, and short-form clarity |
+| [iArt Kinetic Typography](https://github.com/iart-ai/kinetic-typography-skills) | Readable phrase reveals and spoken-keyword emphasis |
+| [iArt Explainer Video](https://github.com/iart-ai/explainer-video-skills) | Storyboards, diagrams, and process explanations |
+| [HyperFrames Media-Use](https://github.com/heygen-com/hyperframes/blob/main/skills/media-use/SKILL.md) | Relevant free local cutout, alpha, synchronization, and edge-quality guidance |
+| [Dispatching Parallel Agents](https://github.com/obra/superpowers/blob/main/skills/dispatching-parallel-agents/SKILL.md) | Independent assignments, focused briefs, and combining results |
+| [Subagent-Driven Development](https://github.com/obra/superpowers/blob/main/skills/subagent-driven-development/SKILL.md) | Specialist work, review, corrections, and progress tracking |
+
+The sources were selected for relevance. This is not a claim that each one is the highest-ranked repository.
+
+Their guidance is adapted into this suite: upstream processing scripts, software-development workflows, incompatible crop/zoom rules, and paid-provider requirements are not dependencies. Remotion instruction prose/code was not copied where no repository license grant was found.
+
+See [pinned revisions and integration decisions](ATTRIBUTIONS.md) and [source notices](skills/omni-edit-pro/references/source-notices.md). The project is not affiliated with the upstream maintainers.
+
+## Validation and current limits
+
+The instruction package has been checked for:
+
+- All nine skill names, valid YAML metadata, and matching license files.
+- Complete same-release wrapper/core dependencies and relative documentation links.
+- Instruction-only contents and an intact staged copy.
+- Skills CLI discovery of all nine entries.
+- Written behavior for question order, presets, same-name sources, limited worker capacity, missing capabilities, failed Cutout variants, and unreviewed exports.
+
+See [VALIDATION.md](VALIDATION.md) for the evidence and scope.
+
+**Real-video rendering and audiovisual output quality have not yet been tested in this repository.** Package checks and instruction reviews do not prove that every host can render, that every cutout will succeed, or that every generated video will meet the visual standard. The runtime workflow requires actual preview, listening, and final-output checks before delivery.
+
+## Project guide
+
+| Document | Purpose |
+| --- | --- |
+| [INSTALL.md](INSTALL.md) | Installation, dependencies between entries, updates, and host discovery |
+| [IMPLEMENTATION.md](IMPLEMENTATION.md) | Detailed design and implementation plan |
+| [ATTRIBUTIONS.md](ATTRIBUTIONS.md) | Source revisions, contributions, licenses, and adaptations |
+| [VALIDATION.md](VALIDATION.md) | Checks performed, requirement audit, and test limits |
+| [Shared SKILL.md](skills/omni-edit-pro/SKILL.md) | Main production rules used by every entry |
+| [Selection](skills/omni-edit-pro/references/selection.md) | The questions, presets, overrides, and batch choices |
+| [Teams](skills/omni-edit-pro/references/batch-teams.md) | Native specialist assignments, queues, review, and recovery |
+| [Styles](skills/omni-edit-pro/references/editing-styles.md) | Split, Cutout, Overlay, and framing rules |
+| [Delivery](skills/omni-edit-pro/references/delivery.md) | Final folders, versions, evidence, and partial results |
+
+The installable package is entirely under `skills/`. The shared core includes its reference documents; the other eight folders contain the main entry or presets. All required instructions travel with the installed suite.
+
+## Frequently asked questions
+
+**Do I need another skill for the two questions or agent teams?**
+
+No. The question flow and delegation instructions are included. Real subagent execution still requires native support in your host.
+
+**Can I give any number of videos?**
+
+You can supply a batch. Each video gets its own job/team, and jobs queue within the available agent and hardware capacity. There is no promise of unlimited simultaneous processing.
+
+**Can I install only a vertical preset?**
+
+Install the shared `omni-edit-pro` core plus that preset from the same release. A preset alone is incomplete.
+
+**Does All combine my videos into one video?**
+
+No. All requests six separate versions of every source video. Combining sources requires an explicit request.
+
+**Does the package contain Python or JavaScript editing code?**
+
+No. It contains instructions and licenses. During an editing task, the executing agent may generate code inside the editing workspace.
+
+**Will it work in every agent or IDE?**
+
+Only when that host can load the instructions and provide the required execution capabilities. Skill discovery, native teams, media inspection, and rendering are separate capabilities. Consult the [compatibility guide](skills/omni-edit-pro/references/agent-compatibility.md) and verify the actual host.
+
+**Is it free?**
+
+The original skill material is [MIT licensed](LICENSE), and its default media workflow uses free local options. Your AI host, chosen runtime, hardware, and assets retain their own terms and costs.

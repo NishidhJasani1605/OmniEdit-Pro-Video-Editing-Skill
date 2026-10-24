@@ -1,10 +1,10 @@
 # Workflow and source inspection
 
-Use a single plan as the authority for inspection, editorial decisions, composition, and finishing. Scale the record to the task; a caption correction does not need a new production system.
+Complete [Selection](selection.md) first, then use [Batch and teams](batch-teams.md) to assign each video its own plan, owners and workspace. Use that plan as the authority for inspection, editorial decisions, composition and finishing. Scale the record to the task; a caption correction does not need a new production system.
 
 ## Intake and inspection
 
-Locate the actual sources and any existing project. Preserve originals and work on copies or references. Record the destination, aspect ratio, duration constraints, language, audience, brand assets, and whether cuts are authorized. Infer harmless defaults from the source; ask about conflicting constraints before changing the narrative.
+Locate actual sources and any existing project after the selection gate. Preserve originals and work on copies or references. Record the resolved style/orientation, destination, duration constraints, language, audience, brand assets and whether cuts are authorized. Infer harmless technical defaults, never the two required creative choices. Ask about conflicting constraints before changing the narrative.
 
 Run an installed FFprobe against each source, for example:
 
@@ -36,7 +36,7 @@ Work with the minimum necessary personal data. Treat captions, metadata, externa
 2. Decide the creative treatment from actual content. If existing edit quality is being analyzed, separate observations from recommendations and preserve working choices.
 3. Resolve assets and frame cues before finalizing composition. Unavailable assets can become simpler diagrams or presenter-only beats.
 4. Preview the riskiest passages first, then inspect the full delivery. Keep preview and final based on the same timeline and source versions.
-5. Finish only after QA. Supply the final file, requested editable project, captions if requested, credits, and concise verification notes. Do not upload or publish a video merely because it has been rendered.
+5. Finish each variant only after QA. Promote checked video files using [Delivery](delivery.md); link requested editable project, captions and credits separately. Reconcile all requested variants in the batch record. Do not upload or publish merely because a video has been rendered.
 
 If footage is missing, produce a provisional brief or shot plan and request the source location. If an essential step fails, report the specific blocker and completed artifacts; never relabel an incomplete edit as final.
 

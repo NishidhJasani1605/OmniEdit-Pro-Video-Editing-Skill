@@ -1,6 +1,6 @@
 # Layouts and effects
 
-Read when composing presenter footage, supporting visuals, captions, and informational overlays. Apply the selected treatment from [visual-planning.md](visual-planning.md); use [motion-design.md](motion-design.md) only when motion helps explain or emphasize the content.
+Read when composing presenter footage, supporting visuals, captions and informational overlays. The selected contract in [Editing styles](editing-styles.md) takes precedence over general layout suggestions here. Apply [Visual planning](visual-planning.md) and [Motion design](motion-design.md) within that contract.
 
 ## Establish the composition geometry
 
@@ -20,11 +20,11 @@ Measure text with the actual font and language. Reserve space for longer strings
 | Split screen | A comparison, interview, or simultaneous explanation | Allocate width by information needs; preserve equal scales when comparing |
 | Full-frame supporting visual | A detailed diagram or relevant footage | Preserve the underlying narrative clock and return without a discontinuity |
 
-For talking-head and narrated material, keep continuous source footage underneath when applicable. Reframe that playback without resetting its source time. If separate instances are necessary for a layout change, maintain identical source-time mapping and avoid duplicated audio. Do not freeze or loop a visibly speaking presenter while their speech continues.
+Use this layout vocabulary only within the chosen style: Split uses two regions, Cutout uses an isolated foreground, Overlay retains the original picture/background as the main image. Full-frame supporting visuals, a floating presenter window or switching among these styles require a corresponding user request; do not replace a selected style for convenience. Keep continuous source-time playback and one narration owner. Do not freeze or loop a visibly speaking presenter while their speech continues.
 
 ## Protect faces and captions
 
-Check whether existing captions are burned into pixels or carried in a selectable subtitle track. Avoid duplicate caption layers. Replacing burned-in text requires an agreed clean source, crop, or masking treatment and visual verification; do not assume the underlying picture can be recovered.
+Check whether existing captions are burned into pixels or carried in a selectable subtitle track. Avoid duplicate caption layers. Replacing burned-in text requires an explicitly agreed clean source or treatment and visual verification. Never crop off a subtitle band or mask it by default; preserve full framing. Do not assume the underlying picture can be recovered.
 
 Plan caption regions against face and object motion across the entire cue, not a single screenshot. Move an overlay to another stable region, reduce its footprint, or choose another layout when a collision occurs. Avoid repeatedly chasing a face with captions; position changes can become a distraction themselves.
 
