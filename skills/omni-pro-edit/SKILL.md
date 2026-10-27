@@ -1,15 +1,17 @@
 ---
 name: omni-pro-edit
-description: Edit supplied videos with OmniEdit Pro; choose horizontal or vertical and Split, Cutout or Overlay through two simple questions when missing.
+description: Use when editing supplied videos automatically, matching a sample video's editing treatment, or requesting an adaptive edit for any supported genre with OmniEdit Pro.
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "2.0.0"
+  version: "3.1.0"
 ---
 
 # omni-pro-edit
 
-No preset choices are fixed. Resolve orientation and style from the user prompt; ask only for missing choices.
+No composition or output shape is fixed. Use Reference direction for an explicitly designated sample, Auto otherwise, or Manual when the user explicitly wants to choose missing settings. Resolve input roles first; a reference is not another source job. Follow explicit settings and edit permissions. Adaptive composition supports non-presenter footage and native source shapes. Reference/Auto choose missing settings from evidence without routine selection questions.
+
+All four compositions inherit portrait presenter below/primary animation above by default, dynamic meaningful graphics and transitions throughout, source-specific contrast palettes, and true silhouette-only Cutout without a rectangular panel. Keep explicit overrides and do not invent a presenter for non-presenter footage; use the shared references for exact treatment and acceptance.
 
 For an editing request, load the [shared OmniEdit Pro workflow](../omni-edit-pro/SKILL.md) and follow its selected-style, framing, speech, free/local processing, per-video team and delivery rules. Carry the preset above into that workflow; loading the shared skill does not reset choices. Resolve clear user overrides through its selection rules.
 

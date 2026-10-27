@@ -4,14 +4,16 @@ description: Edit supplied videos in vertical 9:16 Overlay layout retaining orig
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "2.0.0"
+  version: "3.1.0"
 ---
 
 # omni-pro-edit-vertical-overlay
 
 Preset selection when explicitly chosen by the user: orientation = **vertical**; style = **overlay**. These choices are already answered. Do not ask the two selection questions unless the user explicitly clears a choice or gives an unresolved conflicting instruction.
 
-Apply these preset values only when the user explicitly invokes or selects this skill. If the host/model matched it automatically, loading this file alone does not answer the two questions: use the actual user prompt and ask for any missing choice through the shared selection rules.
+Portrait presenter default: speaking footage or true Cutout silhouette below, primary dynamic animation above. Keep intact source/background in Split and Overlay; Cutout uses only real alpha over the full animated canvas without a visible or reserved rectangular box. Honor an explicit placement override. Choose motion, transitions and palette from this source rather than a repeated blue/card template.
+
+Apply these preset values only when the user explicitly invokes or selects this skill. If the host/model matched it automatically, loading this file alone does not select this preset: use the actual prompt and resolve missing choices through Reference/Auto, or Manual if explicitly requested.
 
 For an editing request, load the [shared OmniEdit Pro workflow](../omni-edit-pro/SKILL.md) and follow its selected-style, framing, speech, free/local processing, per-video team and delivery rules. Carry the preset above into that workflow; loading the shared skill does not reset choices. Resolve clear user overrides through its selection rules.
 

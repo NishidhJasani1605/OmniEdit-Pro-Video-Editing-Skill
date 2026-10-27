@@ -1,6 +1,14 @@
 # Motion design
 
-Read when implementing animated text, diagrams, callouts, or camera moves. Use the creative brief from [visual-planning.md](visual-planning.md), frame events from [transcription-sync.md](transcription-sync.md), and composition constraints from [layouts-effects.md](layouts-effects.md). Create implementation code only in the user's editing workspace.
+Read when implementing animated text, diagrams, callouts, or camera moves. Use the creative brief from [visual-planning.md](visual-planning.md), frame events from [transcription-sync.md](transcription-sync.md), and geometry from [Editing styles](editing-styles.md) and [Layouts and effects](layouts-effects.md). Create implementation code only in the user's editing workspace.
+
+## Develop the graphics throughout the edit
+
+Across Split, Cutout, Overlay and Adaptive, plan continuous purposeful visual development from opening through ending. Build explanations progressively, animate a relevant mechanism or relationship, advance an active highlight, or transition between source-grounded visual states as the meaning develops. A long frozen card with only an entrance fade and exit fade does not meet this default. Ordinary source playback or an unchanged source-native frame alone does not satisfy the graphic-development plan.
+
+Keep readable labels settled while connectors, examples, focus states or other useful graphic parts progress. Serious, quiet or visually dense scenes can use restrained, low-amplitude development. A short reading hold must have a source interval, a reason and a planned next state; it is not a standing excuse for long static passages. If the user explicitly requests stillness or a static treatment, record its scope and honor that override.
+
+Maintain a per-source motion-coverage and transition plan: source/output interval, semantic purpose, active graphic development, readable settled elements, next state, transition purpose and any justified short hold or explicit stillness override. Cover the whole output rather than just a lively introduction. Suitable transitions connect topics, steps or visual focus without requiring a layout swap or a source cut. Avoid nonstop decorative pulses, random template changes, arbitrary loops and motion that competes with reading. This default grants no permission to cut, zoom, crop or retime the source.
 
 ## Keep animation reproducible
 
@@ -12,7 +20,7 @@ Distinguish composition frames from component-local frames. Inside a timed paren
 
 ## Define a motion phrase
 
-For each event, specify the reason for movement, entrance, readable hold, exit, and destination. Use the frame rate from the composition when converting planned durations. Time changes to validated spoken meaning, not an arbitrary animation cycle. Never retime narration to accommodate motion.
+For each event specify the reason, entrance, development states, readable hold, exit and destination. Use composition FPS for durations. Time changes to reviewed speech or observed action/shot events, not an arbitrary cycle. Never retime narration to accommodate motion. In Reference direction derive the motion vocabulary from observed examples and explain adaptations needed for the current content and continuous graphic development; record an explicit user stillness instruction separately.
 
 Use acceleration and deceleration to make movement legible. Reserve overshoot or elastic motion for a suitable tone; a scientific value or sober interview does not automatically benefit from bounce. Stagger items to reveal order, causality, or hierarchy. Keep already introduced information stable while new information arrives.
 
@@ -24,11 +32,11 @@ Animate typography as readable words or meaningful phrases. Preserve language sh
 
 Build SVG-style diagrams from verified relationships and values. Animate reveals, connectors, highlights, and labels from the same frame clock. Preserve units, denominators, axis ranges, sign, dates, source notes, and uncertainty. Do not use decorative growth that suggests an unobserved trend, change a chart baseline during a comparison, or scale symbols in a way that misstates magnitude. Label illustrative diagrams as conceptual when they are not measurements.
 
-Use motion within diagrams or supporting graphics to guide attention toward a relevant detail. Do not pan/zoom/crop the original presenter footage under these presets. Establish the graphic's context first and keep text readable. Avoid constant drift, gratuitous rotations, rapid flashes and motion behind dense text.
+Use motion within diagrams/supporting graphics to guide attention. Under fitted-source presets preserve the original picture; apply a source camera move/crop only with corresponding user authority and a checked exception in the plan. Adaptive follows the same authority rule. Establish graphic context and keep text readable. Avoid constant drift, gratuitous rotations, rapid flashes and motion behind dense text.
 
 ## Speech-led craft
 
-Set one compact motion vocabulary for the video: a principal easing family, entrance/exit rhythm, stagger style, intensity and typography hierarchy. Keep one primary focal element; supporting motion should be quieter. A source thought can justify a completely still hold. Typical short entrances around 0.3–0.5 seconds and shorter exits are starting points, not universal timing rules; tune them to speech and reading time.
+Set one compact motion vocabulary for this video from its inspected topic, tone, actions and explanation needs: a principal easing family, entrance/exit rhythm, development behavior, transition vocabulary, intensity and typography hierarchy. Keep one primary focal element; supporting motion should be quieter. Let the main text settle for reading while useful supporting graphics continue to develop, or record a justified short reading hold in the coverage plan. Typical short entrances around 0.3–0.5 seconds and shorter exits are starting points, not universal timing rules; tune them to speech and reading time.
 
 For calm explanations reveal a line or phrase together; emphasize selected words when verified timing supports it. Character reveals are reserved for short strings and must preserve shaping/graphemes. Avoid a spring bounce on every word. Use masks/wipes only within graphics, not to crop the speaker. Stagger a list to express order or dependency, not arbitrary visual activity.
 
@@ -36,4 +44,6 @@ Reveal diagram entities, connectors and outcomes when their meanings are spoken.
 
 ## Preview the whole event
 
-Inspect the first, peak, settled, and final frames plus real-time playback. Check that entrances and exits fit inside the allocated interval, text does not overshoot safe areas, and transition overlap leaves narration timing unchanged. Scrub to arbitrary frames and render a representative preview to expose state-dependent animation. If a visual needs more reading time than the speech allows, simplify it or extend its visual hold without moving the underlying dialogue.
+Include **full-duration normal-speed motion review for every output** as a named release check in the plan before rendering. Inspect all active graphic lifetimes, interior states, reading holds and transitions against the coverage record. A representative clip, attractive first/last frame, source movement, successful encode or full technical decode cannot satisfy this whole-output viewing check. Missing playback evidence leaves the candidate needs-review, not final.
+
+Inspect the first, peak, settled, and final frames plus real-time playback. Check that entrances, development and exits fit inside the allocated interval, text does not overshoot safe areas, and transition overlap leaves narration timing unchanged. Review full-output motion coverage for long frozen cards, unexplained inactivity and repetitive decorative motion. Scrub to arbitrary frames and render a representative preview to expose state-dependent animation. If a visual needs more reading time than the speech allows, simplify it or retain its readable labels while other useful parts progress without moving the underlying dialogue.

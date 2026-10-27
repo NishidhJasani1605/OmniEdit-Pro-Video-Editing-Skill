@@ -1,36 +1,59 @@
-# Three styles in two orientations
+# Compositions, treatment and source framing
 
-The selected style is a composition contract. General layout suggestions in other references must stay within it. Read [Layouts and effects](layouts-effects.md) for caption placement and [Motion design](motion-design.md) for animation. Horizontal is 16:9; vertical is 9:16. Choose delivery dimensions from the source, destination and brief rather than upscaling everything by default.
+Composition is a geometry contract, separate from treatment and editing permission in [Selection](selection.md). Reference/Auto can choose Adaptive or an established composition; explicit presets retain their contracts. Read [Layouts and effects](layouts-effects.md) and [Motion design](motion-design.md) within that contract. Horizontal presets use 16:9 and vertical presets 9:16. Adaptive may retain square, ultrawide or other source ratios when no stronger instruction applies. Choose dimensions from source detail, destination and brief rather than upscaling by default.
+
+## Reels: presenter below, animation above
+
+For vertical/Reels presenter scenes, place the speaking video or extracted real person in the **lower** part of the canvas and the primary explanatory animation in the **upper** part by default, across Split, Cutout, Overlay and Adaptive. This is the shared portrait placement rule, including vertical variants in All. Use an explicit user placement override when given; a reference showing a different position does not silently replace the default. Record any necessary reference adaptation. A non-presenter scene uses its actual subject/action and does not gain an invented speaking panel.
+
+| Composition | Lower presenter treatment | Animation space |
+| --- | --- | --- |
+| Split | Fit the complete original footage into the lower region | Main diagrams and dynamic explanations in the upper region |
+| Cutout | Place only the actual moving alpha silhouette lower on the canvas, without a rectangle or backing panel | Full-canvas background behind the person; main explanations above and safe negative space around the silhouette, including transparent gaps inside its bounding box |
+| Overlay | Keep source footage and original background together, fitted into a lower footage region; do not remove its background | Main animation on the upper canvas; smaller overlays may use verified clear areas over the lower source |
+| Adaptive with presenter | Use the intact lower source by default; retain the source's background unless extraction is explicitly requested | Main animated explanation above; scene-specific changes obey source/permission rules |
+
+Determine region sizes from full-source aspect, real speaker/gesture visibility, graphic complexity and delivery safe areas; there is no compulsory 50/50 division. Keep the complete source and person legible, not a tiny thumbnail. If fitting portrait footage below makes important detail unreadable, simplify the upper graphics and enlarge the lower region first. Report a remaining impossible constraint rather than crop, stretch, fabricate body parts or silently return to full-canvas footage. In Cutout, the person's hand/hair may extend above an implied divide: protect it using the moving alpha and reflow graphics; never crop it to enforce a straight boundary. No divider or square container is required around the Cutout.
+
+These defaults do not move every horizontal speaker below; horizontal composition retains its own fit and positioning rules. Dynamic motion, source-specific art direction and contrast apply in all formats through [Visual planning](visual-planning.md) and [Motion design](motion-design.md).
+
+## Adaptive
+
+Start from actual footage: screen recording, interview, demonstration, performance, landscape or action sequence. For vertical scenes containing a presenter, use the shared lower-presenter/upper-animation default; for non-presenter scenes use source-native or suitable scene layouts. Do not invent a presenter, isolated subject or caption track to fill a template. The scene plan may use native shots, evolving callouts, comparisons or other layouts within recorded authority. Preserve walkthrough steps, dramatic/action continuity and source framing by default.
+
+Keep one coherent treatment across layouts. Full-frame supporting visuals or a montage are available when requested or otherwise explicitly authorized; Adaptive alone does not authorize deleting dialogue, combining independent jobs, cropping/zooming, retiming or replacing essential footage. Record each permission and its source/output mapping. Adapt incompatible reference techniques and disclose the deviation. A difficult explicit Split/Cutout/Overlay never silently becomes Adaptive.
+
+Adaptive is not a seventh automatic All output. Count an explicitly requested additional Adaptive variant separately. Without a speaker, Auto normally chooses Adaptive; requested Cutout still needs an actual isolatable subject and the local-cutout checks. Report an impossible presenter-specific request rather than fabricate a person or silently substitute a composition.
 
 ## Source framing and person size
 
-For Split and Overlay, display the full decoded source frame after honoring rotation and pixel aspect ratio. Use a uniform fit, never stretch or fill-by-cropping. For a source of display size `Ws × Hs` and an available region `Wr × Hr`, the contain scale is `min(Wr/Ws, Hr/Hs)`. Center or deliberately align the resulting rectangle and fill spare canvas outside it with a calm designed background. Do not crop away existing subtitles or source borders without an explicit change request.
+For Split/Overlay and source-preserving Adaptive, display the full decoded source frame after honoring rotation and pixel aspect ratio. Use a uniform fit, never stretch or fill-by-cropping by default. For display size `Ws × Hs` and available region `Wr × Hr`, contain scale is `min(Wr/Ws, Hr/Hs)`. Deliberately align the rectangle and fill spare canvas with a calm background. Do not crop existing subtitles or borders without an explicit change request. A requested crop is a documented exception for its scope; validate protected content and detail afterward.
 
-The speaker's original on-screen detail is the quality reference. Inspect the face, head, shoulders, visible body and moving gestures across the clip. Avoid making the speaker a tiny thumbnail to fit excessive graphics. Enlarge the speaker region, simplify graphics and change their arrangement first. No automatic punch-ins, source camera pushes, face tracking that trims the body, stretched footage or artificial face reconstruction.
+Original subject/interface detail is the quality reference. Inspect faces and gestures where present, or essential action, code, controls and product detail where no speaker exists. Avoid shrinking important content to fit excessive graphics. Enlarge its region, simplify graphics and change arrangement first. No unrequested punch-ins, camera pushes, body-trimming tracking, stretch or artificial face reconstruction. A reference camera move is not permission to change the source.
 
 Fit may require downscaling or padding. Preserving full source framing, identical displayed person size and full-screen coverage can be incompatible across shapes. Explain the concrete geometry if the brief demands all three; show a fitted preview or ask for the specific tradeoff. Do not silently compromise framing or promise pixel-identical re-encoded output. Never invent body parts outside the source.
 
 ## Split
 
 - Horizontal: speaker region on the left or right, explanation region beside it.
-- Vertical: speaker region above or below, explanation region in the remaining height.
-- Use the user's specified position; otherwise choose from actual gaze/gestures and available content, then keep it stable.
+- Vertical: complete speaking footage below, primary animated explanation above by default.
+- Use the user's specified position when given. Otherwise retain that vertical ordering; for horizontal choose left/right from actual gaze, gestures and available content. Keep geometry stable while graphics evolve.
 - Fit the entire original video inside the speaker region. Choose the region's size from the source aspect ratio and person visibility, not an arbitrary 50/50 split. A wide source may need a wider speaker region; simplify the explanation to protect the speaker.
 - Use cards, diagrams, labels, original illustrations or relevant clips in the explanation region. Keep the underlying speaker playing continuously with original sound. Do not replace this style with a tiny floating head or full-screen B-roll.
 - Reflow explanation content for portrait output. A detailed horizontal diagram can become a progressive vertical sequence while speech timing stays unchanged.
 
 ## Cutout
 
-Read [Local cutouts](local-cutout.md). Isolate the speaker from the background using real frame-derived alpha/masks, preserving visible subject detail, movement and timing. Place that foreground over a coherent graphic background, usually lower/central if the content supports it. There is no separate rectangular presenter panel. Do not cut off head, hair, hands or shoulders to imitate a reference image.
+Read [Local cutouts](local-cutout.md). Isolate the speaker with real frame-derived alpha, preserving detail, movement and timing. In portrait put the real silhouette below with primary animation above; elsewhere choose its position from the scene. Composite over a continuous full-canvas dynamic background. Only actual subject pixels occupy the foreground: no square/rectangular crop, matte backing, card, border or reserved empty rectangle around it. An intermediate image may have rectangular dimensions, but its non-subject pixels are transparent and cannot become a visible or excluded panel. Do not cut off head, hair, hands or shoulders to imitate a reference.
 
-Keep explanations away from the moving silhouette and reserve caption space. Use the available canvas to make the speaker readable without excessive enlargement. Background removal does not authorize skin smoothing, face changes, regenerated speech or retiming. Reject unstable mattes rather than disguising defects with heavy blur.
+Protect the actual moving silhouette and a small justified edge/gesture margin, not its entire bounding rectangle. Background animation can continue behind the subject and through transparent space between an arm and torso or beside the head; alpha composites the person above it. Keep essential text readable outside occupied silhouette regions throughout its display interval, reflowing or timing it around motion. Do not exclude the full lower half merely because the person is there. Inspect changing backgrounds for edge contrast and flicker. Background removal does not authorize face changes, skin smoothing, regenerated speech or retiming; reject unstable mattes.
 
 ## Overlay
 
-Keep the original footage and background together as the main continuous image. If source and target shapes match, it occupies the canvas; otherwise fit the complete source with deliberate padding. Do not push it into a side/top presenter panel, remove its background, or cover it with a replacement full-frame scene.
+Keep original footage and background together as one continuous source layer. For vertical presenter scenes, fit that intact layer into the lower footage region and use the upper canvas for primary animation. This portrait arrangement is intentional even when source and target share 9:16; it does not turn Overlay into background removal. For horizontal or non-presenter scenes, source footage can occupy the canvas when shapes match, otherwise fit the complete source with padding. No unrequested side/top presenter placement, background removal, crop or replacement full-frame scene.
 
-Add suitable cards, progress/day badges, diagrams, labels and captions directly over protected free areas. Keep the speaker prominent. Prefer one useful visual idea at a time; reduce density when the source has little free space. Make the card adapt to the footage, not the footage zoom/crop to fit the card. Any audio waveform must be derived from the audio if it is presented as a measurement; decorative movement must not imply measured data.
+Add evolving diagrams, labels, captions, progress/day badges and other meaningful animation over safe areas and, for portrait presenter scenes, mainly above the lower footage. Keep one clear primary idea while its visual treatment develops throughout. Reduce density rather than freeze a single card or obscure the person. Adapt graphics and source-region size without crop/zoom. Measurement-like audio waveforms must use actual audio; decorative motion cannot imply measured data.
 
 ## Acceptance per variant
 
-Check the delivered shape, selected style and position; full source fit for Split/Overlay; speaker visibility at actual viewing size; hair/hand integrity for Cutout; no unwanted zoom/stretch/crop; no face or gesture obstruction; readable holds; preserved speech and timing. Compare matching source/output timestamps, including movement extremes, not only a flattering still. A different style needs a user instruction, not an agent's convenience.
+Check shape/composition and portrait lower-presenter/upper-animation ordering in all four modes unless explicitly overridden; full-source fit/background retention in non-Cutout; actual-alpha silhouette and usable negative space in Cutout; subject/interface detail; no unauthorized crop/zoom/stretch; readable ongoing graphic development and suitable transitions; preserved source content/timing; and per-video color/subject separation. Compare mapped source/output times including gesture extremes, every Adaptive state and transitions. A different fixed composition needs a user instruction, not implementation convenience. Check resemblance separately against the reference profile.

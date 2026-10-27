@@ -1,14 +1,20 @@
 # Per-video teams and batch work
 
-Read after [Selection](selection.md). This is a native-agent coordination workflow, expressed as instructions. No crewAI service, orchestration library, shell helper or external skill is required. Roles are task assignments with relevant context, not a claim of certified expertise or special model capabilities.
+Read with [Selection](selection.md). This is a native-agent coordination workflow, expressed as instructions. No crewAI service, orchestration library, shell helper or external skill is required. Roles are task assignments with relevant context, not a claim of certified expertise or special model capabilities.
 
 ## Inventory and ownership
 
-Give every source a stable unique ID, even when two input files have the same basename. Record original absolute source path, identity/fingerprint, selected streams, modes and job status. Before a missing source is located, retain a provisional label with needs-input status; verify its source identity before processing or reusing cached work. Treat each supplied video independently unless the user expressly requests a combined edit. Multiple input clips are not implicit permission for a montage.
+Resolve each input as source, reference or supporting asset before counting source jobs. A reference video or supporting clip does not get its own edit job. Follow explicit labels; clarify genuinely ambiguous roles before dispatch. Give every actual source a stable unique ID, even when files share a basename. Record original absolute path, identity/fingerprint, selected streams, creative mode and permissions. Before a missing source is located, retain a provisional label with needs-input status; verify identity before processing or reusing cached work. Treat sources independently unless the user expressly requests a combined edit; multiple clips do not imply a montage.
+
+Maintain the reference-to-source map with primary/attribute priorities, access status and timecoded evidence. A scoped reference-analysis task may serve multiple source teams. Publish its verified observations read-only; each lead owns the source-specific translation, adaptations and comparison. Do not let teams modify a shared profile, copy reference event times onto unrelated footage, or claim an uninspected attribute matched.
+
+Give every source its own inspected creative direction, cue/motion-coverage and transition plan, and palette evidence under [Visual planning](visual-planning.md), [Auto direction](auto-direction.md) and [Motion design](motion-design.md). Derive graphics, visual metaphors, mechanisms, timing and color from that source's topic, imagery/background, subject/clothing and contrast tests. Recoloring or retitling a cloned effects sequence is insufficient for different content. A requested brand or reference can provide a shared system; retain it without forcing arbitrary differences, while adapting the actual explanations and cues independently. Variants of one video may share its treatment.
+
+Auto/Reference may use narrow preliminary source/reference analysis before creative choices are resolved. Record the selected mode, treatment, composition, output set/settings and decision provenance before creating variant/render jobs. Preset defaults apply only when explicitly selected; explicit user overrides change only the named dimension. All starts with six pairs and never silently gains Adaptive. Count variants from the resolved set, not every supplied media file.
 
 Use `<editing-workspace>/Working Files/<video-id>/` for that job's plan, transcript, assets, compositions, previews and candidate exports. Keep source files unchanged. Assign one owner to each writable artifact; a video lead alone integrates the authoritative timeline. Shared resources are read-only once verified. Do not make different teams edit one shared composition or progress file concurrently; report updates to the batch coordinator.
 
-Maintain a compact batch record containing job/variant IDs, team or task handles, owner, dependencies, output paths, state, last evidence and next action. States include waiting-selection, queued, running, needs-input, preview-ready, reviewing, needs-review, needs-repair, completed, failed and blocked. A queue entry or an agent's optimistic message is not completion evidence.
+Maintain a compact batch record containing role/source/reference IDs and mappings, resolved variant IDs, team/task handles, owner, dependencies, output paths, state, last evidence and next action. States include waiting-role, waiting-selection, analyzing, queued, running, needs-input, preview-ready, reviewing, needs-review, needs-repair, completed, failed and blocked. A queue entry or an agent's optimistic message is not completion evidence.
 
 ## Native team dispatch
 
@@ -16,34 +22,36 @@ Check the actual host's exposed subagent tools, allowed nesting, concurrency and
 
 | Role | Inputs and deliverable |
 | --- | --- |
-| Video lead | Brief and source facts; owns plan, dependency order, timeline integration and variant status |
-| Speech/captions | Selected audio and source origin; reviewed transcript, confidence and timing cues |
-| Visual direction/assets | Reviewed ideas and user style; shot plan, design vocabulary, asset rights |
-| Layout/animation | Approved plan, timing and assets; composition and readable motion |
+| Video lead | Role map, brief and source facts; owns source-specific direction/output record, dependencies, authoritative timeline and variant status |
+| Speech/captions, when speech exists | Selected audio and source origin; reviewed transcript, confidence and timing cues; no invented transcript for silent footage |
+| Visual direction/assets | Source observations, selected mode/constraints and applicable read-only reference profile; source-specific treatment, palette/contrast evidence, scene/shot plan, design vocabulary, adaptations and asset rights |
+| Layout/animation | Approved plan, timing and assets; composition, full-duration meaningful graphic development, transition plan and settled readable elements |
 | Cutout, only when selected | Original frames and geometry; local matte/foreground plus edge and temporal checks |
-| Audio/export | Timeline and original sound; mix, representative previews and candidate final |
-| Independent reviewer | Actual source/output, brief and evidence; requirements and audiovisual quality verdicts |
+| Audio/export | Timeline and original sound where present; mix or verified silent path, representative previews and candidate final |
+| Independent reviewer | Actual source/reference/output, resolved brief and evidence; compliance, source-specific direction, full-output motion/contrast coverage, audiovisual quality and treatment-comparison verdicts |
 
-Every substantive stage gets a scoped specialist assignment; a lead does not silently do all work and call that a team. Specialists can run sequentially as slots free up. If nested agents are unavailable, the top-level coordinator dispatches the specialists and links them to their video lead's job. Reserve capacity for coordination/review; do not occupy every slot with leads waiting for children. Launch only as many video teams as the host can sustain and queue the rest. Limit GPU/model/render concurrency independently of agent count.
+Every substantive stage gets a scoped specialist assignment; a lead does not silently do all work and call that a team. For non-presenter or silent work, replace inapplicable speech tasks with scene/action analysis and skip subject extraction unless Cutout is selected. Specialists can run sequentially as slots free up. If nested agents are unavailable, the top-level coordinator dispatches specialists and links them to the video lead's job. Reserve capacity for coordination/review; do not occupy every slot with leads waiting for children. Launch only as many teams as the host can sustain and queue the rest. Limit GPU/model/render concurrency independently of agent count.
 
 If no subagent tool exists, explain that genuine teams cannot be created. Ask whether to proceed with one agent applying the same role checklists, or wait for a team-capable environment. Until answered, preserve the job as needs-input; do not fabricate agents or silently reduce the execution mode. A prior user authorization for solo fallback is sufficient.
 
 ## Assignments and dependency order
 
-Each worker brief includes video/variant ID, role, exact input paths/versions, relevant instruction references, objective, constraints, owned output paths, dependencies and required evidence. Give only needed context. Prohibit cross-job writes and unauthorized extra workers. Preserve the user's model settings unless they requested a change.
+Each worker brief includes source/variant ID, mode and role, exact input paths/versions, applicable reference mapping/profile, relevant instruction references, objective, explicit constraints/editing permissions, selected composition/treatment, owned output paths, dependencies and required evidence. Direction/animation assignments include this source's palette rationale and changing-background/clothing contrast tests, full-duration motion coverage, graphic development and transitions, plus interval/reason for short reading holds or explicit user stillness overrides. Apply [Editing styles](editing-styles.md) for geometry and portrait presenter placement. Give only needed context. Prohibit cross-job writes and unauthorized extra workers. Preserve the user's model settings unless they requested a change.
 
-After source inspection, speech analysis, source-matte investigation and media technical checks may proceed independently. Speech-dependent visuals wait for reviewed cues; animation waits for approved geometry/assets; final export waits for integrated timing and audio. Separate videos may run concurrently. Within one video, independent asset research and graphic development can run in parallel when outputs are separate.
+After source inspection, speech analysis where relevant, selected-Cutout matte investigation and media technical checks may proceed independently. Reference observation can be shared; each source's treatment waits for relevant evidence. Speech-dependent visuals wait for reviewed cues; scene-dependent visuals wait for inspected action/shot anchors. Animation waits for resolved geometry/assets; production rendering waits for the output record and integrated timing/audio. Separate sources may run concurrently. Within one source, independent asset research and graphic development can run in parallel when outputs are separate.
 
 Use actual process/task handles to observe running work. A polling timeout does not prove failure. Verify the task or process status before restarting to avoid duplicate renders. On resume, read the batch record and inspect existing artifacts/handles before reassigning anything. Reuse verified analysis and completed outputs when source and settings have not changed.
 
 ## Review and repair
 
-Workers report actual paths, changes, checks performed, unverified claims and blockers. The lead checks integration; a distinct reviewer evaluates both (1) requested behavior and (2) audiovisual quality using [Quality assurance](quality-assurance.md). A good-looking preview does not excuse missing speech or the wrong style. A technical pass does not excuse unreadable animation.
+Workers report actual paths, changes, checks performed, unverified claims and blockers. The lead checks integration; a distinct reviewer uses [Quality assurance](quality-assurance.md) to evaluate requested behavior, audiovisual quality and mode-specific treatment evidence. Review the representative test before expanding the treatment, and the actual full export before completion. Check each source's meaningful graphic development through opening, middle and ending, justified short holds, transitions, and palette separation over changing footage/clothing. Long frozen cards with only entrance/exit fades, decorative pulses and batch-cloned effects are failures to repair. A good-looking preview does not excuse missing speech, changed meaning or the wrong composition. A technical pass does not excuse unreadable animation or prove reference resemblance.
 
 Send concrete failed intervals and evidence back to the responsible specialist. Recheck repaired output and affected boundaries. After two targeted failures on the same cause, diagnose a different free/local path or surface the smallest unresolved need; never promote a failed variant just to clear the queue. Continue independent jobs. Report material gaps without inventing success.
 
 ## All mode
 
-For each video generate exactly the six orientation/style pairs unless explicitly narrowed. Reuse verified source inspection, transcript, original narration, cleared assets and compatible matte across variants of that same source. A source or transcript change invalidates dependent work. Plan layouts independently: vertical is a reflow, not a crop of the horizontal export. Review all six outputs separately.
+For each actual source generate the six horizontal/vertical × Split/Cutout/Overlay pairs unless explicitly narrowed or overridden under Selection. Adaptive is excluded from the default All set. For example, two sources plus one shared reference request twelve variants; All, horizontal only requests six total, three per source. References/assets never inflate those counts.
 
-If cutout cannot pass, complete and deliver the four valid Split/Overlay variants when possible; keep the two Cutout variants failed or needs-input and the whole All request incomplete. Never quietly substitute another style, omit failed rows, or relabel four outputs as six.
+Reuse verified source inspection, applicable read-only reference observations, reviewed transcript when present, original sound, cleared assets and compatible matte across variants of the same source. A source, transcript or relevant direction change invalidates dependent work. Plan layouts independently: vertical is a reflow, not a crop of the horizontal export. Review every resolved variant separately.
+
+For an unnarrowed All request, if Cutout cannot pass, complete the four valid Split/Overlay variants when possible; keep both Cutout variants failed or needs-input and the request incomplete. For a narrowed/overridden set, report against that actual set. Never substitute another composition, omit failed rows, or relabel a partial set as complete.

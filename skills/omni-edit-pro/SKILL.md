@@ -1,31 +1,35 @@
 ---
 name: omni-edit-pro
-description: Edit one or many supplied videos with per-video specialist teams, horizontal or vertical output, and split, speaker-cutout or original-overlay styles. Shared workflow and compatible original entry for the OmniEdit Pro presets; asks for missing format and style before processing.
+description: Use when editing supplied videos, matching the editing treatment of a sample/reference video, or choosing a suitable edit automatically without a reference. Also applies to OmniEdit Pro presets, batches, and non-presenter footage.
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "2.0.0"
+  version: "3.1.0"
 ---
 
 # OmniEdit Pro
 
-Turn supplied footage into coherent, verified edits. This is the shared implementation for `omni-pro-edit`, the six orientation/style presets, `omni-pro-edit-all`, and this original `omni-edit-pro` entry. Preserve preset selections when a wrapper loads this file. This package contains instructions only; generate any project code, masks, dependencies and media in the user's editing workspace, never in an installed skill. No upstream skill or script is required.
+Turn supplied footage into coherent, verified edits. This is the shared implementation for `omni-pro-edit`, the six orientation/composition presets, `omni-pro-edit-all`, and this compatible original entry. Keep one primary workflow; research, authoring and discovery skills are not production dependencies. This package contains Markdown instructions and license notices only. Generate any needed processing code, masks, dependencies and media in the user's editing workspace, never in an installed skill.
 
-## Resolve the two choices first
+## Resolve intent, roles and authority
 
-For an editing request, read [Selection](references/selection.md) before media inspection, transcription, team dispatch, project creation, runtime installation or rendering. Read only the prompt, explicitly user-selected preset and supplied path labels to resolve choices. Automatic skill matching must not invent either choice or bypass the questions. Do not infer orientation from the source video, or a style from the topic.
+Read [Selection](references/selection.md) before processing. Classify inputs as source targets, style references or supporting assets from explicit labels and clear wording. Ask only if roles or conflicting instructions prevent a correct edit. A reference is analysis-only unless the user also identifies it as a target; it never silently becomes another batch job.
 
-If orientation is missing, ask only: **"Do you want a wide video for YouTube (horizontal 16:9) or a tall video for Reels/Shorts (vertical 9:16)?"** Wait for the answer. If style is still missing, then ask: **"Which style do you want: 1. Split — speaker beside or above/below explanations; 2. Cutout — speaker with the background removed over graphics; or 3. Overlay — original video with animations on top?"** Wait for the answer. Ask only the missing question when the other choice is supplied. Never treat an unanswered question or elapsed time as a selection.
+The main entry uses **Reference** direction when a sample is explicitly designated and **Auto** direction otherwise. Use **Manual** when the user asks to choose missing creative settings themselves. Supplied settings and explicitly selected presets remain authoritative in every mode. Automatic host matching does not establish a user-selected preset. Reference/Auto may inspect identified media to resolve missing settings; they do not ask the old compulsory orientation/style questions. Manual asks only its missing choices and waits.
 
-An explicitly user-selected `all` preset selects both orientations and all three styles: six outputs for each video. Explanation, installation, skill-development and planning-only requests do not trigger the editing questions or processing.
+Keep treatment (pacing, typography, motion, color and sound), composition (`adaptive`, `split`, `cutout`, `overlay`) and editing permission separate. Adaptive supports native footage and scene-specific layouts. All selects both orientations and the original three compositions, six outputs per source, unless the user narrows or overrides named choices. Explanation, installation, authoring and planning-only requests do not start production.
 
 ## Start and protect the edit
 
-After selection, identify source files, requested deliverables, audience and constraints. Inspect available evidence before asking additional questions. A normal editing request includes producing checked final video files; a requested plan or preview limits that deliverable. Do not invent footage, transcripts, native subagent capabilities or completed renders.
+After initial routing, verify source identities, reference mappings, deliverables and constraints. Inspect available evidence before asking further questions. Read [Reference analysis](references/reference-analysis.md) or [Auto direction](references/auto-direction.md) for the selected branch, then record resolved outputs and treatment before production dispatch. A normal edit includes checked final video files; an explicit plan/preview request limits delivery. Do not invent footage, observations, transcripts, native subagents or renders.
 
-For talking-head and narrated work, default to preserving **all original dialogue, its order, original timeline, and lip-sync**. Keep the original footage continuous underneath supporting visuals when applicable. Do not trim pauses, create jump cuts, change speed, regenerate speech, or shorten the narrative without explicit editing instructions. Clarify a shorter requested runtime that conflicts with full dialogue preservation. Other genres follow the user's creative brief; record approved cuts and their source mappings.
+For narrated work default to preserving **all dialogue, order, pauses, original timing and lip-sync**. Preserve the full walkthrough, action or performance when no shortening/restructuring is requested. Record authority separately for trimming, reordering, combining, cropping/zooming, speed changes and full-frame replacement. A clear highlights, montage or shorter-runtime request supplies corresponding editorial authority; do not ask again for already authorized actions. Resolve an actual conflict such as "60 seconds and keep every word". A reference alone supplies no permission to remove words, crop essential content or reuse its assets. Map authorized changes through one source-to-output timeline.
 
-Preserve full source framing in Split and Overlay: no unwanted crop, punch-in, stretch, face enlargement or quality-reducing zoom. In Cutout remove the background, not body parts; retain original subject detail and movement. Read [Styles and framing](references/editing-styles.md) and, for Cutout, [Local cutouts](references/local-cutout.md). Reflow graphics for a different aspect ratio; fit the source with padding when necessary. Never promise unchanged pixel size, full-frame coverage and an uncropped source when geometry makes that impossible.
+Preserve full source framing by default. Split/Overlay retain their fitted-source contracts; Cutout removes the background while preserving real subject detail and movement. Adaptive may use scene layouts within recorded authority, protecting faces, action and essential screen content. Read [Compositions and framing](references/editing-styles.md), and [Local cutouts](references/local-cutout.md) when relevant. Reflow graphics, use padding where needed, and explain incompatible geometry requirements. Do not invent a speaker or transcript for silent/no-presenter footage.
+
+For Reels/vertical presenter scenes, default to **speaking footage or real speaker silhouette below, primary animation above** in all four compositions. Split, Overlay and presenter-led Adaptive fit the intact source and its background in the lower footage area; Cutout places only the true alpha silhouette below over a full-canvas animated background. Cutout has no visible or reserved rectangular presenter box: safe transparent space around the actual moving person, including inside its bounding box, remains usable for graphics. Follow [Compositions](references/editing-styles.md) for exact geometry and explicit placement overrides. Do not apply a speaker layout to footage with no speaker.
+
+In every format and genre, build **dynamic, content-specific graphics and suitable transitions throughout the edit**, not a long static card with only an entrance and exit. Keep text readable while diagrams, highlights or other meaningful visual elements evolve; preserve source speech and timing. Inspect each source independently and choose its motion, transitions, graphic vocabulary and background from the topic, scene, subject/clothing and tested contrast. There is no automatic blue/navy palette or repeated batch template. Blue or a shared brand treatment is appropriate only when supported by the source, reference or explicit instructions. See [Visual planning](references/visual-planning.md) and [Motion design](references/motion-design.md).
 
 Use free/local processing and assets. Prefer a compatible Remotion setup where the intended use requires no paid license, with FFmpeg/FFprobe for preparation and verification. Follow [Environment](references/environment.md) for a free local alternative when needed. One engine owns composition and time. Exclude paid APIs, credit-based services, paid stock and hosted processing from this workflow. Ask only for genuinely missing installation authorization; existing authorization persists. No publishing is implied by editing.
 
@@ -33,7 +37,7 @@ Use free/local processing and assets. Prefer a compatible Remotion setup where t
 
 Read [Batch and teams](references/batch-teams.md). Create a separate job and native specialist team for every source video, queueing tasks within available agent and hardware limits. Assign speech, art direction, layout/animation, audio/export, cutout when relevant, and independent review tasks. Keep different videos' writable files isolated. Use actual host subagent tools; do not merely label one agent as a team. If unsupported, explain the limitation and obtain a changed execution choice before replacing requested teams with solo work. Completed independent jobs may continue while another job needs attention.
 
-For All mode, share verified source analysis and transcript within each video, but plan and review each of its six compositions. A failed cutout does not block valid Split/Overlay jobs, and four completed outputs are not a completed six-output request.
+For All mode, share verified source analysis and any transcript within each video, but plan and review every variant in its resolved output set. Unnarrowed All requests six; four passing Split/Overlay outputs leave two Cutouts incomplete. Horizontal-only All requests three; two passing outputs leave one Cutout incomplete. A failed variant does not block valid independent jobs or disappear from the requested set.
 
 ## Route the work
 
@@ -41,9 +45,10 @@ Read only the references needed for the current stage. Begin with workflow and e
 
 | Stage | Read when needed | Produce or verify |
 | --- | --- | --- |
-| 1. Select and dispatch | [Selection](references/selection.md), [Batch and teams](references/batch-teams.md) | Answered choices, jobs, real team assignments |
+| 1. Route and classify | [Selection](references/selection.md) | Input roles, mode, explicit constraints and editing authority |
 | 2. Detect environment | [Environment](references/environment.md) | Tool/version inventory, workspace, dependency gaps |
-| 3. Inspect sources | [Workflow](references/workflow.md) | Media facts, sample observations, narrative continuity mode |
+| 3. Inspect and direct | [Workflow](references/workflow.md), [Reference analysis](references/reference-analysis.md) or [Auto direction](references/auto-direction.md) | Source facts, observed style/content, treatment and resolved outputs |
+| 3a. Dispatch production | [Batch and teams](references/batch-teams.md) | Source jobs, isolated ownership and real specialist assignments |
 | 4. Understand speech | [Transcription and sync](references/transcription-sync.md) | Reviewed words/segments, timestamps and uncertainty |
 | 5. Direct the edit | [Visual planning](references/visual-planning.md) | Style, pacing, shot plan and semantic cues |
 | 6. Select assets | [B-roll and assets](references/broll-assets.md) | Relevant, cleared assets with provenance |
@@ -59,6 +64,10 @@ For installation, discovery, or host differences, read [Agent compatibility](ref
 
 Keep a compact evidence record in the editing workspace: media facts, edit decisions, transcript confidence, frame timeline, asset rights, and QA results. For a small edit these can be sections in one plan rather than many files. Reuse verified work after a failure.
 
-Align contextual visuals to reviewed spoken concepts at output frame boundaries. Choose smooth, readable animation, diagrams, cards, relevant B-roll and original graphics to suit each video. Animation should explain or emphasize meaning; no compulsory effect count, cut frequency or fake retention score. Never promise virality or millisecond accuracy beyond the frame rate and alignment evidence. Avoid covering faces, gestures, essential screen content or captions.
+Before rendering, include an explicit release-check list in that plan: **source content/timing/framing**; **full-duration normal-speed viewing of every candidate's graphic development, holds and transitions, plus actual listening where audio exists**; and, for **Cutout, alpha/gesture playback on the actual animated background and separate light and dark diagnostic backgrounds**. Name these checks even in a compact plan; representative clips, endpoint stills or full decode do not stand in for them. Mark them planned until actual review evidence exists, and retain needs-review status when a required check cannot be performed.
+
+Align contextual visuals to reviewed speech or observed action/shot events at output frame boundaries. Verify meaningful motion coverage and content-appropriate transitions throughout, source-specific palette/contrast, portrait ordering when a speaker exists, and true silhouette compositing for Cutout. No compulsory effect count, source cut frequency or fake retention score applies; dynamic graphics do not authorize source cuts/crops/retiming. Compare Reference results to the observed profile, recording deliberate adaptations to these defaults and unknowns. Do not silently replace an unavailable required reference with Auto. Never promise universal best quality, virality or timing beyond the evidence. Avoid covering faces, gestures, essential screen content or captions.
 
 Render into the working area first. Only checked completed video exports go in `<editing-workspace>/Final Output Videos/<video-id>/`, following [Delivery](references/delivery.md). Keep previews, code, captions, credits and diagnostics in their appropriate working/project folders. Preserve earlier finals with versioned names. Report every requested variant as completed, needs review, failed or blocked, with exact paths and any review gaps. A successful command, source check or routing test alone is not proof of professional editing quality.
+
+For skill changes, use the old/new scenarios and evidence boundaries in [Evaluation](references/evaluation.md). A routing improvement is distinct from demonstrated audiovisual improvement.

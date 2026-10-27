@@ -2,7 +2,7 @@
 
 ## Own each sound once
 
-In continuity mode, preserve the full selected original narration at its mapped start time and normal speed. Choose one audio owner: either the base video supplies narration, or a separately mapped narration track does and the base video's audio is muted. Multiple audible copies cause echo or phasing. Mute B-roll audio unless intentionally included. Do not add automatic silence removal, speech regeneration, or time stretching.
+In continuity mode preserve full original narration at its mapped time and normal speed. For authorized edits map source audio through the same segment/speed/transition decisions as picture and captions. Choose one audio owner: base video or separately mapped track with base audio muted. Multiple copies cause echo/phasing. Mute B-roll audio unless intentionally included. No unrequested silence removal, speech regeneration or time stretching. For non-speech footage protect intended ambience, music and system/action sounds. If no audio stream exists, record audio/listening as not applicable; do not invent narration or sound to satisfy a checklist.
 
 Keep full-quality source audio separate from recognition audio. Listen before denoising, gating, compressing or normalizing: a treatment that removes consonants is worse than mild steady noise. Use minimal corrective processing, and compare processed and original passages at matched listening levels. Measure integrated loudness and true peak against the requested delivery specification; there is no single mandatory loudness target for every platform or genre. Leave sufficient headroom and document any chosen target. Optional music should support the voice, with smooth level changes rather than pumping or masking.
 
@@ -24,7 +24,9 @@ These are command examples, not bundled files: replace paths, composition ID and
 
 ## Preview and recover
 
-Render representative clips with audio: an early speech cue, dense captions, a complex graphic, a layout change, and the ending. Include full-size stills for typography/crop inspection; low-resolution playback alone can hide fine text problems. Use the same media, timing and composition as final. Review motion at normal speed, listen and compare lips to speech; static screenshots cannot verify either.
+Render passages that exercise the actual plan: early speech/action, dense text, a complex graphic, layout/shot change and ending, with audio when present. Reference previews include the defining treatment and a difficult transfer case; compare against timecoded sample examples. Include full-size stills for type/framing checks. Use the final media/timeline. Review normal-speed motion and, where audio exists, listen and check sync. Static screenshots cannot certify motion or sound.
+
+Include the middle of longer explanatory graphics to expose frozen-card treatment, not only entrances/exits. Review source-specific meaningful evolution and graphic transitions while narration stays continuous. For portrait presenter scenes inspect lower source/silhouette and upper animation in each requested composition; for Cutout include moving arms/hair over the actual full-canvas background and safe transparent gaps, checking contrast. Still-frame and end-to-end decode checks cannot replace that motion/occlusion review.
 
 If rendering fails, isolate the smallest failing frame range. Check missing assets/fonts, decode errors, failed asynchronous loading, unsupported browser APIs and memory. Lower concurrency or use a compatible intermediate where justified; do not alter frame rate or truncate narration to conceal failure. Keep diagnostic logs outside the skill install. Recheck repaired intervals and their boundaries.
 

@@ -1,5 +1,7 @@
 # Transcription, semantic cues, and frame synchronization
 
+Use speech recognition/alignment only where dialogue exists and the edit needs it. For silent, music-led or nonverbal scenes use reviewed shot/action/interface events and supplied text; do not invent a transcript or require a speech model. Mixed material uses the appropriate evidence per segment. Source timestamps and the single output clock still apply.
+
 ## Establish the clock
 
 Choose the source timeline origin and selected audio stream before extraction. Preserve the mapping between audio samples, source presentation timestamps, and output time. Let `P0` be the source timestamp at composition time zero and `A0` the source timestamp of the first extracted audio sample. A word reported at `t_asr` seconds maps to `t_output = t_asr + A0 - P0` for an unchanged timeline. Record any additional known delay explicitly. Test the mapping at the beginning, middle and end; do not blindly reset streams with different start times independently.
@@ -25,5 +27,7 @@ Choose `N = ceil(D * F)` for the required preserved timeline duration `D`, inclu
 Use one cue ledger with `id`, `sourceId`, `wordIds`, `startFrame`, `endFrame`, `layer`, `assetId`, `layout`, and timing confidence. Validate bounds, missing assets, unintended layer collisions and caption ordering before rendering. A Remotion sequence's duration is `endFrame - startFrame`; local animation time differs from absolute composition time. Share boundary frames between adjacent captions instead of independently rounding them into accidental overlaps. Apply fades within planned intervals.
 
 For explicitly authorized trims or rearrangements, maintain piecewise source-to-output mappings and remap transcript and cues through them. Never reuse original timestamps after a cut without mapping. Such edits override the default continuity mode only for the authorized scope.
+
+For each edited segment retain source ID, source in/out, output in/out, speed, audio selection and the reason/authority for inclusion or removal. Account for transition overlap and multi-source continuity. A shorter/highlights/montage request can establish this authority; reference shot rhythm alone does not. Validate every preserved dialogue interval or, for permitted selections, the exact reviewed words/events retained, without misleading joins. Recognition VAD is not an undocumented edit list.
 
 Sources: [WhisperX](https://github.com/m-bain/whisperX), [whisper.cpp](https://github.com/ggml-org/whisper.cpp), [Remotion sequences](https://www.remotion.dev/docs/sequence).

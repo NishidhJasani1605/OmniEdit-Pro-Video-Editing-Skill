@@ -2,6 +2,8 @@
 
 Cutout means separating a person's silhouette from the background, not a rectangular crop of their face. This file provides a workflow the executing agent implements in the editing workspace; it ships no processing code or model. Do not claim that arbitrary footage can be isolated accurately by a simple crop command.
 
+The visible foreground is **only the actual person**. Do not place a square/rectangular image, backing card, frame, filled mask background or reserved rectangular empty area around the extracted subject. A rectangular alpha intermediate is normal storage; every non-subject pixel must remain transparent when composited. The full-canvas graphic background continues behind the person and through all real transparent negative space, including gaps inside the person's bounding box.
+
 ## Choose from the actual footage and installed tools
 
 1. Reuse a trustworthy user-supplied alpha video or mask sequence, verifying exact source/timestamp correspondence and edges.
@@ -19,12 +21,20 @@ Maintain temporal state across contiguous video chunks when the engine needs it;
 
 Keep a mask/foreground intermediate with real alpha, using a locally supported format such as PNG sequence, appropriate VP9 alpha WebM or ProRes 4444. Verify alpha through the actual decoder/compositor, including on bright and dark backgrounds. H.264 MP4 is not the transparent intermediate; it can be the final opaque composite. Account for straight versus premultiplied alpha, edge color spill and dark/bright halos. Export quality settings improve encoding, not a defective segmentation boundary.
 
+For a portrait/Reel place the silhouette lower with primary explanation above, as in [Compositions](editing-styles.md). Size from real body/gesture detail, not a fixed square or 50/50 divider. Let hands/hair extend naturally and reflow graphics around them. Do not hide body parts to keep the foreground below a hard boundary. In horizontal work choose placement from that scene while keeping the same unboxed alpha treatment.
+
+Plan occupied space from the actual time-varying alpha, not just a face detector or bounding rectangle. A modest feather/safety margin may protect hair and gestures; it must not expand into an opaque panel or exclude the whole lower canvas. Animate the full background behind the silhouette. Put labels in safe transparent gaps only when their complete display interval remains readable; otherwise reflow or time them, while nonessential background graphics may pass behind the person. Check alpha/RGB/time correspondence and changing background contrast together.
+
+Choose background palette and contrast from the topic, actual source lighting, skin/hair/clothing and other protected content using [Visual planning](visual-planning.md). No automatic blue/navy background. Avoid losing green clothing against green graphics, light hair against bright surfaces or dark clothing against deep backgrounds merely to match a generic palette. Recheck separation throughout moving graphics; do not repair contrast by altering the real person's appearance.
+
 Use one original narration owner. Mute cutout/background copies so there is no echo. Verify mask, foreground and speech synchronization at the start, middle, end and scene boundaries. Never freeze, loop or regenerate a speaking presenter to conceal a processing failure.
 
 ## Quality decision
 
-Review real-time playback plus difficult frames at delivery resolution. Reject missing fingers/body regions, clipped hair, holes in clothing, crawling edges, flicker, halos, color mismatch, soft faces, and motion/sound offset. Avoid heavy erosion, feathering or beauty filters that hide defects by damaging the person.
+The job plan's Cutout review list includes three named playback backgrounds before a full render: the actual animated scene, a diagnostic light background and a diagnostic dark background. Review alpha/gesture/edge behavior on all three at delivery size and normal speed; record them separately as planned, passed, failed or not run with interval/file evidence. A general promise to "check contrast" is not that complete diagnostic plan.
 
-Try targeted repair or another available free local method. If the result still fails, save a clearly labeled preview and report the exact limitation and options (better source, user-supplied matte, further local work). Do not fall back to a paid service, change to Split/Overlay without permission, or present a failed matte as final. In All mode, continue the four independent Split/Overlay variants and report the two Cutout variants incomplete.
+Review real-time playback and difficult frames at delivery resolution on the actual moving background plus contrasting diagnostic backgrounds. Inspect a frame with hands/arms spread: correctly transparent gaps inside its bounding box must show the background, not a rectangle, and safe background graphics must continue behind/around it. Inspect the full silhouette and any safe text across motion. Reject visible rectangular backing/borders, a box-shaped matte or unnecessarily reserved box, missing fingers/body regions, clipped hair, clothing holes, crawling edges, flicker, halos, color mismatch, soft faces and sync errors. Avoid erosion, feathering or beauty filters that conceal defects by damaging the person.
+
+Try targeted repair or another available free local method. If the result still fails, save a clearly labeled preview and report the exact limitation and options (better source, user-supplied matte, further local work). Do not fall back to a paid service, change to Split/Overlay without permission, or present a failed matte as final. Continue passing independent variants from the actual requested set: unnarrowed All can complete four Split/Overlay variants with two Cutouts incomplete; horizontal-only All can complete two with one Cutout incomplete. Retain every requested row and its actual status.
 
 This guidance draws on the inspected HyperFrames local cutout workflow; it does not require HyperFrames as the composition engine. Model repositories such as [RVM](https://github.com/PeterL1n/RobustVideoMatting) are optional runtime research references, not bundled instruction skills or guaranteed solutions.

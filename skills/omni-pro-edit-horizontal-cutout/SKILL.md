@@ -4,14 +4,14 @@ description: Edit supplied videos in horizontal 16:9 Cutout layout with a locall
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "2.0.0"
+  version: "3.1.0"
 ---
 
 # omni-pro-edit-horizontal-cutout
 
 Preset selection when explicitly chosen by the user: orientation = **horizontal**; style = **cutout**. These choices are already answered. Do not ask the two selection questions unless the user explicitly clears a choice or gives an unresolved conflicting instruction.
 
-Apply these preset values only when the user explicitly invokes or selects this skill. If the host/model matched it automatically, loading this file alone does not answer the two questions: use the actual user prompt and ask for any missing choice through the shared selection rules.
+Apply these preset values only when the user explicitly invokes or selects this skill. If the host/model matched it automatically, loading this file alone does not select this preset: use the actual prompt and resolve missing choices through Reference/Auto, or Manual if explicitly requested.
 
 For an editing request, load the [shared OmniEdit Pro workflow](../omni-edit-pro/SKILL.md) and follow its selected-style, framing, speech, free/local processing, per-video team and delivery rules. Carry the preset above into that workflow; loading the shared skill does not reset choices. Resolve clear user overrides through its selection rules.
 

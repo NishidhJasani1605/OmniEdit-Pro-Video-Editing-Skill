@@ -1,10 +1,10 @@
-# Sources and integration decisions
+# Sources and integration decisions — v3.0.0
 
-Nine unique repositories were downloaded and inspected for this release on 24 October 2026. The two requested Superpowers skills share one repository, giving ten source-list entries. Revisions below identify the inspected material; this is a relevance-based selection, not a highest-stars ranking or an endorsement by upstream authors.
+The v2 foundation used nine unique repositories inspected on 24 October 2026. The two requested Superpowers skills share one repository, giving ten historical source-list entries. A bounded v3 source inspection followed on **2026-10-27**, described separately below. These are relevance-based selections, not a highest-stars ranking or an endorsement by upstream authors.
 
 The source checkouts were kept outside the distributed project. No upstream scripts were executed and no source repository is a runtime dependency. The package contains original, adapted Markdown guidance, not upstream applications, code templates, models or media.
 
-## Inspected revisions
+## Historical foundation: inspected revisions
 
 | Repository and pinned revision | Material reviewed | Contribution to this suite | Rights found |
 | --- | --- | --- | --- |
@@ -30,7 +30,26 @@ The two delegation sources are [Dispatching Parallel Agents](https://github.com/
 - **HyperFrames:** its local background-removal reference distinguishes segmentation quality from encoding quality and supports alpha intermediates. Use those principles without requiring its compositor or paid media providers. Free local matting is a runtime option, never a guarantee of perfect edges.
 - **Superpowers:** keep scoped assignments, independent parallel work, review and repair. Replace software implementation/test/Git instructions with video-specific evidence and QA. Use actual host-native agents, queue within capacity, and do not fabricate a team when the host lacks support.
 
-Two compulsory sequential questions, the preset matrix, unique batch identities, six-variant accounting, source-framing protection and the Final Output Videos promotion rule are maintained directly in this suite. No separate third-party skill is needed for those behaviors.
+The v3 Auto/Reference/Manual routing, role/reference maps, explicit permission records, Adaptive composition, preset matrix, unique source identities, six-variant accounting, source-framing protection, and checked-only Final Output Videos promotion rule are maintained directly in this suite. The v2 compulsory-question gate is replaced; Manual retains questions for missing choices. No separate third-party skill is needed for these behaviors.
+
+## Bounded v3 source inspection — 2026-10-27
+
+This inspection compared possible helpers with the requested reference-conditioned and no-reference workflow. It read the current top-level candidate instructions and selected supporting files. It did not execute candidate code, install the candidates, upload media, run a local trial, or complete a dependency audit. Search/registry adoption signals informed discovery only and do not establish safety, compatibility, or editing quality. Public documentation does not require the private research workspace to remain in this repository.
+
+| Candidate and inspected source | Assessment and integration decision |
+| --- | --- |
+| [Official Remotion guidance at 30d4553](https://github.com/remotion-dev/skills/blob/30d4553ecd46fbc5212fd0ff006ae43af522158b/skills/remotion-best-practices/SKILL.md) | The inspected `remotion-best-practices` 4.0.539 routes to specialized composition/media guides. Optional implementation guidance, not a verified creative director or reference analyzer. Its preview-first default must be scoped so OmniEdit's requested final exports are still delivered. Reachable assets/dependencies were not exhaustively inspected; no local trial was run and current rights need checking before any incorporation. No upstream prose/code is copied. |
+| [Melvynx `steal` at 4774fa4](https://github.com/Melvynx/video-agent-skills/blob/4774fa4f2601baa822fd513387202c26e4587902/skills/steal/SKILL.md) | Research inspiration for contact sheets, cut rhythm, sound/framing observations, a human-readable profile, and a comparison edit. Its engine-specific data and portrait assumptions are not OmniEdit contracts. Online download, dynamic-service, paid audio, and sibling-skill branches require separate review. Dependencies were not fully audited and no local trial was run. No installation recommendation or mandatory dependency; no upstream implementation is imported. |
+
+The current Melvynx skill is `steal`; the older `video-steal` registry entry describes a different historical workflow. The inspected [supporting lessons](https://github.com/Melvynx/video-agent-skills/blob/4774fa4f2601baa822fd513387202c26e4587902/skills/steal/references/learnings.md) contain creator-specific preferences that can conflict with matching a reference's audible treatment. OmniEdit uses evidence and the user's constraints instead of adopting those preferences as universal rules. Registry badges alone were not treated as a safety verdict.
+
+The measurement limitations are our assessment: sparse contact sheets can miss brief events; scene thresholds need visual confirmation; spectrogram appearance does not establish exact sound identity; and a finished reference does not expose its original settings. OmniEdit therefore separates measured observations, inferences, unknowns, confidence, and intentional adaptations.
+
+Optional underlying tools may help execution without adding more skill coordinators: [PySceneDetect's official documentation](https://www.scenedetect.com/docs/latest/) covers scene detection and scene/frame outputs; [faster-whisper's official repository](https://github.com/SYSTRAN/faster-whisper) describes local speech transcription, word timestamps, and optional voice-activity filtering. Scene candidates and transcript timing still need review. Existing equivalents can be reused. Neither tool was installed or trialed in this bounded inspection.
+
+## Research and authoring helpers
+
+`find-skills` supported discovery; `agent-skill-stack` assessed fit, overlap, and conflicts; `anthropic-skill-creator` supplied the baseline/comparison/revision method; `reverse-engineer-anything` routed readable source instructions to ordinary inspection rather than video-style extraction; `arena` compared four alternative proposals through two judged rounds. They are improvement-time roles, not runtime dependencies or evidence of real-video performance. See [IMPLEMENTATION.md](IMPLEMENTATION.md) and [VALIDATION.md](VALIDATION.md).
 
 ## Attribution and separate rights
 
