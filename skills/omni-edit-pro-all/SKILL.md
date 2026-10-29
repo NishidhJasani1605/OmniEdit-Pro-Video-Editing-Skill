@@ -1,13 +1,13 @@
 ---
-name: omni-pro-edit-all
+name: omni-edit-pro-all
 description: "Use when all six OmniEdit Pro preset variants are requested for each source video: horizontal and vertical, each in Split, Cutout and Overlay."
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.2"
+  version: "3.2.0"
 ---
 
-# omni-pro-edit-all
+# omni-edit-pro-all
 
 Preset selection when explicitly chosen by the user: **both orientations and all three styles**, producing six variants per source video. Both selection questions are already answered for that explicit selection. Preserve any clear user narrowing; never count missing Cutout variants as a complete six-output request.
 

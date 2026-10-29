@@ -1,13 +1,13 @@
 ---
-name: omni-pro-edit-vertical-cutout
+name: omni-edit-pro-vertical-cutout
 description: Edit supplied videos in vertical 9:16 Cutout layout with a locally isolated speaker over graphics. Direct OmniEdit Pro preset with per-video teams.
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.2"
+  version: "3.2.0"
 ---
 
-# omni-pro-edit-vertical-cutout
+# omni-edit-pro-vertical-cutout
 
 Preset selection when explicitly chosen by the user: orientation = **vertical**; style = **cutout**. These choices are already answered. Do not ask the two selection questions unless the user explicitly clears a choice or gives an unresolved conflicting instruction.
 

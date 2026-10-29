@@ -1,13 +1,13 @@
 ---
-name: omni-pro-edit-vertical-split
+name: omni-edit-pro-vertical-split
 description: Edit supplied videos in vertical 9:16 Split layout with speaker and explanations. Direct OmniEdit Pro preset with per-video teams.
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.2"
+  version: "3.2.0"
 ---
 
-# omni-pro-edit-vertical-split
+# omni-edit-pro-vertical-split
 
 Preset selection when explicitly chosen by the user: orientation = **vertical**; style = **split**. These choices are already answered. Do not ask the two selection questions unless the user explicitly clears a choice or gives an unresolved conflicting instruction.
 

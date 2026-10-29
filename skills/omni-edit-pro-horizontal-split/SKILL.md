@@ -1,15 +1,15 @@
 ---
-name: omni-pro-edit-horizontal-cutout
-description: Edit supplied videos in horizontal 16:9 Cutout layout with a locally isolated speaker over graphics. Direct OmniEdit Pro preset with per-video teams.
+name: omni-edit-pro-horizontal-split
+description: Edit supplied videos in horizontal 16:9 Split layout with speaker and explanations. Direct OmniEdit Pro preset with per-video teams.
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.2"
+  version: "3.2.0"
 ---
 
-# omni-pro-edit-horizontal-cutout
+# omni-edit-pro-horizontal-split
 
-Preset selection when explicitly chosen by the user: orientation = **horizontal**; style = **cutout**. These choices are already answered. Do not ask the two selection questions unless the user explicitly clears a choice or gives an unresolved conflicting instruction.
+Preset selection when explicitly chosen by the user: orientation = **horizontal**; style = **split**. These choices are already answered. Do not ask the two selection questions unless the user explicitly clears a choice or gives an unresolved conflicting instruction.
 
 Apply these preset values only when the user explicitly invokes or selects this skill. If the host/model matched it automatically, loading this file alone does not select this preset: use the actual prompt and resolve missing choices through Reference/Auto, or Manual if explicitly requested.
 

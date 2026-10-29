@@ -1,12 +1,12 @@
-# OmniEdit Pro 3.1.2 implementation
+# OmniEdit Pro 3.2.0 implementation
 
-Version 3.1.2 strengthens caption stability, resolution-scaled presenter clearance, measured heading alignment, text rendering/encoding evidence and post-render repair. It retains v3.1.1's text containment, verified spelling and independent review, plus v3.1.0's portrait layout, full-duration meaningful graphic development and source-specific art direction. The deliverable remains an instruction-only suite with nine entries. Markdown directs an agent to inspect, plan, execute, compare and review; it does not itself decode or render video.
+Version 3.2.0 unifies all commands under `omni-edit-pro` and merges the duplicate main wrapper into the shared core. The existing production contract from 3.1.2 strengthens caption stability, resolution-scaled presenter clearance, measured heading alignment, text rendering/encoding evidence and post-render repair. It retains v3.1.1's text containment, verified spelling and independent review, plus v3.1.0's portrait layout, full-duration meaningful graphic development and source-specific art direction. The deliverable remains an instruction-only suite with eight entries. Markdown directs an agent to inspect, plan, execute, compare and review; it does not itself decode or render video.
 
 ## Release contract
 
-| Concern | v3.1.2 behavior |
+| Concern | v3.2.0 behavior |
 | --- | --- |
-| Main and original compatible entry | Reference when a sample is designated; Auto otherwise; Manual when explicitly requested |
+| Main entry and shared core | Reference when a sample is designated; Auto otherwise; Manual when explicitly requested |
 | Six direct presets | Preserve their named 16:9/9:16 and Split/Cutout/Overlay defaults when explicitly selected |
 | All | Both orientations × the existing three compositions, six per source before clear user narrowing/override |
 | Adaptive | Additional main-workflow composition for scene-specific/non-presenter treatment and native aspect ratios; not added to All |
@@ -22,10 +22,10 @@ Version 3.1.2 strengthens caption stability, resolution-scaled presenter clearan
 | Art direction | Independently inspect and direct each source for topic, scenes, subject/clothing, lighting and contrast; no automatic blue/navy or cloned animation template |
 | Explicit user choices | Override only the named dimensions; unresolved contradictions need clarification |
 | Default editorial permission | Preserve original dialogue, order, pauses, duration, timing, lip-sync, and framing |
-| Package | Nine entries, 20 core reference files and 38 Markdown/license files; generated processing code and media belong to the later editing workspace |
+| Package | Eight entries, 20 core reference files and 36 Markdown/license files; generated processing code and media belong to the later editing workspace |
 | Dependencies | No mandatory external skills, hosted processing, paid providers, or global orchestration library |
 
-The v3.0 major release removed the v2 compulsory wide/tall and three-style question gate. Version 3.1.0 preserved that routing and the same entry names while changing default portrait layout and strengthening motion, Cutout occupancy and per-source direction. Version 3.1.1 added strict text/face checks and the dedicated reviewer; version 3.1.2 retains those features and addresses caption jitter, alignment and export sharpness. Manual retains questions for genuinely missing choices. Updating requires matching 3.1.2 core and wrappers from one reviewed revision, including `video-reviewer.md`; local changes are not automatically published remotely. See [INSTALL.md](INSTALL.md).
+The v3.0 major release removed the v2 compulsory wide/tall and three-style question gate. Version 3.1.0 preserved that routing and the same entry names while changing default portrait layout and strengthening motion, Cutout occupancy and per-source direction. Version 3.1.1 added strict text/face checks and the dedicated reviewer; version 3.1.2 retains those features and addresses caption jitter, alignment and export sharpness. Manual retains questions for genuinely missing choices. Updating requires matching 3.2.0 core and wrappers from one reviewed revision, including `video-reviewer.md`; local changes are not automatically published remotely. See [INSTALL.md](INSTALL.md).
 
 Manual offers horizontal, vertical, or source-original shape and Adaptive/Split/Cutout/Overlay composition. It waits for missing answers before media-based inference. Auto/Reference may use preliminary analysis to select their treatment and output settings.
 
@@ -145,6 +145,6 @@ Historical v2 and v3.0 evidence is summarized in [VALIDATION.md](VALIDATION.md).
 
 Historical v3.1.0 package checks passed within their scope: nine entries, consistent 3.1.0 metadata/licenses, 174 local file links, two heading links, list-only discovery and a matching 37-file staged copy with no coding/media additions. Seven paired paper scenarios initially recorded 26/28 checks for that draft and 16/28 for 3.0. Two omitted planned review gates were made explicit and the two affected cases passed 8/8 focused checks; original failures and separate retest scope are preserved. Independent source review and its focused follow-up found no standing substantive contradictions in that version. These results are historical and are not v3.1.1 validation results.
 
-Historical v3.1.1 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md), without being carried forward as 3.1.2 results. Current v3.1.2 evidence appears in that document's current section. No actual user-supplied video or visual-quality benchmark was completed during authoring. Instruction and package checks cannot establish correct caption stability, placement, spelling, badge fit, heading alignment, decoded text sharpness, portrait geometry, motion, matte quality or audio fidelity in a future export; each requires the real-output acceptance procedure above.
+Historical v3.1.1 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md), without being carried forward as 3.1.2 results. Historical v3.1.2 evidence is retained there; current v3.2.0 naming and installation checks have their own section. No actual user-supplied video or visual-quality benchmark was completed during authoring. Instruction and package checks cannot establish correct caption stability, placement, spelling, badge fit, heading alignment, decoded text sharpness, portrait geometry, motion, matte quality or audio fidelity in a future export; each requires the real-output acceptance procedure above.
 
 A future quality comparison must freeze cases, rubric, permissions, source, host/model, tool versions, and resource limits before execution. Test Reference and Auto separately with held-out sources. Compare the same prompt for routing, then give v2 equivalent explicit choices for a fair media-quality comparison. Review hard preservation/export checks separately from blinded reference-fit/content-suitability preferences and hands-on repair time. Negative or undersized results require revision or narrower claims; working routing alone does not prove better video quality.

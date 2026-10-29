@@ -1,6 +1,6 @@
 # Agent compatibility and global installation
 
-The host conventions below were checked for the earlier release against official documentation and Skills CLI 1.7.2 on 18 October 2026. They are historical compatibility notes, not a claim that this nine-entry suite has been runtime-tested in every host. Directory support is host-specific; an installed file and a successful CLI listing do not prove that a particular app has loaded it. `~` below means the current user's home, not a project folder.
+The host conventions below were checked for the earlier release against official documentation and Skills CLI 1.7.2 on 18 October 2026. They are historical compatibility notes, not a claim that this eight-entry suite has been runtime-tested in every host. Directory support is host-specific; an installed file and a successful CLI listing do not prove that a particular app has loaded it. `~` below means the current user's home, not a project folder.
 
 ## Install without changing a project
 
@@ -8,10 +8,10 @@ This skill needs only Markdown files and its license at installation time. CLI i
 
 Before installing, identify the exact host and inspect both its native skill directory and any shared directory it reads for existing core and preset names. Also run a global skills listing when available. Compare existing files and back up local changes; do not replace a conflicting installation without the user's update authorization. The CLI can overwrite a same-name skill and can skip prompts when it detects an agent environment. Omitting `--yes` alone is not a conflict guarantee.
 
-For the complete same-release suite or selected presets, follow the repository INSTALL.md. Every preset depends on the sibling `omni-edit-pro` core. This local-checkout command installs the core and main entry at user scope:
+For the complete same-release suite or selected presets, follow the repository INSTALL.md. Every preset depends on the sibling `omni-edit-pro` main entry and shared core. This local-checkout command installs the main entry at user scope:
 
 ```sh
-npx skills add . --skill omni-edit-pro omni-pro-edit --global
+npx skills add . --skill omni-edit-pro --global
 ```
 
 Select the intended host when prompted, or add `--agent` with a verified ID below. Prefer an explicit agent: CLI 1.7.2's automatic selection installed shared/Claude copies in our isolated test but also printed a PromptScript global-install failure while exiting zero. Read the installation summary rather than relying only on the exit code. Do not use `--all`. Use `--copy` if filesystem links are unsuitable. In PowerShell, `npx.cmd` can avoid a blocked `npx.ps1` without changing execution policy. Pin `skills@1.7.2` in place of `skills` when reproducing this release's tests.
@@ -23,7 +23,7 @@ npx skills add . --list
 npx skills list --global
 ```
 
-The installed core must contain `SKILL.md`, `LICENSE`, and its complete `references/` subtree. Each installed preset must contain its own `SKILL.md` and `LICENSE`; its relative link to the sibling core must resolve. Install all nine skill folders for the complete suite, or the core plus selected wrappers. Compare the complete subtree with the downloaded revision, not just the entrypoint. Reload/restart the host if necessary, inspect its skill picker/list, and invoke the skill with a harmless planning-only prompt from an unrelated directory. Check for duplicate names in project-level folders if discovery is ambiguous.
+The installed core must contain `SKILL.md`, `LICENSE`, and its complete `references/` subtree. Each installed preset must contain its own `SKILL.md` and `LICENSE`; its relative link to the sibling core must resolve. Install all eight skill folders for the complete suite, or the core plus selected wrappers. Compare the complete subtree with the downloaded revision, not just the entrypoint. Reload/restart the host if necessary, inspect its skill picker/list, and invoke the skill with a harmless planning-only prompt from an unrelated directory. Check for duplicate names in project-level folders if discovery is ambiguous.
 
 ## Hosts and invocation
 

@@ -4,7 +4,7 @@
 
 Give the main skill your footage and an editing reference for **Reference** mode. Give it footage without a reference for **Auto** mode. It inspects the media, plans a treatment, tests a representative passage, and reviews each requested export. Explicit presets and **Manual** mode remain available when you want to choose the format and composition yourself.
 
-**Version:** 3.1.2 · **Package:** Markdown instructions and license notices · **License:** MIT
+**Version:** 3.2.0 · **Package:** Markdown instructions and license notices · **License:** MIT
 
 This repository supplies the workflow, not an editor application. A capable agent uses actual local media tools and may create processing code in your editing workspace. The package contains no processing scripts, model weights, media, or dependency trees. No additional skill is a mandatory runtime dependency.
 
@@ -22,17 +22,19 @@ Download or clone the repository and read INSTALL.md and
 skills/omni-edit-pro/references/agent-compatibility.md. Detect this agent's
 supported user-level skill directory; use its documented global installation
 method rather than a project-local folder. Preserve existing local changes.
+When updating an earlier release, follow INSTALL.md's migration steps to retire
+obsolete suite names after backing up and verifying their replacements.
 
-Install all nine skill folders from the same repository revision as siblings:
-omni-edit-pro, omni-pro-edit, omni-pro-edit-all,
-omni-pro-edit-horizontal-split, omni-pro-edit-horizontal-cutout,
-omni-pro-edit-horizontal-overlay, omni-pro-edit-vertical-split,
-omni-pro-edit-vertical-cutout, omni-pro-edit-vertical-overlay.
+Install all eight skill folders from the same repository revision as siblings:
+omni-edit-pro, omni-edit-pro-all,
+omni-edit-pro-horizontal-split, omni-edit-pro-horizontal-cutout,
+omni-edit-pro-horizontal-overlay, omni-edit-pro-vertical-split,
+omni-edit-pro-vertical-cutout, omni-edit-pro-vertical-overlay.
 
 Include every SKILL.md, the complete shared references folder, and licenses.
 Verify installed files and wrapper-to-core links. Check agent discovery where
 available, and tell me the installed location, version, how to invoke
-omni-pro-edit in this agent, and whether a reload is needed. Report any check
+omni-edit-pro in this agent, and whether a reload is needed. Report any check
 you could not perform. Install the instructions only; video tools, models and
 an actual edit belong to a later video-editing request.
 ```
@@ -48,7 +50,7 @@ agents without local installation support can read the workflow for planning.
 
 1. Install the complete suite using [INSTALL.md](INSTALL.md).
 2. Supply accessible source files and an editing workspace. Label any sample as an **editing reference**, and identify which source it applies to.
-3. Select `omni-pro-edit` and use either request below, or select a direct preset.
+3. Select `omni-edit-pro` and use either request below, or select a direct preset.
 4. The agent records input roles, permissions, output settings, and one job per source. References do not create extra edit jobs.
 5. Checked exports go in **Final Output Videos**, separated by source. Failed or unreviewed candidates stay in Working Files.
 
@@ -103,24 +105,23 @@ An explicit request for a shorter edit, highlights, or a montage supplies editin
 
 ## Choose a skill
 
-The nine entry names are unchanged in v3.1.2. Use your host's skill picker or supported command syntax. Codex supports `$omni-pro-edit` or its picker; slash commands depend on the host.
+All eight entry names use `omni-edit-pro` in v3.2.0. Use your host's skill picker or supported command syntax. Codex supports `$omni-edit-pro` or its picker; slash commands depend on the host.
 
 | Skill | Default output when explicitly selected |
 | --- | --- |
-| [`omni-pro-edit`](skills/omni-pro-edit/SKILL.md) | Reference when a sample is designated; Auto otherwise; Manual on request |
-| [`omni-pro-edit-horizontal-split`](skills/omni-pro-edit-horizontal-split/SKILL.md) | Horizontal 16:9 Split |
-| [`omni-pro-edit-horizontal-cutout`](skills/omni-pro-edit-horizontal-cutout/SKILL.md) | Horizontal 16:9 Cutout |
-| [`omni-pro-edit-horizontal-overlay`](skills/omni-pro-edit-horizontal-overlay/SKILL.md) | Horizontal 16:9 Overlay |
-| [`omni-pro-edit-vertical-split`](skills/omni-pro-edit-vertical-split/SKILL.md) | Vertical 9:16 Split |
-| [`omni-pro-edit-vertical-cutout`](skills/omni-pro-edit-vertical-cutout/SKILL.md) | Vertical 9:16 Cutout |
-| [`omni-pro-edit-vertical-overlay`](skills/omni-pro-edit-vertical-overlay/SKILL.md) | Vertical 9:16 Overlay |
-| [`omni-pro-edit-all`](skills/omni-pro-edit-all/SKILL.md) | Both orientations × Split, Cutout, Overlay: six versions per source |
-| [`omni-edit-pro`](skills/omni-edit-pro/SKILL.md) | Compatible original entry and shared v3.1.2 workflow |
+| [`omni-edit-pro`](skills/omni-edit-pro/SKILL.md) | Reference when a sample is designated; Auto otherwise; Manual on request |
+| [`omni-edit-pro-horizontal-split`](skills/omni-edit-pro-horizontal-split/SKILL.md) | Horizontal 16:9 Split |
+| [`omni-edit-pro-horizontal-cutout`](skills/omni-edit-pro-horizontal-cutout/SKILL.md) | Horizontal 16:9 Cutout |
+| [`omni-edit-pro-horizontal-overlay`](skills/omni-edit-pro-horizontal-overlay/SKILL.md) | Horizontal 16:9 Overlay |
+| [`omni-edit-pro-vertical-split`](skills/omni-edit-pro-vertical-split/SKILL.md) | Vertical 9:16 Split |
+| [`omni-edit-pro-vertical-cutout`](skills/omni-edit-pro-vertical-cutout/SKILL.md) | Vertical 9:16 Cutout |
+| [`omni-edit-pro-vertical-overlay`](skills/omni-edit-pro-vertical-overlay/SKILL.md) | Vertical 9:16 Overlay |
+| [`omni-edit-pro-all`](skills/omni-edit-pro-all/SKILL.md) | Both orientations × Split, Cutout, Overlay: six versions per source |
 
 **A direct preset:**
 
 ```text
-/omni-pro-edit-horizontal-split
+/omni-edit-pro-horizontal-split
 Keep the original video on the left and explain the ideas with diagrams on the right.
 Preserve the person's full framing and all dialogue.
 ```
@@ -128,7 +129,7 @@ Preserve the person's full framing and all dialogue.
 **Manual selection:**
 
 ```text
-/omni-pro-edit
+/omni-edit-pro
 Manual mode. Edit these two videos separately.
 Ask me for any missing format and composition choices.
 ```
@@ -136,7 +137,7 @@ Ask me for any missing format and composition choices.
 **Every existing preset:**
 
 ```text
-/omni-pro-edit-all
+/omni-edit-pro-all
 Make all six versions of each source. Use sample.mp4 only as an editing reference.
 Save checked exports in Final Output Videos.
 ```
@@ -231,23 +232,27 @@ Only reviewed candidates are promoted to **Final Output Videos**. Missing audiov
 
 ## Install and update
 
-Use the [copy-and-paste global installation prompt](#install-globally-copy-and-paste) above for installation from GitHub. The complete package has nine entries, 20 shared references and 38 Markdown/license files. For updates, preserve local edits and install the core and wrappers together from one reviewed revision. Follow [INSTALL.md](INSTALL.md) for manual copying, migration and verification.
+Use the [copy-and-paste global installation prompt](#install-globally-copy-and-paste) above for installation from GitHub. The complete package has eight entries, 20 shared references and 36 Markdown/license files. For updates, preserve local edits and install the core and wrappers together from one reviewed revision. Follow [INSTALL.md](INSTALL.md) for manual copying, migration and verification.
 
 Manual copying needs no Node.js or Python. From a reviewed local checkout, an optional Skills CLI command for a verified Codex target is:
 
 ```sh
-npx skills add . --global --agent codex --skill omni-edit-pro omni-pro-edit omni-pro-edit-horizontal-split omni-pro-edit-horizontal-cutout omni-pro-edit-horizontal-overlay omni-pro-edit-vertical-split omni-pro-edit-vertical-cutout omni-pro-edit-vertical-overlay omni-pro-edit-all
+npx skills add . --global --agent codex --skill omni-edit-pro omni-edit-pro-horizontal-split omni-edit-pro-horizontal-cutout omni-edit-pro-horizontal-overlay omni-edit-pro-vertical-split omni-edit-pro-vertical-cutout omni-edit-pro-vertical-overlay omni-edit-pro-all
 ```
 
 Verify the selected revision and CLI/runtime requirements. Use `npx.cmd` in PowerShell if script policy blocks `npx.ps1`. A smaller installation must include the shared core plus each chosen wrapper. See [installation and migration](INSTALL.md) and [host compatibility](skills/omni-edit-pro/references/agent-compatibility.md).
 
-**Migrating from v2:** the main entry no longer requires two selection answers before inspecting media. Select Manual to retain question-led selection, or use an explicit preset for stable format/composition defaults. Update core and wrappers together; never mix releases.
+**Migrating to v3.2.0:** every command now uses the `omni-edit-pro` order. The main entry and shared core are one folder, so the suite has eight unique entries rather than nine. Back up existing installations, migrate local edits, replace the former preset folders with the names above, and remove obsolete suite entries from active discovery after verifying the replacement. All editing modes, presets, quality rules and output counts remain available. See [migration instructions](INSTALL.md#migrate-from-earlier-releases).
 
-**Migrating from v3.0:** Reference/Auto/Manual routing, entry names and All's six default variants stay available. The v3.1 portrait placement, full-duration motion, Cutout negative-space use and per-source art direction are retained. Explicit placement, stillness and palette overrides remain authoritative. Update all installed entries from one 3.1.2 revision.
+Earlier behavior changes are retained:
 
-**Migrating from v3.1.0:** retain the same nine entries and update the complete core and wrappers together, including the new `references/video-reviewer.md`. Version 3.1.1 makes middle-channel captions, every-frame face clearance, padded text containment, evidence-backed spelling and independent zero-known-defect release review mandatory. It preserves existing routing, motion, framing and source permissions.
+**From v2:** the main entry no longer requires two selection answers before inspecting media. Select Manual to retain question-led selection, or use an explicit preset for stable format/composition defaults. Update core and wrappers together; never mix releases.
 
-**Migrating from v3.1.1:** update all installed entries and the complete core to 3.1.2. The package stays at 38 files and 20 references. Existing routing, source preservation, Cutout geometry and independent review remain; this revision adds stable phrase captions, scaled headroom, measured heading centering, sharpness/encoding evidence and explicit post-render repair checks.
+**From v3.0:** Reference/Auto/Manual routing and All's six default variants stay available. The v3.1 portrait placement, full-duration motion, Cutout negative-space use and per-source art direction are retained. Explicit placement, stillness and palette overrides remain authoritative. Use the current command names above.
+
+**From v3.1.0:** retain the complete core and wrappers, including `references/video-reviewer.md`. Version 3.1.1 introduced middle-channel captions, every-frame face clearance, padded text containment, evidence-backed spelling and independent zero-known-defect release review. These rules remain mandatory.
+
+**From v3.1.1:** stable phrase captions, scaled headroom, measured heading centering, sharpness/encoding evidence and explicit post-render repair checks introduced in v3.1.2 remain mandatory.
 
 ## Sources and validation
 
@@ -263,14 +268,14 @@ Historical v2 checks covered nine entries, same-release links, installation stag
 
 **Historical v3.1.0 checks:** nine discovered entries at 3.1.0, 37 Markdown/license files, 174 resolved file links, two heading links, matching licenses and a byte-identical staged copy. Seven paired paper scenarios initially recorded 26/28 checks for that draft versus 16/28 for 3.0; two planning omissions were repaired and both affected cases passed focused retests (8/8). The original failures remain recorded separately. Independent source review found no standing substantive contradictions in that version. These counts and results do not certify v3.1.1.
 
-Historical v3.1.1 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md); they do not certify the 3.1.2 changes. For current v3.1.2 checks, use that document's current evidence section. **No actual user-supplied video has been edited or fully reviewed during authoring.** Strict written rules and zero known defects at release do not guarantee that an unobserved defect cannot exist. Caption stability, geometry, spelling, badge fit, text sharpness, reference fidelity, matte quality, useful motion and audio fidelity require actual output review for each later video.
+Historical v3.1.1 and v3.1.2 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md). For current v3.2.0 naming and migration checks, use that document's current evidence section. **No actual user-supplied video has been edited or fully reviewed during authoring.** Strict written rules and zero known defects at release do not guarantee that an unobserved defect cannot exist. Caption stability, geometry, spelling, badge fit, text sharpness, reference fidelity, matte quality, useful motion and audio fidelity require actual output review for each later video.
 
 ## Project guide
 
 | Document | Purpose |
 | --- | --- |
 | [INSTALL.md](INSTALL.md) | Same-release installation, updates, migration, and host discovery |
-| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.1.2 design, execution contract, and authoring roles |
+| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.2.0 design, execution contract, and authoring roles |
 | [ATTRIBUTIONS.md](ATTRIBUTIONS.md) | Pinned sources, rights findings, and research boundaries |
 | [VALIDATION.md](VALIDATION.md) | Historical evidence, current checks, and unrun media tests |
 | [Shared SKILL.md](skills/omni-edit-pro/SKILL.md) | Production instructions used by every entry |

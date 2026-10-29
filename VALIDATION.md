@@ -1,8 +1,23 @@
-# Validation evidence — OmniEdit Pro 3.1.2
+# Validation evidence — OmniEdit Pro 3.2.0
 
 This document separates historical package checks, v3 instruction tests, a bounded synthetic media check, and future media benchmarks. **No actual user-supplied source video has been edited or rendered during this authoring task.** Instruction tests and proposal scores cannot establish audiovisual quality or reference fidelity.
 
-## Current 3.1.2 changes — 2026-10-29
+## Current 3.2.0 naming revision — 2026-10-29
+
+The main command and every preset now use the `omni-edit-pro` word order. The existing shared core is the main entry, and the former duplicate generic wrapper is merged into it. The current suite has eight unique entries: main/core, six orientation/composition presets and All. There are twenty shared references and thirty-six Markdown/license files. This changes naming and installation structure, not editing behavior or the number of video outputs.
+
+The pre-change 3.1.2 package at commit `602c751` had mixed naming: the shared core used the intended word order, while the separate generic wrapper and seven presets used the reversed order. The generic wrapper delegated to that same core without a unique fixed composition or output set. Manual inspection confirmed that the core already implements Reference, Auto, Manual, Adaptive, source preservation, the seven production requirements and independent review. Consolidating the duplicate therefore retains those behaviors. An attempted delegated baseline audit failed because of a host usage limit; no independent-agent result is claimed for this rename.
+
+Naming and migration checks for this revision:
+
+- The expected entry set is exactly `omni-edit-pro`, `omni-edit-pro-all` and the six `omni-edit-pro-<orientation>-<composition>` presets. Frontmatter names match their folders, every entry uses 3.2.0, each license matches the repository license, and all seven presets resolve the shared core.
+- The renamed preset instruction bodies match the prior committed bodies exactly after substituting the command prefix and release version. Selection routes retain the same generic, direct-preset and narrowed-All output sets. The main/core consolidation changes its introduction, not its production rules.
+- The suite contains thirty-six instruction/license files and twenty shared references. Repository Markdown links/anchors/fences, install-command uniqueness and whitespace checks pass. No reversed-order command remains in current repository Markdown or active suite folder names. Historical counts below remain attached to their actual older releases.
+- The installed 3.1.2 suite was compared with commit `602c751` before replacement; no content customization or inventory difference was found. Its thirty-eight files were backed up to `C:/Users/nishi/.codex/skill-backups/omni-edit-pro-20261029-v3.1.2-before-v3.2.0`. The eight obsolete active folders were verified against that backup, then moved into its `retired-active-folders` subfolder outside discovery. The new eight-entry installation matches all thirty-six repository files byte-for-byte and exposes only the intended namespace on disk.
+
+No actual video processing is part of this naming update. Host UI refresh and runtime invocation were not tested; filesystem and frontmatter checks cannot prove that an already-open host has refreshed its discovery list. Publication is verified separately through Git remote state when pushed.
+
+## Historical 3.1.2 changes — 2026-10-29
 
 This update adds the new reported failure cases to the shared production contract: moving-window caption jitter and sentence bleed, highlight-induced text reflow, off-center headings, jagged/compressed typography, measured portrait headroom, and ambiguous audio-preservation claims. The seven requirements and autonomous post-render evidence/repair loop are instructions for later edits. They cannot guarantee that no future video will contain an undiscovered defect. No source video was processed or rendered for this authoring task; the supplied incident summary is reported history, not a newly inspected media result.
 

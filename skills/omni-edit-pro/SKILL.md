@@ -4,12 +4,12 @@ description: Use when editing supplied videos, matching the editing treatment of
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.2"
+  version: "3.2.0"
 ---
 
 # OmniEdit Pro
 
-Turn supplied footage into coherent, verified edits. This is the shared implementation for `omni-pro-edit`, the six orientation/composition presets, `omni-pro-edit-all`, and this compatible original entry. Keep one primary workflow; research, authoring and discovery skills are not production dependencies. This package contains Markdown instructions and license notices only. Generate any needed processing code, masks, dependencies and media in the user's editing workspace, never in an installed skill.
+Turn supplied footage into coherent, verified edits. `omni-edit-pro` is the main entry and shared implementation for the six orientation/composition presets and `omni-edit-pro-all`. The suite has eight unique entries, all using the same `omni-edit-pro` naming order. Keep one primary workflow; research, authoring and discovery skills are not production dependencies. This package contains Markdown instructions and license notices only. Generate any needed processing code, masks, dependencies and media in the user's editing workspace, never in an installed skill.
 
 ## Resolve intent, roles and authority
 

@@ -28,14 +28,14 @@ Resolve shape from a clear user destination/ratio, then preset, then suitable re
 
 | Explicit entry | Default output set |
 | --- | --- |
-| `omni-pro-edit`, `omni-edit-pro` | One chosen output per source; Reference/Auto with Adaptive available |
-| `omni-pro-edit-horizontal-split` | horizontal 16:9, split |
-| `omni-pro-edit-horizontal-cutout` | horizontal 16:9, cutout |
-| `omni-pro-edit-horizontal-overlay` | horizontal 16:9, overlay |
-| `omni-pro-edit-vertical-split` | vertical 9:16, split |
-| `omni-pro-edit-vertical-cutout` | vertical 9:16, cutout |
-| `omni-pro-edit-vertical-overlay` | vertical 9:16, overlay |
-| `omni-pro-edit-all` | both orientations × split/cutout/overlay: six per source |
+| `omni-edit-pro` | One chosen output per source; Reference/Auto with Adaptive available |
+| `omni-edit-pro-horizontal-split` | horizontal 16:9, split |
+| `omni-edit-pro-horizontal-cutout` | horizontal 16:9, cutout |
+| `omni-edit-pro-horizontal-overlay` | horizontal 16:9, overlay |
+| `omni-edit-pro-vertical-split` | vertical 9:16, split |
+| `omni-edit-pro-vertical-cutout` | vertical 9:16, cutout |
+| `omni-edit-pro-vertical-overlay` | vertical 9:16, overlay |
+| `omni-edit-pro-all` | both orientations × split/cutout/overlay: six per source |
 
 Clear later overrides change only their named dimensions. Vertical Overlay + "horizontal instead" means horizontal Overlay. All + "horizontal only" means three per source. All + "Overlay only" means two per source; both orientations with one composition means two, not six. Adaptive is not added to All automatically. Explicit additional deliverables are counted separately; a replacement request replaces only its stated scope. Resolve contradictory choices with one brief clarification.
 
