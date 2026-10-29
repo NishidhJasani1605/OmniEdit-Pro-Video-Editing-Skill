@@ -8,6 +8,42 @@ Give the main skill your footage and an editing reference for **Reference** mode
 
 This repository supplies the workflow, not an editor application. A capable agent uses actual local media tools and may create processing code in your editing workspace. The package contains no processing scripts, model weights, media, or dependency trees. No additional skill is a mandatory runtime dependency.
 
+## Install globally: copy and paste
+
+Copy this entire prompt into your AI agent:
+
+```text
+Install the complete OmniEdit Pro skill suite globally for the AI agent I am
+using, so it is available across my projects.
+
+Repository: https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill
+
+Download or clone the repository and read INSTALL.md and
+skills/omni-edit-pro/references/agent-compatibility.md. Detect this agent's
+supported user-level skill directory; use its documented global installation
+method rather than a project-local folder. Preserve existing local changes.
+
+Install all nine skill folders from the same repository revision as siblings:
+omni-edit-pro, omni-pro-edit, omni-pro-edit-all,
+omni-pro-edit-horizontal-split, omni-pro-edit-horizontal-cutout,
+omni-pro-edit-horizontal-overlay, omni-pro-edit-vertical-split,
+omni-pro-edit-vertical-cutout, omni-pro-edit-vertical-overlay.
+
+Include every SKILL.md, the complete shared references folder, and licenses.
+Verify installed files and wrapper-to-core links. Check agent discovery where
+available, and tell me the installed location, version, how to invoke
+omni-pro-edit in this agent, and whether a reload is needed. Report any check
+you could not perform. Install the instructions only; video tools, models and
+an actual edit belong to a later video-editing request.
+```
+
+[Open the GitHub repository](https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill) · [Installation details](INSTALL.md) · [Agent compatibility](skills/omni-edit-pro/references/agent-compatibility.md)
+
+Use this prompt with any agent that supports local Agent Skills and file access.
+Global installation makes the suite available across projects for that agent
+and user account. Other agents or devices may need their own installation;
+agents without local installation support can read the workflow for planning.
+
 ## Quick start
 
 1. Install the complete suite using [INSTALL.md](INSTALL.md).
@@ -195,22 +231,9 @@ Only reviewed candidates are promoted to **Final Output Videos**. Missing audiov
 
 ## Install and update
 
-Copy this prompt into your agent:
+Use the [copy-and-paste global installation prompt](#install-globally-copy-and-paste) above for installation from GitHub. The complete package has nine entries, 20 shared references and 38 Markdown/license files. For updates, preserve local edits and install the core and wrappers together from one reviewed revision. Follow [INSTALL.md](INSTALL.md) for manual copying, migration and verification.
 
-```text
-Install the complete OmniEdit Pro 3.1.2 suite from the reviewed local checkout:
-<path-to-this-checkout>
-
-Read INSTALL.md and use this host's supported user-level skill location.
-Preserve existing local edits. Install all nine same-release sibling folders,
-including the complete omni-edit-pro core, references, and license notices.
-Verify installed files, shared-core links, and host discovery.
-Install instructions only; do not start an edit or install video tools/models.
-```
-
-Replace the placeholder with the actual local checkout. The complete package has nine entries, 20 shared references and 38 Markdown/license files. Local v3.1.2 changes are not automatically published to GitHub; use a remote source only after verifying it contains the complete selected revision.
-
-Manual copying needs no Node.js or Python. From that reviewed local checkout, an optional Skills CLI command for a verified Codex target is:
+Manual copying needs no Node.js or Python. From a reviewed local checkout, an optional Skills CLI command for a verified Codex target is:
 
 ```sh
 npx skills add . --global --agent codex --skill omni-edit-pro omni-pro-edit omni-pro-edit-horizontal-split omni-pro-edit-horizontal-cutout omni-pro-edit-horizontal-overlay omni-pro-edit-vertical-split omni-pro-edit-vertical-cutout omni-pro-edit-vertical-overlay omni-pro-edit-all
