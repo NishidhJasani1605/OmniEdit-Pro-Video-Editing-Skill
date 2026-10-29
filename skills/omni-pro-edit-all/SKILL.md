@@ -4,7 +4,7 @@ description: "Use when all six OmniEdit Pro preset variants are requested for ea
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.0"
+  version: "3.1.2"
 ---
 
 # omni-pro-edit-all

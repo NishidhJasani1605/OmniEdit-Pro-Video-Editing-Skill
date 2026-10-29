@@ -4,7 +4,7 @@ description: Edit supplied videos in horizontal 16:9 Split layout with speaker a
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.0"
+  version: "3.1.2"
 ---
 
 # omni-pro-edit-horizontal-split

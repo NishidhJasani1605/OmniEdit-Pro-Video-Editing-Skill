@@ -41,6 +41,10 @@ Record mode, reference mapping/coverage, selected treatment, composition, resolv
 
 Render the full candidate in `Working Files`, then inspect it according to [Quality assurance](quality-assurance.md), including actual source/variant comparison, normal-speed motion, listening where audio exists and required treatment/reference assessment. Only after required checks pass, place the verified file in `Final Output Videos/<video-id>/`. Reconfirm the copied/moved file identity and readability. A tool exiting successfully, a thumbnail or a short test alone is insufficient.
 
+Promotion requires a **PASS from the dedicated Production Video Reviewer** under [Video reviewer](video-reviewer.md), tied to this candidate's file fingerprint, with all applicable checks performed, verified wording and zero open observed defects. Tiny/cosmetic defects are not waived. A repair, text correction or new encode requires review of the replacement complete candidate; a pass on an earlier file cannot be transferred. Match the promoted file to the reviewed fingerprint.
+
+The sign-off includes all seven core requirements, timecoded verification-frame evidence, stationary caption/highlight checks, measured headroom/heading alignment, decoded final typography versus clean render, and actual audio/sync review. A high-quality preset or a folder of extracted images without inspection is insufficient. Keep evidence in Working Files and link it separately; do not place diagnostics among final videos.
+
 Missing required audiovisual or reference-comparison review means `needs-review`, not completed: keep the export in the working area and provide the exact file/intervals for review. Unavailable required references cannot become a claimed match or a silent Auto fallback. Failed, placeholder, unrendered and partially checked outputs stay outside the final folder. Keep earlier verified finals if a later revision fails.
 
 ## User report
@@ -48,5 +52,7 @@ Missing required audiovisual or reference-comparison review means `needs-review`
 Report each source/requested variant with status and an exact clickable output path when it exists. State mode/treatment/composition; dimensions/aspect, FPS, duration and format; preservation or authorized edits; and actual full-output viewing, motion, listening and technical checks. Include portrait ordering or explicit override, per-source graphic/motion/transition rationale, topic/subject contrast palette and Cutout silhouette/negative-space review where relevant. In Reference include mappings, coverage, matched/adapted/unassessed attributes, shared-default adaptations and gaps. In Auto give the source-grounded direction reason. Keep measured facts separate from design judgments.
 
 Link requested captions, editable project, credits and review evidence separately. Do not count a preview as a final or missing Cutout as another style. Reconcile the actual resolved set: unnarrowed All has six entries per source; All, horizontal only has three. References/assets do not enter those counts. Continue valid independent outputs when another is blocked, but label the batch partial until every requested variant has passed its required checks. No source, routing or instruction-only test establishes rendered-video quality.
+
+Include a concise reviewer result and link its evidence: exact export/version, actual full-playback/listening coverage, spelling evidence, face/caption and badge checks, repaired defects and remaining gaps. Report "no known defects after the recorded review" only when supported; never promise that every possible mistake has been ruled out.
 
 Creating a final file does not authorize uploading or publishing it.

@@ -4,7 +4,7 @@
 
 Give the main skill your footage and an editing reference for **Reference** mode. Give it footage without a reference for **Auto** mode. It inspects the media, plans a treatment, tests a representative passage, and reviews each requested export. Explicit presets and **Manual** mode remain available when you want to choose the format and composition yourself.
 
-**Version:** 3.1.0 · **Package:** Markdown instructions and license notices · **License:** MIT
+**Version:** 3.1.2 · **Package:** Markdown instructions and license notices · **License:** MIT
 
 This repository supplies the workflow, not an editor application. A capable agent uses actual local media tools and may create processing code in your editing workspace. The package contains no processing scripts, model weights, media, or dependency trees. No additional skill is a mandatory runtime dependency.
 
@@ -34,7 +34,7 @@ Use my Video Project folder as the workspace.
 
 “Best” means clear, relevant, readable, and faithful to your material. It does not promise one winning style for every genre or guaranteed virality. Actual video quality still needs audiovisual review; see [validation and limits](#validation-and-limits).
 
-In v3.1, vertical/Reels presenter scenes put the real speaking video or extracted person **below** the primary animation by default in Split, Cutout, Overlay and Adaptive. Meaningful graphics develop throughout the edit, with readable settled text and suitable transitions. Every source receives its own content, motion and palette decisions from actual footage; blue/navy and cloned animation templates are not automatic defaults. Explicit placement, stillness and palette instructions take priority.
+In v3.1.2, vertical/Reels presenter scenes put the real speaking video or extracted person **below**, captions in a **clear middle channel**, and the primary animation **above**, across Split, Cutout, Overlay and Adaptive. Caption headroom is measured over the speaker's movement and scales with output resolution. Added foreground graphics stay clear of the real presenter, while Cutout backgrounds can use safe transparent gaps. Meaningful graphics develop throughout the edit, with readable settled text and suitable transitions. Every source receives its own content, motion and palette decisions from actual footage; blue/navy and cloned animation templates are not automatic defaults. Explicit placement, stillness and palette instructions take priority without waiving obstruction checks.
 
 ## Modes and choices
 
@@ -67,7 +67,7 @@ An explicit request for a shorter edit, highlights, or a montage supplies editin
 
 ## Choose a skill
 
-The nine entry names are unchanged in v3.1. Use your host's skill picker or supported command syntax. Codex supports `$omni-pro-edit` or its picker; slash commands depend on the host.
+The nine entry names are unchanged in v3.1.2. Use your host's skill picker or supported command syntax. Codex supports `$omni-pro-edit` or its picker; slash commands depend on the host.
 
 | Skill | Default output when explicitly selected |
 | --- | --- |
@@ -79,7 +79,7 @@ The nine entry names are unchanged in v3.1. Use your host's skill picker or supp
 | [`omni-pro-edit-vertical-cutout`](skills/omni-pro-edit-vertical-cutout/SKILL.md) | Vertical 9:16 Cutout |
 | [`omni-pro-edit-vertical-overlay`](skills/omni-pro-edit-vertical-overlay/SKILL.md) | Vertical 9:16 Overlay |
 | [`omni-pro-edit-all`](skills/omni-pro-edit-all/SKILL.md) | Both orientations × Split, Cutout, Overlay: six versions per source |
-| [`omni-edit-pro`](skills/omni-edit-pro/SKILL.md) | Compatible original entry and shared v3.1 workflow |
+| [`omni-edit-pro`](skills/omni-edit-pro/SKILL.md) | Compatible original entry and shared v3.1.2 workflow |
 
 **A direct preset:**
 
@@ -151,6 +151,20 @@ For multiple references, you can specify “captions from A, pacing from B.” A
 
 Each source receives a unique ID, isolated working paths, one timeline owner, and real specialist assignments for source/speech analysis, creative direction, assets, composition/animation, optional Cutout, audio/export, and independent review. Reference observations may be shared read-only across source jobs. Native host agent tools provide the actual workers; jobs queue within available agent and hardware capacity. A host without subagents must disclose that limitation and resolve the execution choice before a solo fallback. See [per-video teams](skills/omni-edit-pro/references/batch-teams.md).
 
+Every source has a dedicated independent **Production Video Reviewer**, separate from the editor, with authority to reject any known defect, including cosmetic defects and one-frame mistakes. The reviewer checks each requested variant's complete actual export, every text occurrence and animation state, and source preservation, sync, motion, sound and technical integrity. Repairs require inspection of the revised full export; approval of an earlier version or a short preview does not carry over. Missing review evidence and unresolved issues keep a candidate out of Final Output Videos. See the [reviewer contract](skills/omni-edit-pro/references/video-reviewer.md).
+
+Seven production requirements cover the reported defects:
+
+1. **Presenter clearance:** place upper-channel captions at least 200 pixels above the highest forehead position on a 1920-pixel-high output, scaling that distance with resolution and aiming for 250 scaled pixels where feasible. Measure the complete caption/plate footprint; fixed Y coordinates and a universal 60/40 split are not accepted substitutes.
+2. **Stable captions:** use complete semantic phrases at a consistent anchor, with no moving word window, sentence bleed, reflow or ghosted phrase transition. Only verified active-word color changes; yellow `#FDE047` is the default when contrast and brand requirements permit.
+3. **Padded backgrounds:** measure actual glyph bounds and wrap complete text within safe width, with sufficient scaled padding through every animation state.
+4. **Centered headings:** center banner/title/CTA content from measured visible bounds, including bearings and multiline layout, rather than guessed offsets. Preserve intentional body-text and explicit user alignments.
+5. **Sharp graphics and export:** render graphics at 2× resolution and downsample carefully, or document an evidenced equivalent. Inspect text in the decoded delivery file for jagged edges, blur, ringing, chroma bleed and compression damage; a codec preset alone cannot pass this check.
+6. **Verified wording:** check names, credentials, venues, landmarks and event date/time details against matching evidence. ASR is a draft, and prior projects' glossaries or dates never verify a new event.
+7. **Original audio and sync:** preserve speech, pauses and source timing under the recorded edit permissions; select source streams explicitly and verify the final mux. Streamcopy and lossy AAC re-encoding are different operations and must be described accurately.
+
+After each render, the reviewer inspects timecoded verification frames and detailed text crops, full normal-speed playback and applicable listening. It logs every defect, returns repairs to the owning specialist, and checks the revised complete export and fresh evidence before release. Missing capability remains needs-review. See [layout rules](skills/omni-edit-pro/references/layouts-effects.md), [transcription verification](skills/omni-edit-pro/references/transcription-sync.md), [rendering](skills/omni-edit-pro/references/audio-rendering.md) and the [reviewer contract](skills/omni-edit-pro/references/video-reviewer.md).
+
 The default workflow uses free local processing: FFmpeg/FFprobe, an available compositor, and suitable local transcription or matting where needed. Remotion is optional when its actual terms permit the intended use without payment; a capable local alternative is allowed. Tool setup happens for an authorized editing job, not during skill installation. There is no automatic paid or hosted fallback. Your AI host, runtime tools, models, fonts, and media retain their own terms.
 
 Animations must explain the actual material, remain readable, and protect people, essential gestures, interface details, existing text, and captions. Charts need real values; measurement-like waveforms need real audio. Local Cutout tests a difficult passage before full processing. Failed Cutout variants remain incomplete while independent Split/Overlay work continues. See [environment](skills/omni-edit-pro/references/environment.md), [local Cutout](skills/omni-edit-pro/references/local-cutout.md), and [quality assurance](skills/omni-edit-pro/references/quality-assurance.md).
@@ -184,7 +198,7 @@ Only reviewed candidates are promoted to **Final Output Videos**. Missing audiov
 Copy this prompt into your agent:
 
 ```text
-Install the complete OmniEdit Pro 3.1.0 suite from the reviewed local checkout:
+Install the complete OmniEdit Pro 3.1.2 suite from the reviewed local checkout:
 <path-to-this-checkout>
 
 Read INSTALL.md and use this host's supported user-level skill location.
@@ -194,7 +208,7 @@ Verify installed files, shared-core links, and host discovery.
 Install instructions only; do not start an edit or install video tools/models.
 ```
 
-Replace the placeholder with the actual local checkout. Local v3.1 changes are not automatically published to GitHub; use a remote source only after verifying it contains the complete selected revision.
+Replace the placeholder with the actual local checkout. The complete package has nine entries, 20 shared references and 38 Markdown/license files. Local v3.1.2 changes are not automatically published to GitHub; use a remote source only after verifying it contains the complete selected revision.
 
 Manual copying needs no Node.js or Python. From that reviewed local checkout, an optional Skills CLI command for a verified Codex target is:
 
@@ -206,7 +220,11 @@ Verify the selected revision and CLI/runtime requirements. Use `npx.cmd` in Powe
 
 **Migrating from v2:** the main entry no longer requires two selection answers before inspecting media. Select Manual to retain question-led selection, or use an explicit preset for stable format/composition defaults. Update core and wrappers together; never mix releases.
 
-**Migrating from v3.0:** Reference/Auto/Manual routing, entry names and All's six default variants stay available. v3.1 changes default portrait presenter placement across all compositions, including fitted lower Overlay footage, and strengthens full-duration motion, Cutout negative-space use and per-source art direction. Explicit placement, stillness and palette overrides remain authoritative. Update all installed entries from one 3.1.0 revision.
+**Migrating from v3.0:** Reference/Auto/Manual routing, entry names and All's six default variants stay available. The v3.1 portrait placement, full-duration motion, Cutout negative-space use and per-source art direction are retained. Explicit placement, stillness and palette overrides remain authoritative. Update all installed entries from one 3.1.2 revision.
+
+**Migrating from v3.1.0:** retain the same nine entries and update the complete core and wrappers together, including the new `references/video-reviewer.md`. Version 3.1.1 makes middle-channel captions, every-frame face clearance, padded text containment, evidence-backed spelling and independent zero-known-defect release review mandatory. It preserves existing routing, motion, framing and source permissions.
+
+**Migrating from v3.1.1:** update all installed entries and the complete core to 3.1.2. The package stays at 38 files and 20 references. Existing routing, source preservation, Cutout geometry and independent review remain; this revision adds stable phrase captions, scaled headroom, measured heading centering, sharpness/encoding evidence and explicit post-render repair checks.
 
 ## Sources and validation
 
@@ -220,17 +238,20 @@ Historical v2 checks covered nine entries, same-release links, installation stag
 
 **Historical v3.0 checks:** nine discovered entries, matching 3.0.0 metadata/licenses, 147 relative file links and a matching staged copy containing only Markdown and licenses. In three paired paper scenarios, independent grading recorded v3.0 **15/15** instruction checks and v2 **10/15**; a separate adversarial review found and closed a narrowed-All counting inconsistency. A small synthetic render/decode check exercised local tools outside this repository. These results do not certify the v3.1 changes.
 
-**v3.1 checks pass within their scope:** nine discovered entries at 3.1.0, 37 Markdown/license files, 174 resolved file links, two heading links, matching licenses and a byte-identical staged copy. Seven paired paper scenarios initially recorded 26/28 checks for the new draft versus 16/28 for 3.0; two planning omissions were repaired and both affected cases passed focused retests (8/8). The original failures remain recorded separately. Independent source review found no standing substantive contradictions. [VALIDATION.md](VALIDATION.md) gives methods and limits. **No actual user-supplied video has been edited or fully reviewed during authoring.** Reference fidelity, matte quality, sustained useful motion and contrast still require actual output review.
+**Historical v3.1.0 checks:** nine discovered entries at 3.1.0, 37 Markdown/license files, 174 resolved file links, two heading links, matching licenses and a byte-identical staged copy. Seven paired paper scenarios initially recorded 26/28 checks for that draft versus 16/28 for 3.0; two planning omissions were repaired and both affected cases passed focused retests (8/8). The original failures remain recorded separately. Independent source review found no standing substantive contradictions in that version. These counts and results do not certify v3.1.1.
+
+Historical v3.1.1 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md); they do not certify the 3.1.2 changes. For current v3.1.2 checks, use that document's current evidence section. **No actual user-supplied video has been edited or fully reviewed during authoring.** Strict written rules and zero known defects at release do not guarantee that an unobserved defect cannot exist. Caption stability, geometry, spelling, badge fit, text sharpness, reference fidelity, matte quality, useful motion and audio fidelity require actual output review for each later video.
 
 ## Project guide
 
 | Document | Purpose |
 | --- | --- |
 | [INSTALL.md](INSTALL.md) | Same-release installation, updates, migration, and host discovery |
-| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.1 design, execution contract, and authoring roles |
+| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.1.2 design, execution contract, and authoring roles |
 | [ATTRIBUTIONS.md](ATTRIBUTIONS.md) | Pinned sources, rights findings, and research boundaries |
 | [VALIDATION.md](VALIDATION.md) | Historical evidence, current checks, and unrun media tests |
 | [Shared SKILL.md](skills/omni-edit-pro/SKILL.md) | Production instructions used by every entry |
 | [Selection](skills/omni-edit-pro/references/selection.md) | Modes, input roles, permissions, presets, and overrides |
+| [Production Video Reviewer](skills/omni-edit-pro/references/video-reviewer.md) | Independent full-export review, defect repair and release decisions |
 
 The complete installable package lives under `skills/`. All required instructions travel with the selected same-release entries. The project is [MIT licensed](LICENSE) and is not affiliated with upstream maintainers.

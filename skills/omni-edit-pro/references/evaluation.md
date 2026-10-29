@@ -51,15 +51,47 @@ Use real footage with the stated properties. For each case freeze the supplied p
 
 Add input-role ambiguity, corrupt source, absent audio, square/rotated/VFR sources, multiple language tracks, difficult names/numbers, same-basename batches and explicit preset overrides when those conditions matter to the intended release. An artificial pressure scenario can test refusal to invent evidence; it cannot replace a real render comparison.
 
+### Caption, text and reviewer regressions
+
+Use these cases for instruction traces and, when media is supplied, real export review. Record which evidence level actually ran; a hypothetical collision or typo is not an observed rendered defect.
+
+| Case | Required decision |
+| --- | --- |
+| Vertical Split/Cutout/Overlay/Adaptive with moving head, a two-frame chin collision and another caption over clear lower-body footage | Reject the collision and the default lower-body placement. Reserve the middle channel using actual motion and complete caption/plate bounds, preserve source framing/timing, and review each variant separately. |
+| `PATIENT CONFIDENTIALITY` fits after settling but spills outside a red badge during entrance | Measure complete rendered text plus padding, coordinate text/backing through all states, wrap/reflow within safe width and verify the actual repaired export. A settled still does not pass the transition. |
+| Phonetic name/venue recognition, one confirmed identity, other spellings unresolved | Approve only evidence-supported wording; preserve uncertainty in working notes, investigate matching sources and ask narrowly when needed. Do not transfer the example glossary to a merely similar source. Propagate verified corrections across all dependent text/variants. |
+| Two sources, All vertical only, one with a verified glossary and the other with unresolved text | Six requested outputs, three per source. Reuse approved wording only within the matching source. Deliver passing independent outputs accurately while affected variants remain incomplete. |
+| Crowded vertical Cutout with moving hands/hair, long multilingual text and diacritics | Reflow graphics and measured padded captions without cropping, unreadable shrinking, lost glyphs or a rectangular presenter exclusion. Preserve usable alpha gaps; report an unresolved geometry conflict instead of accepting overlap. |
+| Silent horizontal screen source or explicit safe caption-position override | Do not invent a presenter, speech track or mandatory portrait channel. Still proofread supplied text and protect actual content. Honor explicit safe placement; source-embedded face overlap needs a clean source or authorized treatment. |
+| Urgent delivery, small cosmetic defects, decoder/still checks only, or a punctuation-corrected replacement export | Independent reviewer refuses premature PASS. Repair all observed defects; perform required full playback/listening, detailed text/boundary checks and version-specific sign-off on the new export. Missing capability remains needs-review. |
+
 ## Hard acceptance checks
 
-Hard checks apply to every candidate regardless of the subjective score. A material hard failure prevents that candidate from passing the improvement gate. Apply the full [Quality assurance](quality-assurance.md) procedure, including actual viewing and listening, rather than treating this table as a replacement.
+### Stable captions and finishing regressions
+
+Exercise these additional decisions on supplied test media, or clearly label an instruction-only trace when no media exists:
+
+| Case | Required decision/evidence |
+| --- | --- |
+| Five-word sliding captions, `worth it? How secure are`, and bold active-word reflow | Replace with complete stationary semantic phrases; separate true sentence boundaries, preserve abbreviations/decimals, fix box/glyph geometry and use color-only emphasis with verified word timing. No phrase-count quota or invented exact timings. |
+| Same portrait at 720x1280,1080x1920 and2160x3840 | Derive middle caption geometry and minimum forehead gaps of approximately133.33,200 and400 final pixels respectively, rounding upward when necessary; target250 scaled where feasible. Measure complete caption footprint and worst forehead motion. Reject copied Y1045 and unsafe geometry; preserve source legibility and framing. |
+| Accented/italic multiline heading with icon, asymmetrical visible margins | Center actual visible bounds/bearings in the declared content box/group within output-pixel rounding. Keep body/data text's intentional alignment. Verify each rendered line and corrected heading. |
+| Jagged 1x text upscaled to2x; candidate uses CRF14 plus a universal8Mb/s cap | Re-render original glyph/vector geometry at2x and downsample once, or evidence an equally clean native/vector path. Diagnose decoded edges against clean reference; no sharpness guarantee from AQ/CRF, no universal bitrate cap and no UHD-detail claim from source upscaling. |
+| AAC256 encode labeled bit-identical, wrong copied input stream index | Select actual streams; passthrough only if compatible and unchanged, otherwise describe re-encoding honestly. Preserve speech/pitch/pauses/timestamps and check muxed sync/tail. |
+| Requested4K HDR master, silent landscape or supplied left-aligned code panel | Retain destination codec/color/bit-depth and actual source constraints; no forced SDR yuv420p, invented speech/presenter/channel or recentering of code. Apply relevant graphics/decoded-quality and independent review checks. |
+| New encode after a tiny centering repair; only old JPEG evidence available | Generate new candidate identity and native lossless evidence, inspect scene/cue/highlight boundaries plus full audiovisual playback; old frames/approval do not certify replacement bytes. |
+
+### Release gates
+
+Hard checks apply to every candidate regardless of the subjective score. Any observed defect, including a minor cosmetic failure, prevents production release until repaired and rechecked. Apply the full [Quality assurance](quality-assurance.md) and [Video reviewer](video-reviewer.md) procedures, including actual viewing and listening, rather than treating this table as a replacement.
 
 | Check | Required evidence |
 | --- | --- |
 | Roles and requested outputs | Correct source/reference assignment, exact requested set and honest per-variant status; references never add jobs |
 | Authorized edits only | Source-to-output mappings respect allowed trim, reorder, crop, speed and replacement scope; protected words/meaning/actions retained |
 | Source and caption accuracy | Reviewed transcript/cues where speech exists; no fabricated speech, incorrect negations, names or unsupported visuals; no transcript invented for silent footage |
+| Verified text in every surface | Source-scoped terminology ledger and evidence; all captions, labels, badges, titles, end cards and delivered sidecars agree with verified wording; no guessed proper names, unverified terms or cross-source glossary contamination |
+| Face-safe captions and padded badges | Middle caption channel for vertical presenter scenes, measured from moving content; no added text/plate on any face; all glyphs and padding contained inside backgrounds through every animation/text state |
 | Sync and audio | Actual listening, lip/action/cue checks, correct source streams, intact tail, no duplicated/masked narration or drift |
 | Layout and visibility | Correct shape/composition, protected framing, readable type/holds, visible interface/gestures and acceptable moving cutout edges |
 | Presenter-led portrait defaults and overrides | For each of the four 9:16 compositions, a recorded lower-speaker/upper-primary-animation layout and actual delivery-size review; any different position traces to an explicit instruction. No invented presenter on non-presenter footage; horizontal placement follows its own contract |
@@ -70,6 +102,7 @@ Hard checks apply to every candidate regardless of the subjective score. A mater
 | Independent jobs and version lineage | Different sources retain isolated writable jobs, source-grounded decisions and reviews. Versions of one source identify their common source and reusable treatment plus the review affected by that version; neither case is miscounted as the other |
 | Technical integrity | Correct output metadata plus complete decode; intentional duration and tail; no corrupt media or missing frames evidenced by playback |
 | Evidence and delivery | Real preview/full-output review, truthful gaps, cleared assets and checked-only final promotion |
+| Independent production release | Dedicated reviewer, exact candidate identity, full playback/listening where applicable, small-defect ledger, zero open observed defects and rechecked replacement exports |
 
 Check speech preservation with source/output comparison and timing evidence; automated transcript equality alone is insufficient because recognition can be wrong. Decode success alone does not establish sync, clarity or resemblance. If a relevant dimension cannot be assessed, mark it unassessed and do not convert missing evidence into a pass.
 

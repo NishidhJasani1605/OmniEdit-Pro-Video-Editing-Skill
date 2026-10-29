@@ -1,8 +1,68 @@
-# Validation evidence — OmniEdit Pro 3.1.0
+# Validation evidence — OmniEdit Pro 3.1.2
 
 This document separates historical package checks, v3 instruction tests, a bounded synthetic media check, and future media benchmarks. **No actual user-supplied source video has been edited or rendered during this authoring task.** Instruction tests and proposal scores cannot establish audiovisual quality or reference fidelity.
 
-## Current 3.1 changes — 2026-10-27
+## Current 3.1.2 changes — 2026-10-29
+
+This update adds the new reported failure cases to the shared production contract: moving-window caption jitter and sentence bleed, highlight-induced text reflow, off-center headings, jagged/compressed typography, measured portrait headroom, and ambiguous audio-preservation claims. The seven requirements and autonomous post-render evidence/repair loop are instructions for later edits. They cannot guarantee that no future video will contain an undiscovered defect. No source video was processed or rendered for this authoring task; the supplied incident summary is reported history, not a newly inspected media result.
+
+### Baseline and technical verification
+
+A read-only evaluator inspected the installed 3.1.1 suite before replacement. It found existing generic protections for readable captions, safe moving-face placement, font measurement, original timing and independent zero-open-defect review. It did not find explicit requirements for no sliding windows, fixed color-only highlight geometry, measured heading centering, 2x graphics or decoded-encode edge comparison. Its proposed fixes were partly professional judgment rather than instructions already present. This distinguishes retained safeguards from actual guidance gaps.
+
+Primary-source research corrected several proposed implementation claims before they entered the skill. Pillow's Lanczos implementation uses support 3, not a 36-lobe filter; font advance length does not include every visible overhang and therefore cannot alone establish badge containment or visible centering. See [Pillow resampling implementation](https://github.com/python-pillow/Pillow/blob/main/src/libImaging/Resample.c) and [font measurement documentation](https://pillow.readthedocs.io/en/stable/reference/ImageFont.html). FFmpeg streamcopy avoids re-encoding; AAC 256 kb/s is an encode and is not bit-identical preservation. In normal single-pass libx264, explicit CRF selects quality mode, so an added bitrate is not an 8 Mb/s floor; destination-specific limits still need review. See [FFmpeg streamcopy](https://ffmpeg.org/ffmpeg.html#Streamcopy), [libx264 implementation](https://github.com/FFmpeg/FFmpeg/blob/master/libavcodec/libx264.c) and [scaler options](https://ffmpeg.org/ffmpeg-scaler.html). No particular filter, AQ setting or bitrate was treated as proof of sharpness.
+
+### Revised instruction tests and repair
+
+A fresh-context evaluator read the revised core and relevant references without the validation report or other agents' answers. It resolved a hypothetical 30-second clip with sliding captions, split abbreviations, font-weight reflow, copied coordinates, italic headings, entrance-only badge fit, jagged text, copied encode/audio settings, stale event details and a proposed still-only release. Its observed decisions were:
+
+- Replace rolling captions with complete grammatical stationary phrases, preserve abbreviations, use verified color-only highlighting and reject fixed phrase-count quotas.
+- Measure the complete caption bottom against worst forehead motion. For 720x1280 and 2160x3840 outputs it correctly derived minimum gaps of 133 1/3 and 400 final pixels. A stated 200-pixel initial gap reduced by 60 pixels becomes 140: conditionally above the first minimum and below the second. It did not equate a caption anchor or arithmetic alone with verified face safety.
+- Measure visible bearings and the icon/text group for centering; scale badge padding and check every animation state, not just the hold.
+- Reject enlarging a jagged 1x raster as supersampling, reject guaranteed UHD claims from CRF/bitrate settings, and require decoded native-resolution comparisons with the clean render.
+- Reject copied credentials/dates without matching evidence and reject unverified stream mapping or AAC re-encoding described as identical audio.
+- Require actual candidate identities, timecoded lossless evidence, full normal-speed playback/listening and a distinct reviewer; keep every known defect and unperformed check unresolved until repaired/reviewed.
+
+A separate read-only adversarial audit traced 4K HDR/non-H.264 delivery, silent footage, left-aligned code, moving Cutout hands/hair, explicit reversed portrait placement, overlapping speakers, uncertain word timing, constrained rendering resources, replacement exports and All-mode output accounting. It found two concrete wording issues: an unqualified word-by-word reveal rule could include subtitles, and anti-overlap/active-word/boundary rules were not clearly scoped to individual speaker lanes. The first was limited to explanatory graphics. The second needed an additional focused revision after the first retest still found global wording; the final text explicitly scopes those rules per lane while preserving genuine concurrent speech. The independent final retest confirmed both findings resolved in the affected sections. These failures and repair stages are retained rather than reporting an unqualified initial pass.
+
+These are one baseline response, one revised behavioral response and an independent source audit with focused retests. They establish instruction decisions and identified-conflict closure, not repeat-run reliability or audiovisual quality. The full responses are in the authoring chat. No actual frame extraction, rendering, listening, encoding-quality comparison or video repair was performed.
+
+### Package and installed-copy checks
+
+The instruction suite remains nine entries, twenty core references and thirty-eight Markdown/license files; no coding, model, media or dependency files were added. The bundled Skill Creator validation, metadata/name/license checks, wrapper-to-core resolution, Markdown links/anchors/fences and whitespace checks passed for the final suite. All nine entries use version 3.1.2. File checks do not prove that future agents will perform the required media reviews.
+
+Before installation, the nine active entries were confirmed as 3.1.1 with the matching 38-file inventory. That exact installed copy was backed up to `C:/Users/nishi/.codex/skill-backups/omni-edit-pro-20261029-v3.1.1-before-v3.1.2`, and files were rechecked for concurrent changes before replacement. Twenty files changed; all thirty-eight installed files matched the repository suite byte-for-byte afterward. No remote publication or host UI reload test was performed. The previous 3.1.1 results below remain historical; none is relabeled as a 3.1.2 media pass.
+
+## Historical 3.1.1 changes — 2026-10-29
+
+This instruction-only update makes the vertical middle caption channel, moving-face protection, measured padded text backgrounds, evidence-backed spelling and dedicated Production Video Reviewer mandatory across the suite. The reviewer records every observed defect, including brief or cosmetic defects, and requires repairs and review of the actual replacement export before release. User-confirmed Rajiv/Amore wording is scoped to the matching source; it is not a global substitution dictionary. No supplied video was processed during this update, so these results do not certify rendered-video quality or perfect error detection.
+
+### Baseline and independent instruction checks
+
+A read-only evaluator used the unchanged committed baseline `66ecac3` before edits. In a hypothetical 42-second vertical Split/Cutout/Overlay delivery with a two-frame chin collision, a lower-body caption, an entrance-only badge overflow and uncertain ASR names, it already rejected face overlap, guessed wording and release without full playback. Those are retained safeguards, not invented baseline failures. It explicitly found no required middle caption channel and no explicit all-state badge-background containment rule: it permitted the clear lower-body caption and treated measured badge repair as its own design judgment.
+
+Two fresh-context evaluators then read the revised production instructions without the validation report or each other's answers. These were decision tests with hypothetical facts, not media executions:
+
+| Scenario | Observed revised decision |
+| --- | --- |
+| Same 42-second vertical case under urgent delivery pressure | Rejected both chin contact and default lower-body caption placement; required a motion-aware middle channel, padded containment through badge entrance, a distinct reviewer, all three full-candidate playback/listening checks and zero-open-defect release. |
+| Partial identity evidence and phonetically matching names | Approved only the supplied title-card identity. Kept specialist title, venue and landmark wording unresolved pending relevant evidence; did not copy the example venue from the skill as proof. |
+| Punctuation-corrected replacement export | Required full playback/listening of the new complete export plus targeted text-fit checks and a new fingerprint-specific verdict; retained reusable source/rights evidence. |
+| Two sources, All vertical only, different doctors/venues | Counted six outputs; restricted approved glossary entries to the matching source; kept affected uncertain variants incomplete while independent work continued. |
+| Crowded Cutout with moving hands/hair and Hindi/English diacritics | Reflowed upper graphics and measured padded text, preserved readable source/wording/timing and usable alpha gaps, and retained an unresolved geometry conflict if fit remained impossible. |
+| Silent horizontal screen video and supplied typo | Avoided invented presenter, ASR and portrait channel; retained supplied-text proofreading, content protection, actual silence/stream inspection and full visual review. |
+| Explicit reversed portrait layout and safe caption band, with source-embedded mouth overlap | Honored the explicit geometry but retained the burned-in defect pending a clean source or authorized repair; no crop/mask shortcut or final claim. |
+| Stills and decode available, playback unavailable | Refused sign-off; recorded missing checks as not run and kept the candidate needs-review in Working Files. |
+
+Both evaluators distinguished planned review from performed review. The five-case evaluator reported no instruction contradiction in its scope. This is one baseline response and two revised responses covering the listed decisions, not repeated-run reliability statistics or a visual-quality benchmark. The full responses are retained in the authoring chat; this table summarizes their actual decisions rather than assigning an audiovisual score.
+
+### Package and installed-copy checks
+
+All nine entries passed the bundled Skill Creator validator with matching 3.1.1 metadata, required names and wrapper-to-core links. The installable suite contains 38 files: nine SKILL.md files, twenty shared Markdown references and nine matching LICENSE files. File/heading-link, Markdown-fence and whitespace checks were performed; no application code, processing scripts, media, models or dependency files were added.
+
+The active nine folders under `C:/Users/nishi/.agents/skills` were inspected against the historical `820d341` installation. Their 34 files had no content customizations or added/missing files; CRLF line endings were the only baseline differences. They were rechecked immediately before replacement and backed up to `C:/Users/nishi/.codex/skill-backups/omni-edit-pro-20261029-v2-before-v3.1.1`. All 38 installed files were then verified byte-for-byte against the revised repository suite. No duplicate OmniEdit installation was found under the native `.codex/skills` root. Host UI reload/discovery and real video execution were not tested, and no remote publication was performed.
+
+## Historical 3.1.0 changes — 2026-10-27
 
 The 3.1 instruction revision adds a shared lower-presenter/upper-animation default for portrait scenes in all four compositions, sustained meaningful graphic development, per-source art direction and contrast palettes, and alpha-aware Cutout negative space without a visible or reserved rectangle. Explicit placement, stillness and palette overrides remain authoritative; horizontal placement and non-presenter scenes retain their appropriate geometry. These are skill instructions, not claims about a newly rendered user video.
 

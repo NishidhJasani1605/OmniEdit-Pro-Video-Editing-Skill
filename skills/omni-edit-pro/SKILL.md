@@ -4,7 +4,7 @@ description: Use when editing supplied videos, matching the editing treatment of
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.0"
+  version: "3.1.2"
 ---
 
 # OmniEdit Pro
@@ -37,6 +37,20 @@ Use free/local processing and assets. Prefer a compatible Remotion setup where t
 
 Read [Batch and teams](references/batch-teams.md). Create a separate job and native specialist team for every source video, queueing tasks within available agent and hardware limits. Assign speech, art direction, layout/animation, audio/export, cutout when relevant, and independent review tasks. Keep different videos' writable files isolated. Use actual host subagent tools; do not merely label one agent as a team. If unsupported, explain the limitation and obtain a changed execution choice before replacing requested teams with solo work. Completed independent jobs may continue while another job needs attention.
 
+Every team must assign a dedicated **Production Video Reviewer**, distinct from the editing/repair workers, using [Video reviewer](references/video-reviewer.md). Every worker follows these seven production requirements for every applicable source and variant:
+
+1. **Unobstructed presenter and measured clearance.** Keep foreground text, plates and cards off the real presenter, including face, eyes, mouth, chin and neck. In vertical presenter scenes, captions occupy the middle channel at the lower edge of upper graphics; require the resolution-scaled headroom in [Layouts](references/layouts-effects.md). Track actual moving bounds, not a fixed Y coordinate, 60/40 split or a single face screenshot. Preserve Cutout's usable alpha gaps and full-canvas background.
+2. **Stable semantic captions.** Display complete grammatical phrases with fixed box, line breaks and word positions throughout each phrase. No moving word window, sentence bleed or highlight-induced reflow. Only the active word changes color using verified timings; use phrase-level timing when word accuracy is unavailable. Follow [Transcription](references/transcription-sync.md), including natural sentence boundaries and reading pace rather than a fixed phrase quota.
+3. **Padded content-sized backgrounds.** Measure complete rendered glyph bounds and padding for every badge/plate, wrap within safe width and coordinate text/background through every animation state. No clipped words, rounded-edge contact or unreadable shrinking.
+4. **Measured heading alignment.** Center banner headings, scene titles and CTA headers in their actual content boxes using rendered bounds and bearings; inspect balanced margins. Never substitute guessed offsets. Preserve explicitly chosen alignment and intentional body/data layouts under [Layouts](references/layouts-effects.md).
+5. **Sharp graphics and verified encoding.** Render generated raster text/graphics at twice final dimensions, then downsample once with a suitable high-quality filter; never upscale a jagged 1x raster and call it supersampling. Use equivalent vector/native rendering only after actual exported edge evidence passes. Choose quality-led encoding for the actual dimensions/FPS/destination and inspect decoded text edges under [Audio and rendering](references/audio-rendering.md); an encoder flag or nominal bitrate cannot certify quality.
+6. **Verified words and entities.** Treat ASR as a draft. Verify names, credentials, technical terms, locations, event date/time and language from matching evidence. Keep a source-scoped terminology ledger and propagate corrections through every text surface and variant. Do not guess, invent credentials or copy an example event into unrelated footage.
+7. **Original sound and sync.** Preserve original speech, pitch, pauses, sequence and timing unless corresponding edits were explicitly authorized. Select the actual source stream and map it once; prefer compatible passthrough where possible, and distinguish re-encoding from lossless/bit-identical preservation. Check the final muxed lips, captions, waveform timing and tail under [Audio and rendering](references/audio-rendering.md).
+
+After rendering, the reviewer extracts timecoded evidence from the actual candidate, performs the full viewing/listening and detailed checks, and returns every observed defect for autonomous repair. Repair, re-render, re-extract and review the replacement complete export. Release requires zero open observed defects, verified wording and all applicable checks passed; no cosmetic-error allowance or unperformed-review pass. A repeated failure requires diagnosis or an explicit blocker, never silent acceptance.
+
+These are production acceptance rules, not a guarantee that an AI can detect every possible error. Read [Layouts](references/layouts-effects.md), [Transcription](references/transcription-sync.md) and [Video reviewer](references/video-reviewer.md) for the operating procedure.
+
 For All mode, share verified source analysis and any transcript within each video, but plan and review every variant in its resolved output set. Unnarrowed All requests six; four passing Split/Overlay outputs leave two Cutouts incomplete. Horizontal-only All requests three; two passing outputs leave one Cutout incomplete. A failed variant does not block valid independent jobs or disappear from the requested set.
 
 ## Route the work
@@ -55,7 +69,7 @@ Read only the references needed for the current stage. Begin with workflow and e
 | 7. Build the timeline | [Transcription and sync](references/transcription-sync.md) | Integer frame intervals, source mappings, cue ledger |
 | 8. Composite and animate | [Motion design](references/motion-design.md), [Layouts](references/layouts-effects.md) | Deterministic composition, readable face-safe graphics |
 | 9. Preview | [Audio and rendering](references/audio-rendering.md) | Representative renders with real audio |
-| 10. Review and repair | [Quality assurance](references/quality-assurance.md) | Measured checks plus visual and listening review |
+| 10. Review and repair | [Quality assurance](references/quality-assurance.md), [Video reviewer](references/video-reviewer.md) | Independent full-candidate review, defect ledger, verified repairs and release verdict |
 | Finish and deliver | [Delivery](references/delivery.md), [Audio and rendering](references/audio-rendering.md) | Checked exports in `Final Output Videos`, project, credits and status |
 
 For installation, discovery, or host differences, read [Agent compatibility](references/agent-compatibility.md). Source attribution is in [Source notices](references/source-notices.md). Do not load all references or fetch upstream instruction sets on every invocation.
@@ -65,6 +79,10 @@ For installation, discovery, or host differences, read [Agent compatibility](ref
 Keep a compact evidence record in the editing workspace: media facts, edit decisions, transcript confidence, frame timeline, asset rights, and QA results. For a small edit these can be sections in one plan rather than many files. Reuse verified work after a failure.
 
 Before rendering, include an explicit release-check list in that plan: **source content/timing/framing**; **full-duration normal-speed viewing of every candidate's graphic development, holds and transitions, plus actual listening where audio exists**; and, for **Cutout, alpha/gesture playback on the actual animated background and separate light and dark diagnostic backgrounds**. Name these checks even in a compact plan; representative clips, endpoint stills or full decode do not stand in for them. Mark them planned until actual review evidence exists, and retain needs-review status when a required check cannot be performed.
+
+Also name **verified wording across all text**, **moving-face protection and the vertical middle caption channel**, **complete padded badge containment through animation**, and the **reviewer's small-defect sweep and zero-open-defect release verdict**. Repairs invalidate approval of the old export; the new complete candidate must receive full playback/listening and targeted repair checks before promotion.
+
+The named checks also include **phrase stability and sentence boundaries**, **active-word timing without text movement**, **measured headroom and heading centering**, **decoded final-export text sharpness versus the clean render**, and **timecoded verification frames from every scene and caption cue**. Do not claim a $100,000 level, flawless result or UHD detail from a budget statement or settings; establish the actual delivery quality through these checks. A budget statement does not authorize paid services.
 
 Align contextual visuals to reviewed speech or observed action/shot events at output frame boundaries. Verify meaningful motion coverage and content-appropriate transitions throughout, source-specific palette/contrast, portrait ordering when a speaker exists, and true silhouette compositing for Cutout. No compulsory effect count, source cut frequency or fake retention score applies; dynamic graphics do not authorize source cuts/crops/retiming. Compare Reference results to the observed profile, recording deliberate adaptations to these defaults and unknowns. Do not silently replace an unavailable required reference with Auto. Never promise universal best quality, virality or timing beyond the evidence. Avoid covering faces, gestures, essential screen content or captions.
 

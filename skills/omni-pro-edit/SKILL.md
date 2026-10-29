@@ -4,7 +4,7 @@ description: Use when editing supplied videos automatically, matching a sample v
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.1.0"
+  version: "3.1.2"
 ---
 
 # omni-pro-edit
