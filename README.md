@@ -4,7 +4,7 @@
 
 Give the main skill your footage and an editing reference for **Reference** mode. Give it footage without a reference for **Auto** mode. It inspects the media, plans a treatment, tests a representative passage, and reviews each requested export. Explicit presets and **Manual** mode remain available when you want to choose the format and composition yourself.
 
-**Version:** 3.2.0 · **Package:** Markdown instructions and license notices · **License:** MIT
+**Version:** 3.2.1 · **Package:** Markdown instructions and license notices · **License:** MIT
 
 This repository supplies the workflow, not an editor application. A capable agent uses actual local media tools and may create processing code in your editing workspace. The package contains no processing scripts, model weights, media, or dependency trees. No additional skill is a mandatory runtime dependency.
 
@@ -105,7 +105,7 @@ An explicit request for a shorter edit, highlights, or a montage supplies editin
 
 ## Choose a skill
 
-All eight entry names use `omni-edit-pro` in v3.2.0. Use your host's skill picker or supported command syntax. Codex supports `$omni-edit-pro` or its picker; slash commands depend on the host.
+All eight entry names use `omni-edit-pro` since v3.2.0. Use your host's skill picker or supported command syntax. Codex supports `$omni-edit-pro` or its picker; slash commands depend on the host.
 
 | Skill | Default output when explicitly selected |
 | --- | --- |
@@ -242,7 +242,7 @@ npx skills add . --global --agent codex --skill omni-edit-pro omni-edit-pro-hori
 
 Verify the selected revision and CLI/runtime requirements. Use `npx.cmd` in PowerShell if script policy blocks `npx.ps1`. A smaller installation must include the shared core plus each chosen wrapper. See [installation and migration](INSTALL.md) and [host compatibility](skills/omni-edit-pro/references/agent-compatibility.md).
 
-**Migrating to v3.2.0:** every command now uses the `omni-edit-pro` order. The main entry and shared core are one folder, so the suite has eight unique entries rather than nine. Back up existing installations, migrate local edits, replace the former preset folders with the names above, and remove obsolete suite entries from active discovery after verifying the replacement. All editing modes, presets, quality rules and output counts remain available. See [migration instructions](INSTALL.md#migrate-from-earlier-releases).
+**Migrating from before v3.2.0:** every command now uses the `omni-edit-pro` order. The main entry and shared core are one folder, so the suite has eight unique entries rather than nine. Back up existing installations, migrate local edits, replace the former preset folders with the names above, and remove obsolete suite entries from active discovery after verifying the replacement. All editing modes, presets, quality rules and output counts remain available. See [migration instructions](INSTALL.md#migrate-from-earlier-releases).
 
 Earlier behavior changes are retained:
 
@@ -268,14 +268,14 @@ Historical v2 checks covered nine entries, same-release links, installation stag
 
 **Historical v3.1.0 checks:** nine discovered entries at 3.1.0, 37 Markdown/license files, 174 resolved file links, two heading links, matching licenses and a byte-identical staged copy. Seven paired paper scenarios initially recorded 26/28 checks for that draft versus 16/28 for 3.0; two planning omissions were repaired and both affected cases passed focused retests (8/8). The original failures remain recorded separately. Independent source review found no standing substantive contradictions in that version. These counts and results do not certify v3.1.1.
 
-Historical v3.1.1 and v3.1.2 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md). For current v3.2.0 naming and migration checks, use that document's current evidence section. **No actual user-supplied video has been edited or fully reviewed during authoring.** Strict written rules and zero known defects at release do not guarantee that an unobserved defect cannot exist. Caption stability, geometry, spelling, badge fit, text sharpness, reference fidelity, matte quality, useful motion and audio fidelity require actual output review for each later video.
+Historical v3.1.1 and v3.1.2 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md). Current v3.2.1 adds small speech/action-anchored graphic reveals, explicit eased handoffs and content-sized panels selected from measured clear space. Detailed explanations use a fitting primary region; narrow regions use useful keywords/symbols or remain clear. These shared rules apply to all presets and Adaptive. See the current evidence section in [VALIDATION.md](VALIDATION.md) for checks and limitations. **No actual user-supplied video has been edited or fully reviewed during authoring.** Strict written rules and zero known defects at release do not guarantee that an unobserved defect cannot exist. Caption stability, geometry, spelling, badge fit, text sharpness, reference fidelity, matte quality, useful motion and audio fidelity require actual output review for each later video.
 
 ## Project guide
 
 | Document | Purpose |
 | --- | --- |
 | [INSTALL.md](INSTALL.md) | Same-release installation, updates, migration, and host discovery |
-| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.2.0 design, execution contract, and authoring roles |
+| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.2.1 design, execution contract, and authoring roles |
 | [ATTRIBUTIONS.md](ATTRIBUTIONS.md) | Pinned sources, rights findings, and research boundaries |
 | [VALIDATION.md](VALIDATION.md) | Historical evidence, current checks, and unrun media tests |
 | [Shared SKILL.md](skills/omni-edit-pro/SKILL.md) | Production instructions used by every entry |

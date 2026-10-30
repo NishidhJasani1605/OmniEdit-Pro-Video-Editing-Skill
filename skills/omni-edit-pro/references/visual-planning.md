@@ -41,6 +41,18 @@ For Reference, develop an original implementation of observed attributes, not a 
 
 Build a per-source plan with these fields: source phrase/word IDs or inspected shot/action interval, semantic purpose, proposed visual and development states, composition/layout, timing anchor and source-to-output mapping, applicable reference attribute/evidence or Auto reason, asset/provenance requirement, protected regions, transition purpose, palette/contrast evidence, adaptation/permission and review concern. Convert validated anchors into output frames through the synchronization reference. Distinguish a concept's onset from an intentional anticipation or delayed reveal.
 
+For each explanatory graphic, the plan must contain these concrete slots before implementation; keep them in the same cue ledger rather than inventing another timeline:
+
+| Slot | Required decision |
+| --- | --- |
+| Semantic unit | One small idea with its source evidence; exact heading/concise clause, keyword or symbol; qualifications kept with their claim; previously introduced context versus hidden future material |
+| Reveal and reading | Verified speech/action anchor, first semantic visibility, entrance/settled frames, readable hold, exit frames and destination; neutral structural anticipation labeled separately |
+| Space and hierarchy | Candidate contiguous regions over the full lifetime, clearance, measured text/group sizes at readable type, selected primary/compact form and content-sized box; fallback when it cannot fit |
+| Smooth handoff | Property endpoints/easing, stable persistent elements, resize/travel envelope, old/new visibility scheduling and unchanged source/audio timing |
+| Acceptance evidence | Preview includes this unit's hardest timing/space state; final review checks semantic order, actual fit, readability and consecutive transition frames with playback |
+
+Use [semantic reveals and handoffs](motion-design.md) and [space allocation](layouts-effects.md#allocate-space-before-sizing-panels) to fill these slots. A full paragraph shown immediately, a generic fade applied to every row, or “make it smooth and responsive” is not an implementation-ready cue plan. A later highlight cannot undo an early reveal. Explanatory chunking never changes the stationary full-phrase caption contract.
+
 Add a full-duration motion-coverage record using [Motion design](motion-design.md): identify what develops in every passage, what remains settled for reading, how the next state connects, and the interval/reason for any short reading hold. Include the opening, middle, ending, quiet scenes and scene boundaries. Default to evolving meaningful graphics throughout every composition; long frozen cards with only fade-in/fade-out treatment are incomplete. Explicit user requests for stillness remain valid and are recorded with their scope. Continuous development can be quiet and low-amplitude; decorative pulsing, random effects or source cuts/zoom/retiming do not fill a coverage gap.
 
 Choose an asset only when it explains, demonstrates, locates, compares, or supplies relevant atmosphere. Keep the presenter visible when expression is the strongest evidence; keep screen detail/action visible when that is the evidence. Asset selection does not authorize source replacement. There is no B-roll percentage, minimum event count, or fixed interval between cuts. Remove visuals that merely repeat a noun without improving comprehension.

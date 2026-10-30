@@ -1,8 +1,24 @@
-# Validation evidence — OmniEdit Pro 3.2.0
+# Validation evidence — OmniEdit Pro 3.2.1
 
 This document separates historical package checks, v3 instruction tests, a bounded synthetic media check, and future media benchmarks. **No actual user-supplied source video has been edited or rendered during this authoring task.** Instruction tests and proposal scores cannot establish audiovisual quality or reference fidelity.
 
-## Current 3.2.0 naming revision — 2026-10-29
+## Current 3.2.1 motion and space revision — 2026-10-30
+
+This revision changes the shared production instructions, not the package's eight-entry structure. It requires small speech/action-anchored explanatory units, explicit eased property endpoints and handoffs, and content-sized panels selected from measured clear regions. Caption phrase stability, portrait ordering, Cutout alpha-space rules, source preservation and per-variant production review remain in force. The new requirements are carried into planning, specialist handoffs, review and release gates.
+
+### Evidence and scope
+
+- **Baseline inspection:** commit `c0f201aada99a2e174f4eac80f6dfdb953095d22` already required meaningful progression, safe moving-person placement and measured text containment. It permitted active highlights as graphic development and lacked an explicit per-unit visibility ledger, same-slot handoff recipe and primary-description/compact-cue allocation procedure. Existing clipping/collision prohibitions are retained safeguards, not claimed new discoveries. An attempted independent baseline scenario agent ended with a host usage-limit error; no result or score is attributed to it.
+- **Read-only reference inspection:** two supplied images were viewed in place. Video metadata, duration-wide sampled frames and adjacent frames around an entrance were inspected through in-memory decoding. They support the staged-card and asymmetric-space design interpretation. No reference media, thumbnails, extracted audio, transcript, identities or attachment paths were added to this package or saved as authoring fixtures. Full normal-speed playback/listening and exact recovered easing were not established; the ramp in the skill is an implementation choice.
+- **Package checks:** all eight entry points passed the skill validator at version 3.2.1. The suite retains 36 Markdown/license files and 20 shared references. Names, same-release wrapper dependencies, license bytes, local links/anchors, closed fences and whitespace were checked. These checks validate packaging, not aesthetic quality.
+- **Numerical checks:** the documented ramp was evaluated at 24, 25, 30 and 60 fps for four durations (16 combinations); endpoints, clamping, monotonicity and bounded opacity passed. The 30fps example was checked for no early second-unit visibility or same-slot prose overlap, and a zero-opacity outgoing endpoint. These calculations validate the example's timing arithmetic, not an executed editor or perceived smoothness.
+- **Geometry checks:** synthetic 734×520 and 274×520 regions were checked with detailed 600×420 and compact 180×80 content plus travel. Detailed content fits only the wide region; compact content can fit the narrow region. A narrow-only description and a hold that fits but whose entrance leaves the region were rejected. The clearance calculation was checked for landscape, portrait and square dimensions. Actual font metrics and moving-subject footage must still be measured on each production job.
+- **Contract review:** the [regression cases](skills/omni-edit-pro/references/evaluation.md#progressive-reveals-smooth-handoffs-and-available-space-regressions) were traced manually through the new timing, fit and review procedures, including mirrored space, changing gestures, portrait/alpha constraints, long text, fast speech, silent interfaces and view-only references. This is an author review, not independent agent compliance, repeated fresh-context trials or a rendered-media benchmark.
+- **Installed copy:** all eight installed 3.2.0 entries were compared with the baseline before replacement; no content customizations or extra files were found. All 36 instruction/license files were backed up outside discovery, updated to 3.2.1, and verified byte-for-byte against the repository suite. No media was part of that backup or installation. Host UI reload/runtime discovery was not tested.
+
+No new edited video or production export was requested or produced. Independent revised-agent tests and full audiovisual comparisons remain **not run**. Written release checks and the tested numerical examples do not establish universal defect-free output; each later candidate still needs the actual full-output review and repair loop. This revision does not publish the repository or certify a live host reload.
+
+## Historical 3.2.0 naming revision — 2026-10-29
 
 The main command and every preset now use the `omni-edit-pro` word order. The existing shared core is the main entry, and the former duplicate generic wrapper is merged into it. The current suite has eight unique entries: main/core, six orientation/composition presets and All. There are twenty shared references and thirty-six Markdown/license files. This changes naming and installation structure, not editing behavior or the number of video outputs.
 

@@ -4,7 +4,7 @@ description: Edit supplied videos in horizontal 16:9 Cutout layout with a locall
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.2.0"
+  version: "3.2.1"
 ---
 
 # omni-edit-pro-horizontal-cutout
