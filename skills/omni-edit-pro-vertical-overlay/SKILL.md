@@ -4,7 +4,7 @@ description: Edit supplied videos in vertical 9:16 Overlay layout retaining orig
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.2.1"
+  version: "3.3.0"
 ---
 
 # omni-edit-pro-vertical-overlay

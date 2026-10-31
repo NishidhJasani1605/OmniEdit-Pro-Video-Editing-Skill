@@ -26,6 +26,8 @@ Compare decoded final-file crops with the clean pre-encode render: smallest text
 
 ## Prepare one deterministic render
 
+Before launching a full-duration multi-frame render, obtain the reviewer's revision-bound [PASS — STILL GATE](video-reviewer.md#pre-render-still-frame-audit-gate). Generate lossless single-frame PNGs from this same composition, fonts, assets and color/scale path for that inspection; single-frame evidence generation is allowed before approval. Failed geometry/style/illumination checks require code repair and re-audit first. Do not launch a full render speculatively in parallel with this gate. A render command below is an example, not authority to skip this dependency.
+
 Use the selected free/local compositor and versioned dependencies; when using Remotion, inspect its installed APIs. Derive all layers, audio offsets, dimensions, frame rate and duration from the same validated timeline. Resolve local assets, fonts and asynchronous loads before capture. Rendering a frame should not depend on wall-clock time, network races or unseeded randomness. The normal edit request includes final export; do not stop at an interactive preview unless the user requested preview-only work.
 
 Choose codec, container, pixel format, audio codec/rate/channel layout, dimensions and color output for the requested destination. H.264/AAC MP4 is a common compatibility choice, not a universal master format. Use a suitable alpha-capable format only when transparency is required. Handle HDR and log material with a deliberate, tested color transform; do not fix washed-out colors by blindly increasing saturation or mislabeling color metadata.

@@ -4,19 +4,44 @@ Read this before an actual edit. Resolve intent from the prompt, explicit preset
 
 ## Identify inputs
 
-Record each input's role: **source target**, **style reference**, **supporting asset**, or **unknown**. A source is edited; a reference is observed; an asset is considered for use with rights evidence. A file has two roles only when explicitly requested. Map references to sources, including shared references and per-source overrides. Resolve ambiguous unlabeled files before dispatch: "Which file should I edit, and which is the example?" Do not infer roles from filename order alone. A lone designated reference does not supply a source.
+Record each input's role: **source target**, **style reference**, **supporting asset**, or **unavailable**. A source is edited; a reference is observed; an asset is considered for use with rights evidence. A file has two roles only when explicitly requested. Explicit labels and corrections win. For unlabeled inputs use the automatic classification below without stopping to ask which file is the source or reference. A lone designated reference does not supply a source.
 
 Preserve source identities even when basenames match. References do not contribute to source-job or output counts. A batch means independent sources unless a combined edit is requested. Clear montage/combination instructions establish grouping; do not repeat authorization questions they already answer.
+
+### Zero-Configuration Automatic Role Classification
+
+When video files arrive without explicit source/reference tags, inspect them before dispatch and proceed autonomously. Use FFprobe for decoded dimensions, display aspect ratio (including rotation and sample aspect), frame rate, video duration, audio stream duration/start and stream presence. Use FFmpeg to decode 2–3 representative frames per file, spread across opening, middle and ending rather than adjacent opening frames. Respect view-only retention constraints with in-memory decoding. These frames support initial classification, not complete reference or motion review; inspect more intervals when the evidence conflicts.
+
+| Detected role | Evidence to inspect |
+| --- | --- |
+| **Source Target (Raw Footage)** | Continuous single-take presenter footage with natural room/camera background and absence of pre-rendered motion graphics, title bars and burned-in captions. A raw camera/hash filename supports this classification but never overrides decoded content. Non-presenter raw/action/interface footage remains a valid source; do not invent a presenter. |
+| **Vertical Reference (9:16)** | Display aspect ratio 9:16, such as 1080×1920, together with pre-rendered motion graphics, split screens, topic banners or burned-in captions. Aspect ratio alone cannot turn a raw vertical recording into a reference. |
+| **Horizontal Reference (16:9)** | Display aspect ratio 16:9, such as 1920×1080, together with motion graphics, overlay cards, side scrims or lower-third captions. A widescreen raw recording remains a source. |
+
+Log file ID, metadata, sampled timecodes, visible evidence, assignment, confidence, reference-to-source mapping and reason in the job plan. Compare subject/topic and audiovisual correspondence to map references to matching source targets. Never use input order or filenames alone. With multiple same-format references, prefer the best content match, then the most inspectable relevant treatment; log that priority. Different formats guide their own outputs and are not conflicting references to be averaged.
+
+If 2–3 frames leave roles uncertain, extend inspection and record the best supported assignment without a role-confirmation prompt. Retain an unresolved file as a provisional source target rather than silently discarding it or treating it as a proven reference; keep that uncertainty in the plan. A lone unlabeled finished-looking video is a source unless there is evidence of another target it exemplifies. User labels, explicit destinations, selected presets and editing permissions remain authoritative. Auto classification does not authorize trimming, cropping, asset copying or source replacement. A corrupt/inaccessible file remains unavailable, not falsely classified; continue accessible independent inputs and report the access gap.
+
+When no explicit output set/preset overrides detection, derive deliverables per source from its applicable references:
+
+| Applicable reference formats | Automatically resolved deliverables |
+| --- | --- |
+| Vertical only | One **Vertical 9:16 Reel** |
+| Horizontal only | One **Horizontal 16:9 Master** |
+| Both vertical and horizontal | **BOTH**: one Vertical 9:16 Reel and one Horizontal 16:9 Master |
+| No applicable reference | Auto direction, preserving source display aspect unless another instruction applies |
+
+Select composition within each format from the applicable reference and source fit; this does not multiply outputs into all compositions. An explicit preset retains its selected composition/shape; explicit All still requests six pairs or its narrowed set, with references guiding the corresponding formats. References never add source jobs. Finalize and log the exact source/variant matrix and proceed without routine format or role questions.
 
 ## Direction, composition and treatment
 
 | Direction | Predicate | Behavior |
 | --- | --- | --- |
-| Reference | An explicitly designated sample guides this source | Inspect source and sample; use [reference-analysis.md](reference-analysis.md) |
-| Auto | No applicable designated reference and no request for Manual | Inspect source; use [auto-direction.md](auto-direction.md) |
+| Reference | An explicitly designated or automatically classified reference applies to this source | Inspect source and sample; use [reference-analysis.md](reference-analysis.md) |
+| Auto | No applicable designated or automatically classified reference and no request for Manual | Inspect source; use [auto-direction.md](auto-direction.md) |
 | Manual | User explicitly wants to choose missing settings | Honor supplied details; ask missing creative choices below |
 
-An explicit direction wins. Auto plus a sample may mean the sample is an asset or unused input; resolve a material ambiguity rather than assuming a match request. Manual can use a reference for unspecified aesthetics after its settings are answered. An inaccessible required reference remains a Reference gap; no silent switch to Auto. Use an already authorized fallback and record when it applies.
+An explicit direction wins. Explicit Auto governs its scope; log a supplied sample as unused treatment evidence or an explicitly requested asset within that scope. Otherwise automatically classified references select Reference without a role prompt. Manual can use a reference for unspecified aesthetics after its settings are answered. An inaccessible required reference remains a Reference gap; no silent switch to Auto. Use an already authorized fallback and record when it applies.
 
 Composition describes geometry: `adaptive`, `split`, `cutout`, `overlay`. Treatment describes typography, pacing, graphics, motion, color and sound. A sample's "style" may describe either; do not interpret every style adjective as a fixed composition. Editing permission separately describes allowed changes to the source.
 
@@ -28,7 +53,7 @@ Resolve shape from a clear user destination/ratio, then preset, then suitable re
 
 | Explicit entry | Default output set |
 | --- | --- |
-| `omni-edit-pro` | One chosen output per source; Reference/Auto with Adaptive available |
+| `omni-edit-pro` | One per applicable reference format (vertical, horizontal or both); without references one Auto output per source; Adaptive available |
 | `omni-edit-pro-horizontal-split` | horizontal 16:9, split |
 | `omni-edit-pro-horizontal-cutout` | horizontal 16:9, cutout |
 | `omni-edit-pro-horizontal-overlay` | horizontal 16:9, overlay |
@@ -55,7 +80,7 @@ Record authority for trimming/deleting words or pauses, reordering, combining so
 
 For explicit Manual, use supplied settings first. If orientation is missing, ask: **"Do you want a wide video (horizontal 16:9), a tall video (vertical 9:16), or the source's original shape?"** Wait. Then if composition is missing ask: **"Which composition do you want: Adaptive, Split, Cutout, or Overlay?"** Wait. Ask only the missing question; do not inspect media to infer a Manual answer. No response, timeout or preselected option is an answer. Pause only the unresolved scope.
 
-Reference/Auto do not ask these routine questions. They may ask for a missing source/location/workspace, ambiguous roles, contradictory instructions or a material low-confidence choice that evidence cannot settle. Announce reasonable assumptions and proceed with reversible previews when no blocker exists. Do not turn every creative choice or preview into a new approval gate.
+Reference/Auto do not ask routine role or format questions. Resolve unlabeled inputs and reference-format deliverables with the zero-configuration procedure above. They may ask for a genuinely missing source/location/workspace or contradictory explicit instructions. Log evidence-based creative assumptions and proceed with reversible, reviewer-audited previews. Do not turn every creative choice or preview into a new user approval gate.
 
 ## Handoff
 

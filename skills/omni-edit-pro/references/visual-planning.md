@@ -1,6 +1,6 @@
 # Visual planning
 
-Read after source inspection and relevant speech or shot/action analysis, before acquiring assets or building compositions. Produce a small creative brief and an actionable visual plan in the editing workspace. Use [transcription-sync.md](transcription-sync.md) for timing mechanics and [broll-assets.md](broll-assets.md) for asset research. Use [Reference analysis](reference-analysis.md) for an explicitly designated sample or [Auto direction](auto-direction.md) when choosing from the source.
+Read after source inspection and relevant speech or shot/action analysis, before acquiring assets or building compositions. Produce a small creative brief and an actionable visual plan in the editing workspace. Use [transcription-sync.md](transcription-sync.md) for timing mechanics and [broll-assets.md](broll-assets.md) for asset research. Use [Reference analysis](reference-analysis.md) for a designated or automatically classified applicable sample or [Auto direction](auto-direction.md) when choosing from the source.
 
 ## Understand the existing edit
 
@@ -50,6 +50,10 @@ For each explanatory graphic, the plan must contain these concrete slots before 
 | Space and hierarchy | Candidate contiguous regions over the full lifetime, clearance, measured text/group sizes at readable type, selected primary/compact form and content-sized box; fallback when it cannot fit |
 | Smooth handoff | Property endpoints/easing, stable persistent elements, resize/travel envelope, old/new visibility scheduling and unchanged source/audio timing |
 | Acceptance evidence | Preview includes this unit's hardest timing/space state; final review checks semantic order, actual fit, readability and consecutive transition frames with playback |
+| Reference card anatomy | Distinct concept-to-container mapping, each colored accent border/category pill/bold title/padding, stack gap and safe sequence grouping; no monolithic bullet-list substitution |
+| Scrim and lighting | Reference X-axis measurements versus estimated alpha, proposed smooth multi-stop profile, terminal zero before moving shoulder/body, with/without-scrim presenter comparison |
+| Caption/spacing geometry | Horizontal full-canvas midpoint and bottom band; portrait scaled stack band/gaps, >100px card/caption gap and at least200px forehead gap at1920px height |
+| Still-first gate | Scene/variant frame manifest, exact composition revision, lossless stills, reference/source comparisons, reviewer identity, failures/repairs and PASS — STILL GATE before full rendering |
 
 Use [semantic reveals and handoffs](motion-design.md) and [space allocation](layouts-effects.md#allocate-space-before-sizing-panels) to fill these slots. A full paragraph shown immediately, a generic fade applied to every row, or “make it smooth and responsive” is not an implementation-ready cue plan. A later highlight cannot undo an early reveal. Explanatory chunking never changes the stationary full-phrase caption contract.
 

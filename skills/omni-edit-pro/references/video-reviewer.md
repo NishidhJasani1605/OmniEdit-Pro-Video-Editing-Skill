@@ -10,17 +10,36 @@ Give the reviewer this concrete handoff before review:
 
 | Required item | Contents |
 | --- | --- |
-| Identity | Source ID, variant, candidate absolute path, version and file fingerprint; source-to-output mapping |
+| Identity | Source ID, variant and source-to-output mapping; for the pre-render gate, composition revision/input fingerprint, planned candidate path and actual still fingerprints; for post-render review, actual candidate path/version/file fingerprint |
 | Brief | User constraints, actual requested output, composition, approved treatment and any explicit overrides |
 | Text evidence | Raw/reviewed transcript where speech exists, approved terminology ledger with evidence, all caption/title/badge/end-card/sidecar text and outstanding questions |
 | Geometry | Per-scene protected presenter/gesture bounds, caption channel and measured minimum clearance, phrase/word positions, actual fonts, glyph bounds, centered heading boxes, badge padding/wrapping and platform safe areas |
 | Semantic units and motion | Each unit's exact content/source anchor, first semantic visibility, entry/settled/hold/exit frames, property endpoints/easing, persistent elements and same-slot handoff schedule |
 | Available-space decisions | Candidate clear regions over the complete cue, primary versus compact form and reason, readable type floor, measured content-sized boxes, motion/overlap footprints and worst clearance |
-| Render and encoding | Graphics render scale, downsampling/compositing path, clean reference frames, actual encoder/rate control/color settings, audio source selection and passthrough/re-encode choice |
-| Media evidence | Original source, applicable references/assets, candidate with actual audio or verified silence, diagnostic Cutout composites when applicable |
+| Render and encoding | Graphics render scale, downsampling/compositing path, clean reference frames, audio source selection and passthrough/re-encode choice; planned encoder/rate control/color settings at the still gate, actual settings for post-render review |
+| Media evidence | Original source and applicable references/assets; exact-composition lossless stills for the pre-render gate; actual encoded candidate with audio or verified silence plus diagnostic Cutout composites for post-render review |
 | Prior review | Check coverage, defect ledger, repair ownership and previous candidate verdicts; do not inherit a pass for changed output |
 
 Missing required inputs or unavailable viewing/listening capability means incomplete review. Never claim to have watched, heard or checked content that the host cannot expose. Follow the existing team-capability fallback rules; a role label is not a spawned reviewer.
+
+## Production Video Reviewer Protocol
+
+### Pre-Render Still-Frame Audit Gate
+
+**Before any full-duration multi-frame video render**, the dedicated reviewer must render lossless PNG stills from the exact proposed composition/code, fonts, assets and timeline, at native output dimensions (or the approved supersampling/downsampling path). The reviewer may request the render from its specialist when needed, but must inspect the actual returned stills independently. Run this gate before extending a representative preview into full production; an existing full render is not a substitute for still-first approval on a new design.
+
+Build a scene/frame manifest spanning **every planned scene**, including applicable Intro, Multi-card reveal, Adaptation, Event details, Active captions and Closing callout states. Also include longest text, partial/complete stack, scrim endpoint, most crowded active-caption frame and head/gesture extremes. Use actual scene/cue anchors and corresponding reference frames. Mark absent scene types source-grounded inapplicable rather than inventing an event, date, name, CTA or additional footage to satisfy the list. Without a reference, compare against the approved source-grounded plan and these contracts. Respect view-only input constraints by decoding reference frames in memory; generated candidate stills belong only in the editing workspace, never the skill package.
+
+For each still, record composition revision/fingerprint (including text, fonts, assets and layout inputs), source/variant, scene/cue, frame/timecode, reference evidence or not-applicable reason, measured geometry and the reviewer task identity. Visually compare candidate and reference alongside the real source. **FAIL the still gate** for any of these:
+
+1. Distinct concepts that should occupy separate stacked boxes are merged into one bullet-list container, or a required card lacks its accent border, category pill, bold title or padding.
+2. The dark scrim shades any presenter pixel, casts a shadow on face/clothing/lab coat, or has a harsh unnatural vertical falloff boundary. Require the calibrated multi-stop profile and illumination comparison in [Reference analysis](reference-analysis.md#measured-darkness-falloff--presenter-illumination).
+3. A horizontal subtitle/pill is centered on the graphics column instead of the full canvas midpoint (X = 960 at 1920px width), unless there is an explicit placement override. Check the rendered pill/phrase as well as the full-width wrapper.
+4. A default portrait presenter scene has less than **200 × outputHeight / 1920** pixels between caption bottom and highest forehead, or violates the required card/caption clearance and proportional stack spacing in [Layouts](layouts-effects.md#vertical-headroom--panel-spacing). This portrait test does not impose a 200px horizontal side margin or apply to footage with no presenter; applicable safety checks remain mandatory.
+
+The gate also checks all applicable wording, containment, framing and source-preservation constraints. Any failure requires immediate autonomous correction to the responsible code/style/layout, fresh still renders and a repeated visual audit **before full rendering**. Do not reduce the threshold, merge cards, darken the person or waive the gate for a deadline. Repeated failures require diagnosis under the repair loop. Missing still-render/inspection capability or required evidence leaves the gate **NEEDS REVIEW**, and the full render remains queued.
+
+Record **PASS — STILL GATE** only when all applicable scenes/variants pass and no still-audit defect remains. Tie the approval to the exact composition revision. Changed text, font, card structure, source fitting, scrim, caption placement or other dependent geometry invalidates the affected approval and requires re-audit before another full render. Preserve old evidence with its old identity. This verdict authorizes rendering; it is **not** a production release verdict and cannot establish motion smoothness, full-duration coverage, sync, sound or unseen frames. Representative motion previews and all post-render review passes below still apply.
 
 ## Review passes
 

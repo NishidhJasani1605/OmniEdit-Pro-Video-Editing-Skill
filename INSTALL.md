@@ -1,4 +1,4 @@
-# Installing OmniEdit Pro 3.2.1
+# Installing OmniEdit Pro 3.3.0
 
 Install instructions only. Installation does not start an editing job, ask creative-selection questions, spawn production teams, create a video project, or install processing tools/models. No external skill is a mandatory runtime dependency.
 
@@ -27,7 +27,7 @@ Manual copying needs no Python, Node.js, application code or upstream skill inst
 
 ## Optional Skills CLI
 
-From a reviewed local checkout containing all eight 3.2.1 entries, with Git and a supported Node/npm runtime:
+From a reviewed local checkout containing all eight 3.3.0 entries, with Git and a supported Node/npm runtime:
 
 ```sh
 npx skills add . --global --agent <agent-id> --skill omni-edit-pro omni-edit-pro-horizontal-split omni-edit-pro-horizontal-cutout omni-edit-pro-horizontal-overlay omni-edit-pro-vertical-split omni-edit-pro-vertical-cutout omni-edit-pro-vertical-overlay omni-edit-pro-all
@@ -41,11 +41,11 @@ npx skills add . --global --agent <agent-id> --skill omni-edit-pro omni-edit-pro
 
 Use `npx.cmd` in PowerShell if script policy blocks `npx.ps1`, without weakening the policy. Use `--copy` if links are unsuitable. Do not use a broad `--all` flag to guess the intended host. The previously tested CLI 1.7.2 requires Node.js >=22.20.0; check the selected CLI's requirements when using another release.
 
-For remote installation, replace `.` with the repository URL/ref only after verifying that revision contains the complete 3.2.1 suite. Local v3.2.1 modifications are not published automatically, and a repository URL alone does not establish that this revision is available there. This repository's source URL is [NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill](https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill).
+For remote installation, replace `.` with the repository URL/ref only after verifying that revision contains the complete 3.3.0 suite. Local v3.3.0 modifications are not published automatically, and a repository URL alone does not establish that this revision is available there. This repository's source URL is [NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill](https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill).
 
 ## Verify
 
-1. Compare every installed file to the selected source revision and check matching 3.2.1 metadata/license notices. A complete installation has eight entries, 20 core references and 36 Markdown/license files; verify the selected files rather than relying on counts alone.
+1. Compare every installed file to the selected source revision and check matching 3.3.0 metadata/license notices. A complete installation has eight entries, 20 core references and 36 Markdown/license files; verify the selected files rather than relying on counts alone.
 2. Resolve each wrapper's relative link to `../omni-edit-pro/SKILL.md` in the installed layout. The dependency must actually be readable; a CLI success message is insufficient.
 3. Reload the host when necessary and check its skill picker/list. Verify from an unrelated project with a harmless explanation-only prompt.
 4. Report what was verified and what remains untested. A filesystem/CLI check does not prove app discovery, native subagent availability or video quality.
@@ -55,7 +55,7 @@ No real video is required for installation verification. Runtime inventory, free
 
 ## Migrate from earlier releases
 
-Version 3.2.1 standardizes every entry on the `omni-edit-pro` naming order.
+Since version 3.2.0, every entry uses the `omni-edit-pro` naming order. Update the complete suite together for the 3.3.0 production contracts.
 The main entry is the shared core itself; the former duplicate main wrapper is
 merged into it. Install the eight unique folders above: one main/core, six
 format/composition presets and All. The suite contains 36 files and 20 shared
@@ -65,7 +65,7 @@ requested by unrestricted All mode.
 1. Inventory the installed suite and back it up outside active skill roots.
    Compare local edits against the prior revision and migrate them before replacement.
 2. Install the complete `omni-edit-pro` core and the renamed preset folders from
-   the same 3.2.1 revision. Do not rename the shared core into a preset or overwrite
+   the same 3.3.0 revision. Do not rename the shared core into a preset or overwrite
    it with the former main wrapper; the core contains the full production workflow.
 3. Verify installed bytes, frontmatter names, sibling core links and discovery.
    Remove only verified obsolete suite folders from active discovery after their

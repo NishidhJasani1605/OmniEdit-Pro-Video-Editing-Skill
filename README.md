@@ -4,7 +4,7 @@
 
 Give the main skill your footage and an editing reference for **Reference** mode. Give it footage without a reference for **Auto** mode. It inspects the media, plans a treatment, tests a representative passage, and reviews each requested export. Explicit presets and **Manual** mode remain available when you want to choose the format and composition yourself.
 
-**Version:** 3.2.1 · **Package:** Markdown instructions and license notices · **License:** MIT
+**Version:** 3.3.0 · **Package:** Markdown instructions and license notices · **License:** MIT
 
 This repository supplies the workflow, not an editor application. A capable agent uses actual local media tools and may create processing code in your editing workspace. The package contains no processing scripts, model weights, media, or dependency trees. No additional skill is a mandatory runtime dependency.
 
@@ -74,12 +74,14 @@ Use my Video Project folder as the workspace.
 
 In v3.1.2, vertical/Reels presenter scenes put the real speaking video or extracted person **below**, captions in a **clear middle channel**, and the primary animation **above**, across Split, Cutout, Overlay and Adaptive. Caption headroom is measured over the speaker's movement and scales with output resolution. Added foreground graphics stay clear of the real presenter, while Cutout backgrounds can use safe transparent gaps. Meaningful graphics develop throughout the edit, with readable settled text and suitable transitions. Every source receives its own content, motion and palette decisions from actual footage; blue/navy and cloned animation templates are not automatic defaults. Explicit placement, stillness and palette instructions take priority without waiving obstruction checks.
 
+Version 3.3.0 adds automatic role/format discovery, reference-matched multi-box hierarchy, calibrated presenter-safe scrims, full-canvas horizontal caption centering and a mandatory pre-render still audit. These contracts live in the shared core and apply to every relevant preset. See [current validation evidence](VALIDATION.md).
+
 ## Modes and choices
 
 | Mode | When it applies | What the agent does |
 | --- | --- | --- |
-| **Reference** | You designate a sample as an editing reference | Inspect it separately, record timecoded observations, adapt the treatment to your source, and compare a preview with relevant reference passages |
-| **Auto** | No editing reference is designated and Manual is not requested | Inspect the source, choose a suitable treatment by scene, and explain the selected direction briefly |
+| **Reference** | A designated or automatically detected editing reference applies | Inspect it separately, record timecoded observations, adapt the treatment to your source, and compare a preview with relevant reference passages |
+| **Auto** | No applicable reference is detected/designated and Manual is not requested | Inspect the source, choose a suitable treatment by scene, and explain the selected direction briefly |
 | **Manual** | You explicitly request manual selection | Follow supplied choices; ask only for genuinely missing format/composition choices |
 
 Manual format choices include horizontal 16:9, vertical 9:16, or the source's original shape. Composition choices include Adaptive, Split, Cutout, and Overlay. Manual waits for missing answers before media-based inference; Auto and Reference permit preliminary analysis to resolve their choices.
@@ -88,7 +90,7 @@ Format, composition, creative treatment, and editing permission are separate dec
 
 Output shape follows explicit user choices, an explicitly selected preset, an applicable reference, then the source display aspect ratio. Auto can preserve square and other native ratios; it does not assume every source belongs in a vertical short. An automatically matched preset is not an explicit user selection and does not supply preset defaults.
 
-The agent asks when an ambiguity blocks the edit, such as two unlabeled files that could mean two sources or one source plus a sample, contradictory directions, or conflicting references with no usable priority. It does not ask the old wide/tall and style questions routinely in Auto or Reference mode. A requested but inaccessible reference is reported as unavailable; switching to Auto requires your direction.
+For unlabeled inputs, the agent probes metadata and 2–3 decoded frames, automatically maps raw footage and 9:16/16:9 references, logs evidence/confidence and proceeds. Vertical references yield a Vertical Reel, horizontal references a Horizontal Master, and both yield both outputs unless explicit choices override detection. Genuinely missing inputs or contradictory explicit instructions can still need clarification. It does not ask the old wide/tall and style questions routinely in Auto or Reference mode. A requested but inaccessible reference is reported as unavailable; switching to Auto requires your direction.
 
 ### Editing permissions
 
@@ -200,7 +202,7 @@ Seven production requirements cover the reported defects:
 6. **Verified wording:** check names, credentials, venues, landmarks and event date/time details against matching evidence. ASR is a draft, and prior projects' glossaries or dates never verify a new event.
 7. **Original audio and sync:** preserve speech, pauses and source timing under the recorded edit permissions; select source streams explicitly and verify the final mux. Streamcopy and lossy AAC re-encoding are different operations and must be described accurately.
 
-After each render, the reviewer inspects timecoded verification frames and detailed text crops, full normal-speed playback and applicable listening. It logs every defect, returns repairs to the owning specialist, and checks the revised complete export and fresh evidence before release. Missing capability remains needs-review. See [layout rules](skills/omni-edit-pro/references/layouts-effects.md), [transcription verification](skills/omni-edit-pro/references/transcription-sync.md), [rendering](skills/omni-edit-pro/references/audio-rendering.md) and the [reviewer contract](skills/omni-edit-pro/references/video-reviewer.md).
+Before full rendering, the reviewer audits lossless stills across every actual scene and variant. Separate stacked cards must preserve their own accent borders, category pills, bold titles and padding. Calibrated multi-stop scrims reach zero before the moving presenter without changing natural illumination. Horizontal caption pills center on the full canvas (X = 960 at 1920px width); portrait stacks retain scaled gaps and headroom. Any failed still requires layout/code repair and re-audit. Still approval authorizes rendering only. After each render, the reviewer inspects timecoded verification frames and detailed text crops, full normal-speed playback and applicable listening. It logs every defect, returns repairs to the owning specialist, and checks the revised complete export and fresh evidence before release. Missing capability remains needs-review. See [layout rules](skills/omni-edit-pro/references/layouts-effects.md), [transcription verification](skills/omni-edit-pro/references/transcription-sync.md), [rendering](skills/omni-edit-pro/references/audio-rendering.md) and the [reviewer contract](skills/omni-edit-pro/references/video-reviewer.md).
 
 The default workflow uses free local processing: FFmpeg/FFprobe, an available compositor, and suitable local transcription or matting where needed. Remotion is optional when its actual terms permit the intended use without payment; a capable local alternative is allowed. Tool setup happens for an authorized editing job, not during skill installation. There is no automatic paid or hosted fallback. Your AI host, runtime tools, models, fonts, and media retain their own terms.
 
@@ -268,14 +270,14 @@ Historical v2 checks covered nine entries, same-release links, installation stag
 
 **Historical v3.1.0 checks:** nine discovered entries at 3.1.0, 37 Markdown/license files, 174 resolved file links, two heading links, matching licenses and a byte-identical staged copy. Seven paired paper scenarios initially recorded 26/28 checks for that draft versus 16/28 for 3.0; two planning omissions were repaired and both affected cases passed focused retests (8/8). The original failures remain recorded separately. Independent source review found no standing substantive contradictions in that version. These counts and results do not certify v3.1.1.
 
-Historical v3.1.1 and v3.1.2 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md). Current v3.2.1 adds small speech/action-anchored graphic reveals, explicit eased handoffs and content-sized panels selected from measured clear space. Detailed explanations use a fitting primary region; narrow regions use useful keywords/symbols or remain clear. These shared rules apply to all presets and Adaptive. See the current evidence section in [VALIDATION.md](VALIDATION.md) for checks and limitations. **No actual user-supplied video has been edited or fully reviewed during authoring.** Strict written rules and zero known defects at release do not guarantee that an unobserved defect cannot exist. Caption stability, geometry, spelling, badge fit, text sharpness, reference fidelity, matte quality, useful motion and audio fidelity require actual output review for each later video.
+Historical v3.1.1 and v3.1.2 package, scenario and installed-copy checks are recorded separately in [VALIDATION.md](VALIDATION.md). Historical v3.2.1 added small speech/action-anchored graphic reveals, explicit eased handoffs and content-sized panels selected from measured clear space. Detailed explanations use a fitting primary region; narrow regions use useful keywords/symbols or remain clear. These shared rules apply to all presets and Adaptive. See the current evidence section in [VALIDATION.md](VALIDATION.md) for checks and limitations. **No actual user-supplied video has been edited or fully reviewed during authoring.** Strict written rules and zero known defects at release do not guarantee that an unobserved defect cannot exist. Caption stability, geometry, spelling, badge fit, text sharpness, reference fidelity, matte quality, useful motion and audio fidelity require actual output review for each later video.
 
 ## Project guide
 
 | Document | Purpose |
 | --- | --- |
 | [INSTALL.md](INSTALL.md) | Same-release installation, updates, migration, and host discovery |
-| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.2.1 design, execution contract, and authoring roles |
+| [IMPLEMENTATION.md](IMPLEMENTATION.md) | v3.3.0 design, execution contract, and authoring roles |
 | [ATTRIBUTIONS.md](ATTRIBUTIONS.md) | Pinned sources, rights findings, and research boundaries |
 | [VALIDATION.md](VALIDATION.md) | Historical evidence, current checks, and unrun media tests |
 | [Shared SKILL.md](skills/omni-edit-pro/SKILL.md) | Production instructions used by every entry |

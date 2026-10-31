@@ -14,6 +14,22 @@ Treat safe areas as delivery-specific. Inspect the intended platform's current i
 
 Measure text with the actual loaded font and language. Reserve space for longer strings, diacritics, right-to-left text, and font fallback. Ensure fonts and assets are loaded before measuring or capturing preview frames. Prefer a simpler stable layout when automatic tracking or reliable measurement is unavailable. Apply the text-background containment contract below to every badge, caption plate, title and label.
 
+## Geometry and Layouts
+
+### Horizontal Caption Centering
+
+In horizontal Overlay, place the subtitle/caption **alignment container across the full canvas**, `left: 0, right: 0`, centered horizontally at the bottom within delivery-safe margins. Its midpoint is `outputWidth / 2`: **X = 960 at 1920×1080**, X = 640 at 1280×720 and X = 1920 at 3840×2160. Other horizontal compositions use the same full-canvas caption center by default; an explicit user placement instruction can override it. Captions must never be trapped inside the left graphics column or centered relative to the scrim/card stack by habit.
+
+The full-width element is the alignment wrapper, not a compulsory full-width painted background. Keep the visible pill content-sized with measured padding, center that pill and its complete shaped phrase on the full-canvas midpoint, and keep both stationary during word highlights. Balanced left/right visible margins may differ only by unavoidable output-pixel rounding. Validate long/multiline phrases after font loading, including the backing, stroke and shadow. Preserve bottom safe areas and source/gesture protection; use a clear bottom caption band or permitted intact-source fitting/padding if needed. Do not silently move a colliding centered caption into the graphics column or cover the presenter to retain the default. Report an actual unsolved geometry conflict.
+
+### Vertical Headroom & Panel Spacing
+
+At a 1080×1920 portrait output, plan stacked cards in the upper animation area between **Y = 200px and Y = 900px**, with **28–36px proportional gaps** between the full visible card footprints. Scale Y positions and gaps by `outputHeight / 1920` (2× these values at 2160×3840). Use content-sized cards with their own border, category pill, bold title and padding under the [Multi-Box Architecture Contract](reference-analysis.md#multi-box-architecture-contract). These are layout-planning bands within the selected composition, not permission to move the source or conceal content.
+
+Keep **more than 100 scaled pixels** between the lowest visible card/animation footprint and the top of the middle caption pill, including borders and shadows. From the complete bottom of that caption pill to the highest presenter forehead throughout the cue, retain the existing **at least 200 scaled pixels** minimum; aim for **more than 200 up to 400 scaled pixels** of clear headroom when the scene permits. The 400px value is a target, not a maximum that forces unnecessary blank space. Hands, hair and other motion still need separate clearance. Do not count supersampled coordinates as final-output pixels.
+
+Check these distances at reveal/travel/resize/gesture extremes, not just at settled frames. If the upper stack would exceed its region or reduce those gaps, simplify supporting copy, split it into successive groups of distinct cards or redistribute permitted graphic space before rendering; never merge the cards, shrink the presenter to a thumbnail or consume the middle caption channel. Preserve actual Cutout alpha gaps rather than reserving a rectangular lower panel. Explicit placement overrides must be recorded and still pass moving-subject protection; non-presenter footage does not acquire a forehead rule. Horizontal spacing follows its measured geometry, not the portrait 200px headroom test.
+
 ## Allocate space before sizing panels
 
 Choose the **information form from the usable space**, then size its box from measured content. This applies to every source, scene, aspect ratio and composition, not to a fixed left/right template. A panel can contain its text perfectly and still be too big for the scene. Treat text containment and scene fit as two separate required checks.

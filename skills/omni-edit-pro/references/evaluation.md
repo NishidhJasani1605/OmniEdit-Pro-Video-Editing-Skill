@@ -83,6 +83,21 @@ Run these as instruction scenarios before implementation changes, then as actual
 
 ## Hard acceptance checks
 
+### v3.3 automatic discovery, multi-box, scrim and still-first regressions
+
+These scenarios define instruction decisions; execute real-media tests separately when authorized fixtures and review capabilities exist. Preserve explicit choices and the v3.2.1 semantic-reveal/space-fit controls.
+
+| Scenario | Expected decision/evidence |
+| --- | --- |
+| Three unlabeled videos: camera/hash named continuous natural-room presenter; matching 9:16 graphics/captions sample; matching 16:9 scrim/cards sample | Probe metadata including audio duration and 2–3 decoded frames each; log evidence/confidence. One source, two format-specific references, two outputs (Vertical Reel and Horizontal Master), no role/format question. Never turn the references into source jobs. |
+| Raw vertical file alone; two raw sources; explicitly labeled polished source plus one reference; explicit horizontal Overlay or narrowed All with both reference formats | Raw aspect alone is not a reference signal; source-native Auto or separate source jobs remain valid. Explicit labels/presets/narrowing win; both formats do not multiply an explicit output set. Log uncertain cases and inspect more without routine role confirmation. |
+| Reference shows three separate stacked concepts; draft uses one bullet-list panel; full stack does not fit | Reject the merged container. Require each card's accent border/category pill/bold title/padding; simplify descriptions or sequence groups of separate cards at source anchors. No unreadable scaling, future-text exposure or source obstruction. |
+| 1920×1080 overlay with protected shoulder beginning atX900, then a second source whose shoulder begins atX700 | Smooth multi-stop scrim may terminate near40–43%width only where clear; the second source requires an earlier zero endpoint. Scrim-induced presenter changes and shadow alpha are zero. Abrupt falloff fails even without face overlap. A flattened reference without clean plate supports estimated, not exact recovered alpha. |
+| Horizontal caption draft centerX300 inside600px graphics column; outputs1920×1080,1280×720,3840×2160 | Full-width alignment wrapper and content-sized pill/phrase center atX960,X640,X1920 respectively; placement override only by explicit user instruction. Inspect rendered bounds, not CSS wrapper alone. |
+| Portrait1080×1920 has12px stack gaps, card/caption gap100px, forehead gap180px; repeat at2160×3840 | Still gate rejects all three distances. Use28–36px stack gaps, card/caption gap>100 and forehead gap>=200 at1920px height; double at3840px. Target>200–400px headroom, retain actual alpha space and source size. |
+| Producer wants full render first; scene manifest contains no event-details scene; a font changes after still approval | Full render waits for revision-bound visual PASS — STILL GATE over every actual scene/variant. Absent event scene is inapplicable, never invented. Font/geometry changes invalidate dependent approval; repair/re-render stills/re-audit. Still pass never approves full motion/audio/release. |
+| Gate renderer exists but reviewer cannot inspect PNGs; a pretty still passes while scrim/gesture motion later collides | Missing inspection keeps gate needs-review and rendering queued. Later motion collision still fails post-render review even after still pass. No fabricated reviewer, automatic-command pass or inherited stale evidence. |
+
 ### Stable captions and finishing regressions
 
 Exercise these additional decisions on supplied test media, or clearly label an instruction-only trace when no media exists:
