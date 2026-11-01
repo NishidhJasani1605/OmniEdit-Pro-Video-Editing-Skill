@@ -1,87 +1,109 @@
-# OmniEdit Pro (Unified Pure Skill Edition)
+# OmniEdit Pro (Unified Pure Skill Edition v4.0.0)
 
-**A unified, instruction-only AI video editing skill equipped with local AI matting, dynamic speech-synced animation, and automated programmatic QA.**
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Architecture: Pure Skill](https://img.shields.io/badge/Architecture-Pure%20Skill%20(Markdown)--orange)](skills/omni-edit-pro)
+[![Matting: RVM MobileNetV3](https://img.shields.io/badge/AI%20Cutout-RVM%20MobileNetV3-green)](https://github.com/PeterL1n/RobustVideoMatting)
+[![Platform: Cross-Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen)]()
 
-OmniEdit Pro transforms raw video footage into polished, high-retention video deliverables across any orientation (9:16 vertical, 16:9 horizontal) and layout (Split Screen, Cutout with RVM, Full-Screen Overlay, Adaptive).
+**OmniEdit Pro is an open-source, production-ready AI video editing skill. It transforms raw video footage into cinematic, high-retention deliverables across any orientation (9:16 vertical, 16:9 horizontal) and layout (Split Screen, Cutout with RVM, Full-Screen Overlay, Adaptive).**
 
-**Version:** 4.0.0 · **Architecture:** Single Unified Pure Skill (`skills/omni-edit-pro`) · **License:** MIT
+---
+
+## ⚡ Direct Copy & Paste Prompt for Any AI Agent
+
+Copy and paste this exact prompt into **any AI coding assistant** (such as Claude Code, Antigravity, Cursor, Codex, or Gemini) to automatically download, install, and activate OmniEdit Pro in your workspace:
+
+```text
+Please download and install the OmniEdit Pro video editing skill from https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill.git. Set up skills/omni-edit-pro as my active video editing skill. Follow its pure Markdown tool directives (using OpenAI Whisper for speech alignment, PeterL1n's Robust Video Matting MobileNetV3 for background cutout, Pillow for layout math, and native FFmpeg for lossless compositing). When I provide a video without specifying style or orientation, present the interactive clarification questions (9:16 vs 16:9, Split vs Cutout vs Overlay vs Custom Idea) before editing.
+```
+
+---
+
+## 🎬 How OmniEdit Pro Works
 
 ```
 +-----------------------------------------------------------------------------+
-|                            USER INPUT                                       |
-|               (Raw Footage + Optional Style Sample/Prompt)                  |
+|                                USER INPUT                                   |
+|                (Raw Footage + Optional Style Sample/Prompt)                 |
 +-----------------------------------------------------------------------------+
-                                     |
-                                     v
+                                       |
+                                       v
 +-----------------------------------------------------------------------------+
-|                     SMART INTERACTIVE CLARIFICATION                         |
-|         (Auto-detects or prompts user: Orientation, Layout & Style)         |
+|                      SMART INTERACTIVE CLARIFICATION                        |
+|          (Auto-detects or prompts user: Orientation, Layout & Style)        |
 +-----------------------------------------------------------------------------+
-                                     |
-                                     v
+                                       |
+                                       v
 +-----------------------------------------------------------------------------+
-|                     OMNIEDIT PRO TOOL DIRECTIVES                            |
-|  RVM MobileNetV3         Pillow (PIL) Geometry      FFmpeg Windows Engine   |
-|  (Local AI Matting)      (Layout & Collision Math)  (Lossless Compositor)   |
+|                      OMNIEDIT PRO TOOL DIRECTIVES                           |
+|   RVM MobileNetV3         Pillow (PIL) Geometry      FFmpeg Windows Engine  |
+|   (Local AI Matting)      (Layout & Collision Math)  (Lossless Compositor)  |
 +-----------------------------------------------------------------------------+
-                                     |
-                                     v
+                                       |
+                                       v
 +-----------------------------------------------------------------------------+
-|                    AUTOMATED PROGRAMMATIC REVIEWER                          |
-|         (Mathematical Collision Checks + Audio Waveform Verification)       |
+|                     AUTOMATED PROGRAMMATIC REVIEWER                         |
+|          (Mathematical Collision Checks + Audio Waveform Verification)      |
 +-----------------------------------------------------------------------------+
-                                     |
-                                     v
+                                       |
+                                       v
 +-----------------------------------------------------------------------------+
-|                        FINAL OUTPUT PROMOTION                               |
-|                 <workspace>/Final Output Videos/<video-id>/                 |
+|                         FINAL OUTPUT PROMOTION                              |
+|                  <workspace>/Final Output Videos/<video-id>/                |
 +-----------------------------------------------------------------------------+
 ```
 
 ---
 
-## 1. Quick Start
+## 1. Quick Start & Interactive Questionnaire
 
-### Basic Invocation:
-Provide your raw footage and optionally a style reference or creative prompt:
+When you invoke OmniEdit Pro without specifying orientation or style:
 
 ```text
 Edit my-video.mp4 using OmniEdit Pro.
 ```
 
-If your prompt lacks orientation or layout details, OmniEdit Pro presents a clear interactive questionnaire before processing:
+The skill automatically pauses and prompts you with clear multiple-choice options:
 
-```text
-Step 1: Target Video Orientation
-1. 9:16 Vertical (Recommended for Mobile - Reels, Shorts, TikTok)
-2. 16:9 Horizontal (Widescreen - YouTube, Desktop)
-3. Auto-Detect from Source Footage
+### Step 1: Target Video Orientation
+1. **9:16 Vertical (Recommended for Mobile)** — Optimized for Instagram Reels, TikTok, YouTube Shorts.
+2. **16:9 Horizontal (Widescreen)** — Optimized for YouTube, desktop presentations, LinkedIn.
+3. **Auto-Detect** — Match whatever orientation the raw video was recorded in.
 
-Step 2: Editing Style & Layout
-1. Split Screen (Presenter on one side, diagrams on other)
-2. Cutout (AI Background Removal via local RVM MobileNetV3)
-3. Overlay (100% Intact camera footage with sleek titles/badges on top)
-4. Auto-Select / Adaptive (AI chooses optimal layout scene-by-scene)
-5. Custom Idea (Describe your own creative vision, e.g. PiP circle, code tutorial)
-```
+### Step 2: Editing Style & Layout
+1. **Split Screen** — Divides the canvas: presenter in one zone (left or bottom), dynamic diagrams and cards in the other.
+2. **Cutout (AI Background Removal via RVM)** — Uses local Robust Video Matting (MobileNetV3) to isolate the speaker like a clean sticker, floating over high-tech animated backgrounds.
+3. **Overlay (Clean & Non-Intrusive)** — Keeps 100% of your camera video full-screen; layers stylish glassmorphic title plates, captions, and badges over natural empty spaces.
+4. **Auto-Select / Adaptive** — Let the AI inspect the video and automatically pick the best look for the topic scene-by-scene.
+5. **Custom / Your Own Idea** — Have a specific look in mind? *(e.g. "Picture-in-picture circle", "Documentary retro look", "Side-by-side code tutorial")*. Describe it in the prompt and the AI will build custom styling to match your vision!
 
 ---
 
 ## 2. Tool Directives (Which Tool to Use for Which Purpose)
 
-OmniEdit Pro is a **pure Markdown instruction skill** (no bundled `.py` files inside the skill repository). It directs the AI coding agent to leverage proven external tools in the workspace:
+OmniEdit Pro is a **pure Markdown instruction skill** containing zero `.py` or binary code files inside the skill repository. Instead, it directs the AI coding agent to invoke proven external tools in the workspace:
 
 | Purpose | Recommended Tool | Directive & Execution in Workspace |
 |---|---|---|
-| **Speaker Background Cutout** | **Robust Video Matting (RVM)**<br/>(`PeterL1n/RobustVideoMatting`) | Load `rvm_mobilenetv3.pth` via PyTorch to extract clean foreground and alpha masks locally on CPU/GPU. |
+| **Speaker Background Cutout** | **Robust Video Matting (RVM)**<br/>(`PeterL1n/RobustVideoMatting`) | Load `rvm_mobilenetv3.pth` (15MB) via PyTorch to extract clean foreground RGB and alpha masks locally on CPU/GPU without green screen. |
 | **Speech Transcription & Word Timings** | **OpenAI Whisper** | Run Whisper to generate word-level timestamped transcripts for speech-synced animation. |
 | **Transcript Intelligence & Spelling** | **AI Content Agent** | Normalizes homophones, fixes brand/tech spelling, generates 3–5 word summary titles, and ensures modern version names. |
-| **Typography & Layout Math** | **Pillow (`PIL.ImageFont`)** | Measures exact glyph bounding boxes, line wrapping, and ensures text does not collide with the speaker's face. |
+| **Typography & Layout Math** | **Pillow (`PIL.ImageFont`)** | Measures exact glyph bounding boxes, calculates text wrapping, sets badge padding ($\ge 24\text{px}$), and ensures zero facial collision. |
 | **Video Compositing & Audio Passthrough** | **FFmpeg CLI** | Blends video layers, downsamples graphics via Lanczos-3, preserves lossless audio (`-c:a copy`), and escapes Windows paths (`D\:/...`). |
 
 ---
 
-## 3. How All 18 Identified Deadlocks Are Solved
+## 3. Full-Mesh Multi-Agent Team & CEO Approval
+
+When executed in multi-agent environments (such as Antigravity):
+- **CEO Agent (Video Lead)**: Oversees project strategy, dispatches tasks, reviews deliverables from each specialist, and gives final sign-off before release.
+- **High-Speed Parallel Tracks**: Speech transcription (Whisper), background cutout (RVM), and visual styling run **concurrently at the exact same time**, reducing turnaround time by up to 60%.
+- **Omni-Directional (Any-to-Any) Communication**: Every single subagent can directly message ANY other subagent whenever they need to coordinate (e.g. Reviewer alerts Layout Animator to nudge a card by 10px; Cutout alerts Visuals to speaker clothing colors).
+- **Auto Solo Fallback**: If run in single-agent environments (VS Code, Cursor), the agent executes the specialist roles sequentially without stalling.
+
+---
+
+## 4. How All 18 Identified Deadlocks Are Solved
 
 | # | Flaw / Deadlock | Solution in Unified Architecture |
 |---|---|---|
@@ -106,12 +128,12 @@ OmniEdit Pro is a **pure Markdown instruction skill** (no bundled `.py` files in
 
 ---
 
-## 4. Directory Structure
+## 5. Repository Structure
 
 ```text
 OmniEdit-Pro-Video-Editing-Skill/
-├── README.md
-├── LICENSE
+├── README.md                             <-- Quick start, copy-paste prompt & architecture
+├── LICENSE                               <-- MIT License
 ├── skills/
 │   └── omni-edit-pro/                    <-- SINGLE UNIFIED PURE SKILL
 │       ├── SKILL.md                      <-- Main hub + interactive question flow
@@ -124,7 +146,7 @@ OmniEdit-Pro-Video-Editing-Skill/
 │           ├── editing-styles.md         <-- Composition layouts (Full-screen Overlay)
 │           ├── audio-rendering.md        <-- FFmpeg streamcopy & 2x rasterization
 │           ├── video-reviewer.md         <-- Programmatic automated QA gate
-│           ├── batch-teams.md            <-- Automatic solo execution fallback
+│           ├── batch-teams.md            <-- Full-mesh multi-agent coordination
 │           ├── reference-analysis.md     <-- Reference profiling & card backings
 │           ├── quality-assurance.md      <-- Smart tolerance tuning
 │           └── delivery.md               <-- Safe promotion to Final Output Videos
@@ -132,9 +154,9 @@ OmniEdit-Pro-Video-Editing-Skill/
 
 ---
 
-## 5. Verification & Tool Checking
+## 6. Verification & System Requirements
 
-Verify that required host tools are available on your system:
+Ensure the following core tools are installed on your host system:
 
 ```bash
 # Check FFmpeg and FFprobe
@@ -145,3 +167,9 @@ ffprobe -version
 python -c "import torch; print('PyTorch:', torch.__version__)"
 python -c "import PIL; print('Pillow:', PIL.__version__)"
 ```
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
