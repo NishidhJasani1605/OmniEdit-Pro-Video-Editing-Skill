@@ -1,17 +1,19 @@
-# OmniEdit Pro (Unified Pure Skill Edition v4.0.0)
+# OmniEdit Pro
+
+**The open-source AI video editing skill for high-retention, cinematic video content.**
+
+Transform raw footage into polished, modern videos featuring speech-synchronized motion graphics, AI background cutout, glassmorphic typography, and intelligent multi-agent post-production.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Architecture: Pure Skill](https://img.shields.io/badge/Architecture-Pure%20Skill%20(Markdown)--orange)](skills/omni-edit-pro)
+[![Skill: Pure Markdown](https://img.shields.io/badge/Architecture-Pure%20Agent%20Skill-orange)](skills/omni-edit-pro)
 [![Matting: RVM MobileNetV3](https://img.shields.io/badge/AI%20Cutout-RVM%20MobileNetV3-green)](https://github.com/PeterL1n/RobustVideoMatting)
-[![Platform: Cross-Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-brightgreen)]()
-
-**OmniEdit Pro is an open-source, production-ready AI video editing skill. It transforms raw video footage into cinematic, high-retention deliverables across any orientation (9:16 vertical, 16:9 horizontal) and layout (Split Screen, Cutout with RVM, Full-Screen Overlay, Adaptive).**
+[![Format: 9:16 & 16:9](https://img.shields.io/badge/Formats-9:16%20Reels%20%7C%2016:9%20Widescreen-purple)]()
 
 ---
 
-## ⚡ Direct Copy & Paste Prompt for Any AI Agent
+## ⚡ 1-Click Install Prompt for Any AI Agent
 
-Copy and paste this exact prompt into **any AI coding assistant** (such as Claude Code, Antigravity, Cursor, Codex, or Gemini) to automatically download, install, and activate OmniEdit Pro in your workspace:
+Copy and paste this prompt into **Claude Code, Antigravity, Cursor, Codex, or Gemini** to install and activate OmniEdit Pro in seconds:
 
 ```text
 Please download and install the OmniEdit Pro video editing skill from https://github.com/NishidhJasani1605/OmniEdit-Pro-Video-Editing-Skill.git. Set up skills/omni-edit-pro as my active video editing skill. Follow its pure Markdown tool directives (using OpenAI Whisper for speech alignment, PeterL1n's Robust Video Matting MobileNetV3 for background cutout, Pillow for layout math, and native FFmpeg for lossless compositing). When I provide a video without specifying style or orientation, present the interactive clarification questions (9:16 vs 16:9, Split vs Cutout vs Overlay vs Custom Idea) before editing.
@@ -19,7 +21,16 @@ Please download and install the OmniEdit Pro video editing skill from https://gi
 
 ---
 
-## 🎬 How OmniEdit Pro Works
+## 🌟 What is OmniEdit Pro?
+
+**OmniEdit Pro** is an intelligent video editing skill designed specifically for AI coding assistants. Instead of requiring heavy manual video editors (like Premiere Pro or DaVinci Resolve) or expensive cloud editing subscriptions, OmniEdit Pro provides a comprehensive, production-grade specification that turns any AI agent into an **autonomous video post-production studio**.
+
+When you give an AI assistant raw footage and invoke OmniEdit Pro, the agent:
+1. **Transcribes & Analyzes Audio**: Aligns spoken words to exact millisecond timestamps using Whisper.
+2. **Applies Content Intelligence**: Detects key concepts, fixes spelling, ensures modern terminology, and creates sleek summary cards.
+3. **Designs Geometric Visuals**: Generates clean typography, padded cards, and category pills that never collide with the speaker's face.
+4. **Isolates the Speaker (Cutout Mode)**: Uses local AI video matting (RVM MobileNetV3) to remove backgrounds without green screens.
+5. **Composites Losslessly**: Leverages native FFmpeg to assemble smooth animations, downsample crisp 2x vector graphics, and preserve bit-identical original audio.
 
 ```
 +-----------------------------------------------------------------------------+
@@ -55,118 +66,96 @@ Please download and install the OmniEdit Pro video editing skill from https://gi
 
 ---
 
-## 1. Quick Start & Interactive Questionnaire
+## 🚀 Key Features & Capabilities
 
-When you invoke OmniEdit Pro without specifying orientation or style:
+### 1. 🎯 Dynamic Speech-Synchronized Animation
+- **Reveals as You Speak**: Titles, bullet cards, and badges animate on screen **in exact sync with spoken words** (using snappy 0.15s spring curves) rather than being displayed statically before the speaker introduces them.
+- **Persistent Card Stacking**: Sequential points accumulate into a sleek stacked list, giving viewers ample time to read and absorb information naturally.
+- **Zero-Collision Spacing**: Cards carry local glassmorphic backings that guarantee contrast without casting awkward shadows across the speaker's body.
 
-```text
-Edit my-video.mp4 using OmniEdit Pro.
-```
+### 2. ✂️ Local AI Speaker Cutout (Robust Video Matting)
+- **Green-Screen Free**: Isolates the speaker's natural moving silhouette using PeterL1n's lightweight (15MB) **Robust Video Matting (RVM) MobileNetV3** model.
+- **Fast Local Execution**: Runs locally on your CPU or GPU—no cloud API costs or subscription limits.
+- **Dynamic Backgrounds**: The speaker floats seamlessly over animated motion graphics, diagrams, and video layers.
 
-The skill automatically pauses and prompts you with clear multiple-choice options:
+### 3. 📐 4 Flexible Composition Layouts
+- **Split Screen**: Divides canvas into clear visual quadrants (e.g. presenter on one side, animated diagrams on the other).
+- **Cutout**: Background removed; speaker floats over full-canvas motion backgrounds and animations.
+- **Full-Screen Overlay**: Keeps 100% of the raw camera footage full-screen ($1080 \times 1920$ or $1920 \times 1080$), tastefully layering title plates, subtitles, and badges in natural empty spaces.
+- **Adaptive**: The AI dynamically switches layouts scene-by-scene based on what is being discussed.
 
-### Step 1: Target Video Orientation
-1. **9:16 Vertical (Recommended for Mobile)** — Optimized for Instagram Reels, TikTok, YouTube Shorts.
-2. **16:9 Horizontal (Widescreen)** — Optimized for YouTube, desktop presentations, LinkedIn.
-3. **Auto-Detect** — Match whatever orientation the raw video was recorded in.
+### 4. 📱 Any Video Orientation
+- **9:16 Vertical (Mobile First)**: Perfectly optimized for TikTok, Instagram Reels, and YouTube Shorts.
+- **16:9 Horizontal (Widescreen)**: Engineered for YouTube main videos, desktop presentations, and LinkedIn.
+- **Auto-Detect**: Automatically matches the source video's native resolution and frame rate.
 
-### Step 2: Editing Style & Layout
-1. **Split Screen** — Divides the canvas: presenter in one zone (left or bottom), dynamic diagrams and cards in the other.
-2. **Cutout (AI Background Removal via RVM)** — Uses local Robust Video Matting (MobileNetV3) to isolate the speaker like a clean sticker, floating over high-tech animated backgrounds.
-3. **Overlay (Clean & Non-Intrusive)** — Keeps 100% of your camera video full-screen; layers stylish glassmorphic title plates, captions, and badges over natural empty spaces.
-4. **Auto-Select / Adaptive** — Let the AI inspect the video and automatically pick the best look for the topic scene-by-scene.
-5. **Custom / Your Own Idea** — Have a specific look in mind? *(e.g. "Picture-in-picture circle", "Documentary retro look", "Side-by-side code tutorial")*. Describe it in the prompt and the AI will build custom styling to match your vision!
+### 5. 💬 Smart Interactive Clarification Flow
+If you give OmniEdit Pro a video without specifying what look you want, it stops and interactively asks:
+- **Orientation**: 9:16 Vertical, 16:9 Horizontal, or Auto-Detect?
+- **Style**: Split Screen, Cutout, Overlay, Auto/Adaptive, or **Your Own Custom Idea**!
+  *(Tell the AI your custom idea—e.g. "Picture-in-picture circle in bottom corner" or "Split screen with live code on right"—and it builds styling to match!)*
+
+### 6. 🧠 Smart Spelling & Modern Context Agent
+- **Phonetic Repair**: Automatically catches and fixes transcription errors in medical, technical, business, and regional names.
+- **Temporal Freshness**: Ensures all references, model names, and software versions cited in graphics are current and up-to-date.
+- **High-Impact Headlines**: Condenses spoken thoughts into punchy 3–5 word headlines.
+
+### 7. 👥 Full-Mesh Multi-Agent Team + CEO Oversight
+- **CEO Agent (Video Lead)**: Sets direction, dispatches tasks, reviews deliverables from each specialist, and gives final release sign-off.
+- **High-Speed Parallel Tracks**: Audio transcription, background cutout, and visual styling run **simultaneously in parallel**, cutting turnaround time by up to 60%.
+- **Omni-Directional (Any-to-Any) Communication**: Every subagent can directly message ANY other subagent whenever they need to coordinate (e.g. Reviewer alerts Layout Animator to adjust a card; Cutout alerts Visuals to clothing colors).
+- **Auto Solo Fallback**: Runs smoothly and sequentially in single-agent environments (VS Code, Cursor) without stalling.
+
+### 8. 🎧 Bit-Identical Lossless Audio
+- Uses native FFmpeg direct audio streamcopy (`-c:a copy`) to preserve original microphone quality, dynamic range, and perfect lip-sync with zero generational re-compression.
 
 ---
 
-## 2. Tool Directives (Which Tool to Use for Which Purpose)
+## 🛠️ Tool Directives (Which Tool is Used for What)
 
-OmniEdit Pro is a **pure Markdown instruction skill** containing zero `.py` or binary code files inside the skill repository. Instead, it directs the AI coding agent to invoke proven external tools in the workspace:
+OmniEdit Pro is a pure skill package. It directs the AI coding agent to utilize standard, high-performance tools available on the host machine:
 
-| Purpose | Recommended Tool | Directive & Execution in Workspace |
+| Capability | Recommended Tool | Purpose & Usage |
 |---|---|---|
-| **Speaker Background Cutout** | **Robust Video Matting (RVM)**<br/>(`PeterL1n/RobustVideoMatting`) | Load `rvm_mobilenetv3.pth` (15MB) via PyTorch to extract clean foreground RGB and alpha masks locally on CPU/GPU without green screen. |
-| **Speech Transcription & Word Timings** | **OpenAI Whisper** | Run Whisper to generate word-level timestamped transcripts for speech-synced animation. |
-| **Transcript Intelligence & Spelling** | **AI Content Agent** | Normalizes homophones, fixes brand/tech spelling, generates 3–5 word summary titles, and ensures modern version names. |
-| **Typography & Layout Math** | **Pillow (`PIL.ImageFont`)** | Measures exact glyph bounding boxes, calculates text wrapping, sets badge padding ($\ge 24\text{px}$), and ensures zero facial collision. |
-| **Video Compositing & Audio Passthrough** | **FFmpeg CLI** | Blends video layers, downsamples graphics via Lanczos-3, preserves lossless audio (`-c:a copy`), and escapes Windows paths (`D\:/...`). |
+| **Speaker Background Cutout** | **Robust Video Matting (RVM)**<br/>(`PeterL1n/RobustVideoMatting`) | Lightweight 15MB MobileNetV3 model loaded via PyTorch in the workspace for fast local alpha mask extraction. |
+| **Speech Alignment & Timings** | **OpenAI Whisper** | Generates word-level timestamps to trigger syllable-synchronized animations. |
+| **Layout & Typography Math** | **Pillow (`PIL.ImageFont`)** | Measures exact visible bounding boxes, line wrapping, badge padding, and verifies zero facial collision. |
+| **Video Compositing & Mixing** | **FFmpeg CLI** | Lossless compositing, 2x text raster downsampling (Lanczos-3), Windows path escaping (`D\:/...`), and audio streamcopy (`-c:a copy`). |
 
 ---
 
-## 3. Full-Mesh Multi-Agent Team & CEO Approval
-
-When executed in multi-agent environments (such as Antigravity):
-- **CEO Agent (Video Lead)**: Oversees project strategy, dispatches tasks, reviews deliverables from each specialist, and gives final sign-off before release.
-- **High-Speed Parallel Tracks**: Speech transcription (Whisper), background cutout (RVM), and visual styling run **concurrently at the exact same time**, reducing turnaround time by up to 60%.
-- **Omni-Directional (Any-to-Any) Communication**: Every single subagent can directly message ANY other subagent whenever they need to coordinate (e.g. Reviewer alerts Layout Animator to nudge a card by 10px; Cutout alerts Visuals to speaker clothing colors).
-- **Auto Solo Fallback**: If run in single-agent environments (VS Code, Cursor), the agent executes the specialist roles sequentially without stalling.
-
----
-
-## 4. How All 18 Identified Deadlocks Are Solved
-
-| # | Flaw / Deadlock | Solution in Unified Architecture |
-|---|---|---|
-| 1 | **Human Playback Paradox** | **Automated Programmatic QA Gate**: Evaluates bounding box math, non-collision, and audio waveform decodes programmatically; passing tests promotes candidate to `Final Output Videos`. |
-| 2 | **9:16 Portrait Space Collapse** | **Full-Screen 9:16 Overlay**: Keeps 9:16 footage 100% full-screen ($1080 \times 1920$); graphics layer over natural negative space without shrinking into a 337px thumbnail. |
-| 3 | **Split Caption Seam Collision** | **Quadrant-Anchored Subtitles**: Anchors captions comfortably inside active speaker or graphics quadrant, never on the center dividing seam ($X=960$). |
-| 4 | **Zero-Defect 2-Try Halt** | **Smart Tolerance Tuning**: Replaces hard crashes with adaptive parameter adjustments (10px margin padding, automatic quadrant shifting). |
-| 5 | **Dark Scrim vs Speaker Collision** | **Card-Attached Backing**: Each card carries its own local glassmorphic or blur backing plate, eliminating full-canvas dark scrim collisions. |
-| 6 | **Fast Speech Pacing Deadlock** | **Dynamic Micro-Transitions**: 0.15s spring animations matching speaker tempo, accumulating into persistent multi-item lists for ample reading time. |
-| 7 | **Multi-Video Batch Misclassification** | **Explicit Batch Confirmation**: Batch files treated as independent sources unless explicitly flagged with `--reference`. |
-| 8 | **Explicit Tool Directives** | **Explicit External Tool Directives**: Replaces guessing or bundled scripts with explicit CLI/API instructions for RVM, FFmpeg, Whisper, and Pillow. |
-| 9 | **Remotion Commercial Licensing** | **Native Free FFmpeg + PIL Engine**: 100% free, open-source compositor with zero proprietary licensing traps or headless browser crashes. |
-| 10 | **Local Cutout Feasibility** | **Robust Video Matting (RVM) MobileNetV3**: Fast 15MB model that runs locally on CPU or GPU without green screen. |
-| 11 | **2x Supersampling 8K Blowup** | **Selective Vector/PIL Rasterization**: Only text and badges are rendered at 2x and downsampled; raw video remains at 1x to prevent 8K memory exhaustion. |
-| 12 | **Subagent Spawning Stalls** | **Automatic Solo Pipeline**: If host editor does not support dynamic subagents, the agent executes specialist roles sequentially without stalling. |
-| 13 | **Proper Name Verification Freeze** | **Modern Context & Phonetic Fallback**: Intelligent phonetic fallback and domain dictionaries prevent release freezes on unlisted proper names. |
-| 14 | **Remotion Streamcopy Myth** | **Native FFmpeg Streamcopy**: Uses FFmpeg `-c:a copy` for genuine zero-loss audio passthrough. |
-| 15 | **"All" Mode Resource Explosion** | **Selective On-Demand Rendering**: Replaces brute-force 12-variant exports with targeted on-demand rendering. |
-| 16 | **Zero Real-World Video Tests** | **Reference-Calibrated Baseline**: Pacing and visual rules calibrated against real-world video footage (`Dr_Rajiv_AI_Invitation_Premium_Vertical_9x16.mp4`). |
-| 17 | **Still Gate Context Explosion** | **Programmatic Spot-Check Gate**: Verifies geometry in code, passing only 2–3 key milestone frames for visual spot-checks. |
-| 18 | **Windows Path Colon Crashes** | **Windows Path Normalizer**: Converts `D:\path` to safe FFmpeg syntax (`D\:/path`) in filtergraphs. |
-
----
-
-## 5. Repository Structure
+## 📁 Repository Structure
 
 ```text
 OmniEdit-Pro-Video-Editing-Skill/
-├── README.md                             <-- Quick start, copy-paste prompt & architecture
+├── README.md                             <-- Complete documentation & quick install prompt
 ├── LICENSE                               <-- MIT License
 ├── skills/
-│   └── omni-edit-pro/                    <-- SINGLE UNIFIED PURE SKILL
-│       ├── SKILL.md                      <-- Main hub + interactive question flow
-│       └── references/                   <-- Consolidated, defect-free guidelines
-│           ├── selection.md              <-- Interactive inquiry & mode rules
-│           ├── local-cutout.md           <-- RVM MobileNetV3 specs & invocation
-│           ├── motion-design.md          <-- Dynamic speech-synced animation rules
+│   └── omni-edit-pro/                    <-- The Single Unified Skill
+│       ├── SKILL.md                      <-- Main orchestrator & interactive flow
+│       └── references/                   <-- Detailed production guidelines
+│           ├── selection.md              <-- Interactive questionnaire & custom idea mode
+│           ├── local-cutout.md           <-- RVM MobileNetV3 matting instructions
+│           ├── motion-design.md          <-- Dynamic speech-synced animation curves
 │           ├── transcription-sync.md     <-- Smart spelling & modern content agent
-│           ├── layouts-effects.md        <-- Fixed geometry & quadrant subtitles
-│           ├── editing-styles.md         <-- Composition layouts (Full-screen Overlay)
+│           ├── layouts-effects.md        <-- Full-screen overlay & quadrant subtitles
+│           ├── editing-styles.md         <-- Split, Cutout, Overlay, & Adaptive layouts
 │           ├── audio-rendering.md        <-- FFmpeg streamcopy & 2x rasterization
 │           ├── video-reviewer.md         <-- Programmatic automated QA gate
-│           ├── batch-teams.md            <-- Full-mesh multi-agent coordination
+│           ├── batch-teams.md            <-- Full-mesh multi-agent coordination & CEO oversight
 │           ├── reference-analysis.md     <-- Reference profiling & card backings
-│           ├── quality-assurance.md      <-- Smart tolerance tuning
-│           └── delivery.md               <-- Safe promotion to Final Output Videos
+│           ├── quality-assurance.md      <-- Adaptive tolerance tuning
+│           └── delivery.md               <-- Safe promotion to Final Output Videos/
 ```
 
 ---
 
-## 6. Verification & System Requirements
+## 💻 System Requirements
 
-Ensure the following core tools are installed on your host system:
-
-```bash
-# Check FFmpeg and FFprobe
-ffmpeg -version
-ffprobe -version
-
-# Check Python environment (PyTorch and Pillow)
-python -c "import torch; print('PyTorch:', torch.__version__)"
-python -c "import PIL; print('Pillow:', PIL.__version__)"
-```
+To use OmniEdit Pro with your AI assistant, ensure the following tools are available on your system:
+- **FFmpeg & FFprobe**: `ffmpeg -version`
+- **Python 3.8+**: with `torch` and `Pillow` installed (`pip install torch torchvision pillow`)
+- **OpenAI Whisper**: for speech transcription (`pip install openai-whisper`)
 
 ---
 
