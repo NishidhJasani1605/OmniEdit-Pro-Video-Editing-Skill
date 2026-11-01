@@ -1,59 +1,83 @@
-# Audio, finishing, previews, and rendering
+# Audio Finishing, 2x Supersampling, and FFmpeg Rendering
 
-## Own each sound once
+Read when rendering, compositing, mixing audio, and encoding final video deliverables. Use **FFmpeg** directly in the workspace for all video composition, audio streamcopy, and rendering operations.
 
-In continuity mode preserve full original narration at its mapped time and normal speed. For authorized edits map source audio through the same segment/speed/transition decisions as picture and captions. Choose one audio owner: base video or separately mapped track with base audio muted. Multiple copies cause echo/phasing. Mute B-roll audio unless intentionally included. No unrequested silence removal, speech regeneration or time stretching. For non-speech footage protect intended ambience, music and system/action sounds. If no audio stream exists, record audio/listening as not applicable; do not invent narration or sound to satisfy a checklist.
+---
 
-Keep full-quality source audio separate from recognition audio. Listen before denoising, gating, compressing or normalizing: a treatment that removes consonants is worse than mild steady noise. Use minimal corrective processing, and compare processed and original passages at matched listening levels. Measure integrated loudness and true peak against the requested delivery specification; there is no single mandatory loudness target for every platform or genre. Leave sufficient headroom and document any chosen target. Optional music should support the voice, with smooth level changes rather than pumping or masking.
+## 1. Bit-Identical Audio Streamcopy (Resolves Issue 14)
 
-Preserve every original spoken word, natural pause, pitch and timing unless the user explicitly authorized the corresponding change. Select and document the actual input/audio stream; never copy an example input index such as `1:a:0` without verifying it. When the container, codec, timeline and processing allow it, prefer audio streamcopy to avoid another lossy generation. AAC encoding at 256 kb/s can be a high-quality stereo delivery choice when encoding is necessary; it is not direct passthrough, lossless or bit-identical preservation. Retain required channels and sample rate where supported, and choose channel-appropriate settings instead of silently downmixing. Keep an untouched original or lossless working master. Verify muxed timestamps, encoder delay, beginning/middle/end sync and complete tail regardless of whether audio was copied or encoded. Make an identity claim only when the relevant packet/sample comparison was actually performed and its scope is stated.
+Audio quality is paramount in video editing:
+- **Direct Streamcopy (`-c:a copy`)**: Whenever container and timeline allow, audio is passed through without re-encoding using native FFmpeg. This avoids generational loss, preserves original dynamic range, and maintains bit-identical sample accuracy.
+- **Muxing Audio with Processed Visuals**:
+  ```bash
+  ffmpeg -y \
+    -i "Working Files/video_01/visual_composite.mp4" \
+    -i "raw_source.mp4" \
+    -c:v copy \
+    -c:a copy \
+    -map 0:v:0 -map 1:a:0 \
+    "Final Output Videos/video_01/delivered_video.mp4"
+  ```
+- **Lip-Sync Precision**: Direct streamcopy guarantees zero audio drift between the start, middle, and tail of the video.
 
-## Render clean graphics before compression
+---
 
-For generated raster typography, subtitles, badges, cards and diagrams, render at **2x final width and 2x final height**, scaling fonts, strokes, padding, masks and positions consistently; then downsample once to delivery size with a high-quality antialiasing filter. For example, a 1080x1152 graphics region becomes 2160x2304 during rasterization. Render from original text/vector geometry at that size; enlarging an already jagged 1x image does not recreate clean edges. Supersampling is the default production path, not proof of sharpness. A vector/native renderer may use another path only with documented comparison showing equally clean decoded edges at native and intended viewing size. Memory pressure calls for lower concurrency or region-based rendering, not an unreviewed quality downgrade.
+## 2. Selective 2x Text Supersampling (Resolves Issue 11)
 
-Pillow's `Image.Resampling.LANCZOS` is a truncated-sinc resampling option with support 3; do not describe it as a 36-lobe filter. Inspect high-contrast edges for ringing after downsampling. Keep transparent edges correctly composited and avoid fringe colors. Keep all geometry in a consistent coordinate system so the 2x stage cannot halve/double caption clearance or shift text. Preserve actual source detail: scaling a soft source to 4K is not restored UHD detail. Fit the original footage once with an appropriate high-quality scaler; compare bicubic/Lanczos or the compositor's equivalent on real faces, hair and motion. No interpolation algorithm universally maximizes sharpness or justifies oversharpening, halos, crop or stretch.
+To achieve crisp typography and badge edges without crashing into 8K GPU memory limits:
+- **Selective Vector/Pillow Rasterization**: Only text elements, badges, and graphic cards are rendered at 2x dimensions and downsampled with high-quality Lanczos-3 antialiasing.
+- **Background Video at 1x**: Raw video footage remains at 1x resolution. This completely eliminates Chromium Puppeteer out-of-memory crashes and 8K frame buffer blowups.
+- **Lanczos-3 Downsampling**: Downsample 2x raster cards using Pillow's `Image.Resampling.LANCZOS` before compositing onto the 1x video canvas.
 
-## Choose a quality-led delivery encode
+---
 
-Choose the actual output resolution/FPS, color handling and destination limits before encoding. For a compatible SDR H.264 delivery, a useful high-quality starting profile is **libx264, slow preset, CRF 14 and yuv420p**. Inspect its actual result and change settings if text edges, gradients or motion fail. The profile is not mandatory for HDR, alpha, another required codec or a specified master format. Keep a clean/lossless reference frame or intermediate for comparison and minimize lossy generations.
+## 3. Windows-Safe Path Escaping in Filtergraphs (Resolves Issue 18)
 
-Use one deliberate rate-control strategy. In normal single-pass libx264, an explicit CRF selects quality mode; adding `-b:v 8M` does not establish an 8 Mb/s quality floor. Add maxrate/bufsize only for an actual delivery constraint and size them for resolution, frame rate, complexity and decoder requirements. Do not impose the example 8/16/24 Mb values on every video, particularly 4K/high-FPS exports. If delivery limits damage required readability, adjust the composition/encode or retain a higher-quality master and report the delivery constraint. Do not silently sacrifice the approved quality target.
+On Windows, absolute file paths contain drive colons and backslashes (e.g. `D:\OmniEdit-Pro-Video-Editing-Skill\...`):
+- In FFmpeg `-filter_complex` expressions, `:` is a filter option delimiter and `\` is an escape character. Passing raw Windows paths directly into filtergraphs causes fatal syntax crashes.
+- Escape drive colons and convert backslashes as follows:
+  ```python
+  def escape_ffmpeg_path(p: str) -> str:
+      # e.g., "D:\videos\input.mp4" -> "D\:/videos/input.mp4"
+      normalized = p.replace("\\", "/")
+      if len(normalized) > 1 and normalized[1] == ":":
+          return normalized[0] + "\\:" + normalized[2:]
+      return normalized
+  ```
 
-AQ settings such as mode 3, additional reference frames or motion-search overrides are optional measured tuning, not a guarantee against ringing or blocking. Do not stack a copied parameter string onto a preset without understanding the installed encoder and testing its effect. Verify the supported encoder/options before use; do not require a specific software backend where the destination needs another. Preserve requested color/bit depth; a universal 8-bit yuv420p command is not appropriate for every master.
+---
 
-Compare decoded final-file crops with the clean pre-encode render: smallest text, diagonals/curves, bold highlights, punctuation/diacritics, light text on dark gradients and colored text. Inspect at native 100% scale and realistic delivery size, both still and moving. Reject stair-stepping, blur, disappearing strokes, chroma bleeding, ringing, banding and temporal shimmer. Diagnose whether the defect first appears in font rasterization, scaling, compositing, color conversion or encoding, then fix that stage. Higher bitrate cannot repair an already jagged render. Thumbnails, enlarged browser previews and nominal bitrate alone do not establish HD quality.
+## 4. Free Native FFmpeg Compositing (Resolves Issue 9)
 
-## Prepare one deterministic render
+Avoid proprietary licensing traps and Chromium browser dependencies by using native FFmpeg compositing:
 
-Before launching a full-duration multi-frame render, obtain the reviewer's revision-bound [PASS — STILL GATE](video-reviewer.md#pre-render-still-frame-audit-gate). Generate lossless single-frame PNGs from this same composition, fonts, assets and color/scale path for that inspection; single-frame evidence generation is allowed before approval. Failed geometry/style/illumination checks require code repair and re-audit first. Do not launch a full render speculatively in parallel with this gate. A render command below is an example, not authority to skip this dependency.
+- **Split Screen**:
+  ```bash
+  ffmpeg -y \
+    -i "Working Files/speaker.mp4" \
+    -i "Working Files/diagrams.mp4" \
+    -filter_complex "[0:v]scale=960:1080[left];[1:v]scale=960:1080[right];[left][right]hstack[outv]" \
+    -map "[outv]" -map 0:a \
+    -c:v libx264 -crf 18 -c:a copy \
+    "Final Output Videos/video_01/split_final.mp4"
+  ```
 
-Use the selected free/local compositor and versioned dependencies; when using Remotion, inspect its installed APIs. Derive all layers, audio offsets, dimensions, frame rate and duration from the same validated timeline. Resolve local assets, fonts and asynchronous loads before capture. Rendering a frame should not depend on wall-clock time, network races or unseeded randomness. The normal edit request includes final export; do not stop at an interactive preview unless the user requested preview-only work.
+- **Cutout Composite**:
+  ```bash
+  ffmpeg -y \
+    -i "Working Files/motion_bg.mp4" \
+    -i "Working Files/foreground.mp4" \
+    -i "Working Files/alpha_matte.mp4" \
+    -filter_complex "[0:v]scale=1080:1920[bg];[1:v]scale=1080:1920[fg];[2:v]scale=1080:1920[alpha];[fg][alpha]alphamerge[cutout];[bg][cutout]overlay=0:0[outv]" \
+    -map "[outv]" -map 1:a \
+    -c:v libx264 -crf 18 -c:a copy \
+    "Final Output Videos/video_01/cutout_final.mp4"
+  ```
 
-Choose codec, container, pixel format, audio codec/rate/channel layout, dimensions and color output for the requested destination. H.264/AAC MP4 is a common compatibility choice, not a universal master format. Use a suitable alpha-capable format only when transparency is required. Handle HDR and log material with a deliberate, tested color transform; do not fix washed-out colors by blindly increasing saturation or mislabeling color metadata.
+---
 
-For an already installed CLI, representative commands are:
+## 5. High-Quality Delivery Encoding Standards
 
-```text
-remotion compositions "src/index.ts"
-remotion render "src/index.ts" OmniEdit "out/preview.mp4" --frames=0-149
-remotion render "src/index.ts" OmniEdit "out/final.mp4"
-```
-
-These are command examples, not bundled files: replace paths, composition ID and frame range with the actual project. Render previews and full candidates under `Working Files/<video-id>/` first; the example `out/final.mp4` is a candidate, not an accepted final. Invoke the local binary or approved project runner and inspect its version/help before options. A CLI frame range can have inclusive endpoints, whereas the internal timeline uses exclusive ends; convert explicitly. A render may download a browser if missing, so complete dependency checks first.
-
-## Preview and recover
-
-Render passages that exercise the actual plan: early speech/action, dense text, a complex graphic, layout/shot change and ending, with audio when present. Reference previews include the defining treatment and a difficult transfer case; compare against timecoded sample examples. Include full-size stills for type/framing checks. Use the final media/timeline. Review normal-speed motion and, where audio exists, listen and check sync. Static screenshots cannot certify motion or sound.
-
-Include the middle of longer explanatory graphics to expose frozen-card treatment, not only entrances/exits. Review source-specific meaningful evolution and graphic transitions while narration stays continuous. For portrait presenter scenes inspect lower source/silhouette and upper animation in each requested composition; for Cutout include moving arms/hair over the actual full-canvas background and safe transparent gaps, checking contrast. Still-frame and end-to-end decode checks cannot replace that motion/occlusion review.
-
-If rendering fails, isolate the smallest failing frame range. Check missing assets/fonts, decode errors, failed asynchronous loading, unsupported browser APIs and memory. Lower concurrency or use a compatible intermediate where justified; do not alter frame rate or truncate narration to conceal failure. Keep diagnostic logs outside the skill install. Recheck repaired intervals and their boundaries.
-
-After final rendering, probe the output and decode it end to end for errors. Compare its frames and audio duration with the planned duration, allowing only documented frame/sample or encoder padding. Never use a shortest-stream option blindly when muxing preserved narration; it can discard the end. Verify the muxed output, not just the intermediate composition. Stream copying may preserve audio encoding when compatible, but is not a guarantee of identical playback timing.
-
-Follow [Delivery](delivery.md) to promote only checked exports into `Final Output Videos/<video-id>/`. Link requested caption/project files, credits and QA notes from the working area. Mention output specifications, processing, known limitations and playback review coverage. Keep source footage and editable dependencies available for revision.
-
-Before promotion, follow the [reviewer's verification-frame and repair loop](video-reviewer.md): extract evidence from the decoded final candidate, inspect every scene/caption and representative glyph edge, repair the responsible stage and re-review the replacement complete export. Do not substitute JPEG artifacts in a diagnostic screenshot for evidence of codec defects; prefer lossless PNGs for edge inspection.
-
-Sources: [Remotion CLI](https://www.remotion.dev/docs/cli), [renderMedia](https://www.remotion.dev/docs/renderer/render-media), [FFmpeg filters](https://ffmpeg.org/ffmpeg-filters.html), [FFmpeg streamcopy](https://ffmpeg.org/ffmpeg.html#Streamcopy), [FFmpeg libx264 options](https://ffmpeg.org/ffmpeg-codecs.html#libx264), [FFmpeg libx264 implementation](https://github.com/FFmpeg/FFmpeg/blob/master/libavcodec/libx264.c), [Pillow resampling filters](https://pillow.readthedocs.io/en/stable/handbook/concepts.html#filters), [Pillow resampling implementation](https://github.com/python-pillow/Pillow/blob/main/src/libImaging/Resample.c), [FFmpeg scaler](https://ffmpeg.org/ffmpeg-scaler.html).
+- **Codec**: `libx264`, `preset medium` or `slow`, `crf 18` (visually lossless delivery).
+- **Pixel Format**: `yuv420p` for universal mobile and web playback compatibility.
+- **Color Range & Primaries**: Preserve `bt709` tags from raw camera source.

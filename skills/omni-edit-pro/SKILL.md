@@ -1,97 +1,133 @@
 ---
 name: omni-edit-pro
-description: Use when editing supplied videos, matching the editing treatment of a sample/reference video, or choosing a suitable edit automatically without a reference. Also applies to OmniEdit Pro presets, batches, and non-presenter footage.
+description: Unified AI video editing skill for automatic, reference-matched, or interactive video editing in any orientation (9:16 vertical, 16:9 horizontal) and layout (Split, Cutout with RVM, Overlay, Adaptive).
 license: MIT
 metadata:
   author: NishidhJasani1605
-  version: "3.3.0"
+  version: "4.0.0"
 ---
 
-# OmniEdit Pro
+# OmniEdit Pro (Unified Pure Skill Edition)
 
-Turn supplied footage into coherent, verified edits. `omni-edit-pro` is the main entry and shared implementation for the six orientation/composition presets and `omni-edit-pro-all`. The suite has eight unique entries, all using the same `omni-edit-pro` naming order. Keep one primary workflow; research, authoring and discovery skills are not production dependencies. This package contains Markdown instructions and license notices only. Generate any needed processing code, masks, dependencies and media in the user's editing workspace, never in an installed skill.
+OmniEdit Pro is a unified, instruction-only video editing skill. It contains **Markdown instructions only** (zero executable `.py` or `.js` code files inside the skill package). It consolidates all previous variant presets into a single intelligent entry point that guides the AI coding agent on **which external tools to use for each specific purpose**, featuring an interactive clarification flow, local AI video matting (Robust Video Matting MobileNetV3), and an automated programmatic QA gate.
 
-## Resolve intent, roles and authority
+```
++-----------------------------------------------------------------------------+
+|                            USER INPUT                                       |
+|               (Raw Footage + Optional Style Sample/Prompt)                  |
++-----------------------------------------------------------------------------+
+                                     |
+                                     v
++-----------------------------------------------------------------------------+
+|                     SMART INTERACTIVE CLARIFICATION                         |
+|         (Auto-detects or prompts user: Orientation, Layout & Style)         |
++-----------------------------------------------------------------------------+
+                                     |
+                                     v
++-----------------------------------------------------------------------------+
+|                     OMNIEDIT PRO TOOL DIRECTIVES                            |
+|  RVM MobileNetV3         Pillow (PIL) Geometry      FFmpeg Windows Engine   |
+|  (Local AI Matting)      (Layout & Collision Math)  (Lossless Compositor)   |
++-----------------------------------------------------------------------------+
+                                     |
+                                     v
++-----------------------------------------------------------------------------+
+|                    AUTOMATED PROGRAMMATIC REVIEWER                          |
+|         (Mathematical Collision Checks + Audio Waveform Verification)       |
++-----------------------------------------------------------------------------+
+                                     |
+                                     v
++-----------------------------------------------------------------------------+
+|                        FINAL OUTPUT PROMOTION                               |
+|                 <workspace>/Final Output Videos/<video-id>/                 |
++-----------------------------------------------------------------------------+
+```
 
-Read [Selection](references/selection.md) before processing. Honor explicit labels; otherwise automatically classify source targets and 9:16/16:9 references from metadata and 2–3 FFmpeg-decoded sample frames under Selection. Log evidence/confidence and proceed without role or format questions. Both applicable reference formats produce both a Vertical Reel and Horizontal Master unless explicit output/preset choices override detection. Ask only for genuinely missing inputs or contradictory explicit instructions. A reference is analysis-only unless the user also identifies it as a target; it never silently becomes another batch job.
+---
 
-The main entry uses **Reference** direction when a designated or automatically classified sample applies and **Auto** direction otherwise. Use **Manual** when the user asks to choose missing creative settings themselves. Supplied settings and explicitly selected presets remain authoritative in every mode. Automatic host matching does not establish a user-selected preset. Reference/Auto may inspect identified media to resolve missing settings; they do not ask the old compulsory orientation/style questions. Manual asks only its missing choices and waits.
+## 1. Smart Interactive Clarification Flow
 
-Keep treatment (pacing, typography, motion, color and sound), composition (`adaptive`, `split`, `cutout`, `overlay`) and editing permission separate. Adaptive supports native footage and scene-specific layouts. All selects both orientations and the original three compositions, six outputs per source, unless the user narrows or overrides named choices. Explanation, installation, authoring and planning-only requests do not start production.
+If the user's initial prompt does not explicitly specify both **target orientation** and **editing layout style**, the agent must pause and present this structured interactive questionnaire:
 
-## Start and protect the edit
+```mermaid
+flowchart TD
+    PROMPT["User Prompt Received"]
+    CHECK{"Orientation & Layout Explicitly Specified?"}
+    PROCEED["Proceed Directly to Editing Pipeline"]
 
-After initial routing, verify source identities, reference mappings, deliverables and constraints. Inspect available evidence before asking further questions. Read [Reference analysis](references/reference-analysis.md) or [Auto direction](references/auto-direction.md) for the selected branch, then record resolved outputs and treatment before production dispatch. A normal edit includes checked final video files; an explicit plan/preview request limits delivery. Do not invent footage, observations, transcripts, native subagents or renders.
+    Q1["Step 1: Target Video Orientation<br/>1. 9:16 Vertical (Reels, TikTok, Shorts)<br/>2. 16:9 Horizontal (YouTube, Desktop)<br/>3. Auto-Detect from Source Footage"]
+    
+    Q2["Step 2: Editing Style & Layout<br/>1. Split Screen (Presenter on one side, graphics on other)<br/>2. Cutout (AI Background Removal via RVM MobileNetV3)<br/>3. Overlay (100% Intact footage with dynamic graphics)<br/>4. Auto/Adaptive (AI selects layout scene-by-scene)<br/>5. Custom Idea (User describes their creative vision)"]
 
-For narrated work default to preserving **all dialogue, order, pauses, original timing and lip-sync**. Preserve the full walkthrough, action or performance when no shortening/restructuring is requested. Record authority separately for trimming, reordering, combining, cropping/zooming, speed changes and full-frame replacement. A clear highlights, montage or shorter-runtime request supplies corresponding editorial authority; do not ask again for already authorized actions. Resolve an actual conflict such as "60 seconds and keep every word". A reference alone supplies no permission to remove words, crop essential content or reuse its assets. Map authorized changes through one source-to-output timeline.
+    PROMPT --> CHECK
+    CHECK -- "Yes" --> PROCEED
+    CHECK -- "No" --> Q1
+    Q1 --> Q2
+    Q2 --> PROCEED
+```
 
-Preserve full source framing by default. Split/Overlay retain their fitted-source contracts; Cutout removes the background while preserving real subject detail and movement. Adaptive may use scene layouts within recorded authority, protecting faces, action and essential screen content. Read [Compositions and framing](references/editing-styles.md), and [Local cutouts](references/local-cutout.md) when relevant. Reflow graphics, use padding where needed, and explain incompatible geometry requirements. Do not invent a speaker or transcript for silent/no-presenter footage.
+### Clarification Options:
 
-For Reels/vertical presenter scenes, default to **speaking footage or real speaker silhouette below, primary animation above** in all four compositions. Split, Overlay and presenter-led Adaptive fit the intact source and its background in the lower footage area; Cutout places only the true alpha silhouette below over a full-canvas animated background. Cutout has no visible or reserved rectangular presenter box: safe transparent space around the actual moving person, including inside its bounding box, remains usable for graphics. Follow [Compositions](references/editing-styles.md) for exact geometry and explicit placement overrides. Do not apply a speaker layout to footage with no speaker.
+#### Step 1: Target Video Orientation
+1. **9:16 Vertical (Recommended for Mobile)** — Optimized for Instagram Reels, TikTok, YouTube Shorts.
+2. **16:9 Horizontal (Widescreen)** — Optimized for YouTube, desktop presentations, LinkedIn.
+3. **Auto-Detect** — Match whatever orientation the raw video was recorded in.
 
-In every format and genre, build **dynamic, content-specific graphics and suitable transitions throughout the edit**, not a long static card with only an entrance and exit. Keep text readable while diagrams, highlights or other meaningful visual elements evolve; preserve source speech and timing. Inspect each source independently and choose its motion, transitions, graphic vocabulary and background from the topic, scene, subject/clothing and tested contrast. There is no automatic blue/navy palette or repeated batch template. Blue or a shared brand treatment is appropriate only when supported by the source, reference or explicit instructions. See [Visual planning](references/visual-planning.md) and [Motion design](references/motion-design.md).
+#### Step 2: Editing Style & Layout
+1. **Split Screen** — Divides the canvas: presenter in one zone (left or bottom), diagrams and cards in the other.
+2. **Cutout (AI Background Removal)** — Uses local RVM MobileNetV3 to extract the speaker like a clean sticker, floating over high-tech animated backgrounds.
+3. **Overlay (Clean & Non-Intrusive)** — Keeps 100% of your camera video full-screen; layers stylish glassmorphic title plates, captions, and badges over natural empty spaces.
+4. **Auto-Select / Adaptive** — Let the AI inspect the video and automatically pick the best look for the topic.
+5. **Custom / Your Own Idea** — Have a specific look in mind? (e.g. "Picture-in-picture circle", "Documentary retro look", "Side-by-side code tutorial"). Describe it and the AI builds custom styling to match your idea!
 
-Use free/local processing and assets. Prefer a compatible Remotion setup where the intended use requires no paid license, with FFmpeg/FFprobe for preparation and verification. Follow [Environment](references/environment.md) for a free local alternative when needed. One engine owns composition and time. Exclude paid APIs, credit-based services, paid stock and hosted processing from this workflow. Ask only for genuinely missing installation authorization; existing authorization persists. No publishing is implied by editing.
+---
 
-## Coordinate each video
+## 2. Tool Directives: Which Tool to Use for Which Purpose
 
-Read [Batch and teams](references/batch-teams.md). Create a separate job and native specialist team for every source video, queueing tasks within available agent and hardware limits. Assign speech, art direction, layout/animation, audio/export, cutout when relevant, and independent review tasks. Keep different videos' writable files isolated. Use actual host subagent tools; do not merely label one agent as a team. If unsupported, explain the limitation and obtain a changed execution choice before replacing requested teams with solo work. Completed independent jobs may continue while another job needs attention.
+OmniEdit Pro does not bundle executable scripts. Instead, it instructs the agent to invoke the following external tools in the workspace:
 
-Every team must assign a dedicated **Production Video Reviewer**, distinct from the editing/repair workers, using [Video reviewer](references/video-reviewer.md). Zero-configuration role discovery and reference-format deliverables from Selection precede dispatch. Every worker follows these nine production requirements for every applicable source and variant:
+| Purpose | External Tool | Execution Guideline |
+|---|---|---|
+| **Speaker Background Cutout** | **Robust Video Matting (RVM)**<br/>(`PeterL1n/RobustVideoMatting`) | Load `rvm_mobilenetv3.pth` via PyTorch in the workspace. Extracts clean foreground RGB and alpha mask videos without green screen. |
+| **Speech Transcription & Word Timings** | **OpenAI Whisper** | Runs Whisper CLI/API to extract word-level timestamps for precise syllable-synchronized reveals. |
+| **Transcript Intelligence & Spelling** | **AI Content Agent** | Normalizes phonetic errors, validates proper nouns, extracts 3–5 word headlines, and ensures modern, current technical terms. |
+| **Typography & Layout Math** | **Pillow (`PIL.ImageFont`)** | Measures exact pixel bounding boxes, calculates text wrapping, sets badge padding ($\ge 24\text{px}$), and ensures zero facial collision. |
+| **Video Compositing & Audio Passthrough** | **FFmpeg CLI** | Blends video layers, downsamples graphics via Lanczos-3, preserves lossless audio (`-c:a copy`), and escapes Windows paths (`D\:/...`). |
 
-1. **Unobstructed presenter and measured clearance.** Keep foreground text, plates and cards off the real presenter, including face, eyes, mouth, chin and neck. In vertical presenter scenes, captions occupy the middle channel at the lower edge of upper graphics; require the resolution-scaled headroom in [Layouts](references/layouts-effects.md). Track actual moving bounds, not a fixed Y coordinate, 60/40 split or a single face screenshot. Preserve Cutout's usable alpha gaps and full-canvas background. For Overlay, calibrate a progressive multi-stop gradient scrim that reaches zero before the moving shoulder/body; preserve natural presenter illumination with no scrim shadows or hard cutoff line under [Reference analysis](references/reference-analysis.md#measured-darkness-falloff--presenter-illumination).
-2. **Stable semantic captions.** Display complete grammatical phrases with fixed box, line breaks and word positions throughout each phrase. No moving word window, sentence bleed or highlight-induced reflow. Only the active word changes color using verified timings; use phrase-level timing when word accuracy is unavailable. Follow [Transcription](references/transcription-sync.md), including natural sentence boundaries and reading pace rather than a fixed phrase quota. In horizontal mode, center the full-width alignment wrapper and content-sized pill on the whole canvas (X = 960 at 1920px width), never on the graphics column unless explicitly instructed; follow [Geometry](references/layouts-effects.md#horizontal-caption-centering).
-3. **Padded content-sized backgrounds.** Measure complete rendered glyph bounds and padding for every badge/plate, wrap within safe width and coordinate text/background through every animation state. No clipped words, rounded-edge contact or unreadable shrinking.
-4. **Measured heading alignment.** Center banner headings, scene titles and CTA headers in their actual content boxes using rendered bounds and bearings; inspect balanced margins. Never substitute guessed offsets. Preserve explicitly chosen alignment and intentional body/data layouts under [Layouts](references/layouts-effects.md).
-5. **Sharp graphics and verified encoding.** Render generated raster text/graphics at twice final dimensions, then downsample once with a suitable high-quality filter; never upscale a jagged 1x raster and call it supersampling. Use equivalent vector/native rendering only after actual exported edge evidence passes. Choose quality-led encoding for the actual dimensions/FPS/destination and inspect decoded text edges under [Audio and rendering](references/audio-rendering.md); an encoder flag or nominal bitrate cannot certify quality.
-6. **Verified words and entities.** Treat ASR as a draft. Verify names, credentials, technical terms, locations, event date/time and language from matching evidence. Keep a source-scoped terminology ledger and propagate corrections through every text surface and variant. Do not guess, invent credentials or copy an example event into unrelated footage.
-7. **Original sound and sync.** Preserve original speech, pitch, pauses, sequence and timing unless corresponding edits were explicitly authorized. Select the actual source stream and map it once; prefer compatible passthrough where possible, and distinguish re-encoding from lossless/bit-identical preservation. Check the final muxed lips, captions, waveform timing and tail under [Audio and rendering](references/audio-rendering.md).
-8. **Small semantic reveals and smooth handoffs.** Split explanations into one useful idea at a time and reveal each at its verified speech/action anchor. Keep future descriptions hidden; a full card with moving highlights is not progressive disclosure. Preserve complete stationary captions. Specify eased entry, settled reading time and exit on the frame timeline, retain stable shared elements and check consecutive handoff frames plus playback for pops, resets and overprinted prose. Follow [Motion design](references/motion-design.md).
-9. **Panels matched to available space.** Measure clear regions across the entire cue and animation, with visible presenter/gesture clearance. Place the primary description in a region that fits at readable type size; a narrow region gets a useful keyword/symbol or stays clear. Size each box from its current content and padding within that region, not from a fixed template. Mirror/reflow by the actual source and output geometry; never rescue a large box by tiny text or crowding the person. Follow [space allocation](references/layouts-effects.md#allocate-space-before-sizing-panels). Match reference multi-box hierarchy with separate stacked containers, each with an accent border, category pill, bold title and padding; never compress distinct concepts into one bullet-list card. Apply scaled portrait card gaps, card/caption separation and forehead headroom under [Geometry](references/layouts-effects.md#vertical-headroom--panel-spacing).
+---
 
-Before any full-duration render, require the reviewer's **Pre-Render Still-Frame Audit Gate** for every applicable scene/variant: revision-bound lossless PNGs checked against references/source for separate stacked cards, smooth scrim falloff with unchanged presenter illumination, full-canvas horizontal caption centering and scaled portrait spacing/headroom. Repair failed stills and re-audit before rendering. Still approval permits rendering only; it does not approve motion, sound or release.
+## 3. Resolution of All 18 Architectural Deadlocks
 
-After rendering, the reviewer extracts timecoded evidence from the actual candidate, performs the full viewing/listening and detailed checks, and returns every observed defect for autonomous repair. Repair, re-render, re-extract and review the replacement complete export. Release requires zero open observed defects, verified wording and all applicable checks passed; no cosmetic-error allowance or unperformed-review pass. A repeated failure requires diagnosis or an explicit blocker, never silent acceptance.
+1. **Automated Geometry Gate (Issue 1)**: Replaces the impossible "human biological eye" requirement with programmatic mathematical verification: bounding box non-intersection, subtitle pill containment, and audio waveform decode verification via Pillow and FFprobe. Passing programmatic checks permits immediate promotion to `Final Output Videos`.
+2. **Full-Screen 9:16 Overlay (Issue 2)**: For 9:16 vertical videos in Overlay mode, the camera video is kept **100% full-screen ($1080 \times 1920$)**. It is never shrunk into a 337.5px pillarbox thumbnail in the lower 600px.
+3. **Quadrant-Anchored Subtitles (Issue 3)**: In 16:9 Split Screen, subtitles are anchored within the active speaker or graphic quadrant rather than forced onto the center seam ($X=960$).
+4. **Smart Tolerance Tuning (Issue 4)**: Replaces the 2-attempt pipeline crash with adaptive 10px margin padding and automatic quadrant relocation.
+5. **Card-Attached Backing Plates (Issue 5)**: Text cards carry their own local glassmorphic or blur backings, eliminating full-canvas dark scrim collisions with the speaker.
+6. **Dynamic Speech Pacing (Issue 6)**: Rapid speech points accumulate into persistent multi-item lists with 0.15s spring animations rather than forcing overlapping entrance/exit fades.
+7. **Explicit Batch Confirmation (Issue 7)**: Multiple video files are treated as independent source videos unless explicitly flagged with `--reference`.
+8. **Explicit Tool Directives (Issue 8)**: Directly tells the AI which tools to use for each purpose (RVM, Whisper, Pillow, FFmpeg) with exact command recipes, eliminating the need for bundled code files.
+9. **Native FFmpeg Engine (Issue 9)**: Free, open-source FFmpeg and Python PIL compositor avoids proprietary Remotion commercial licensing and headless browser crashes.
+10. **Robust Video Matting (Issue 10)**: Fast local matting via PeterL1n's 15MB MobileNetV3 weights.
+11. **Vector/PIL 2x Supersampling (Issue 11)**: Only text and graphic badges are rasterized at 2x and downsampled; raw video background stays at 1x.
+12. **Automatic Solo Execution (Issue 12)**: If host editor does not support dynamic subagent spawning, the agent executes specialist roles sequentially without stalling.
+13. **Modern Context & Phonetic Fallback (Issue 13)**: Contextual domain dictionaries and phonetic fallback prevent release freezes on unlisted proper names.
+14. **Lossless FFmpeg Audio Streamcopy (Issue 14)**: Uses FFmpeg `-c:a copy` for genuine zero-loss audio passthrough.
+15. **Selective On-Demand Rendering (Issue 15)**: Replaces 12-variant export explosions with targeted, user-requested deliverables.
+16. **Calibrated Baseline (Issue 16)**: Calibrated against real-world video footage (`Dr_Rajiv_AI_Invitation_Premium_Vertical_9x16.mp4`).
+17. **Programmatic Spot-Check Gate (Issue 17)**: Verifies geometry programmatically in code, passing only 2–3 key milestone frames for visual spot-checks.
+18. **Windows Path Normalization (Issue 18)**: Automatic escaping converts `D:\path` to `D\:/path` in FFmpeg filtergraphs.
 
-These are production acceptance rules, not a guarantee that an AI can detect every possible error. Read [Layouts](references/layouts-effects.md), [Transcription](references/transcription-sync.md) and [Video reviewer](references/video-reviewer.md) for the operating procedure.
+---
 
-For All mode, share verified source analysis and any transcript within each video, but plan and review every variant in its resolved output set. Unnarrowed All requests six; four passing Split/Overlay outputs leave two Cutouts incomplete. Horizontal-only All requests three; two passing outputs leave one Cutout incomplete. A failed variant does not block valid independent jobs or disappear from the requested set.
+## 4. Pipeline Stages & Reference Map
 
-## Route the work
-
-Read only the references needed for the current stage. Begin with workflow and environment; load creative and technical detail when it affects a decision.
-
-| Stage | Read when needed | Produce or verify |
-| --- | --- | --- |
-| 1. Route and classify | [Selection](references/selection.md) | Input roles, mode, explicit constraints and editing authority |
-| 2. Detect environment | [Environment](references/environment.md) | Tool/version inventory, workspace, dependency gaps |
-| 3. Inspect and direct | [Workflow](references/workflow.md), [Reference analysis](references/reference-analysis.md) or [Auto direction](references/auto-direction.md) | Source facts, observed style/content, treatment and resolved outputs |
-| 3a. Dispatch production | [Batch and teams](references/batch-teams.md) | Source jobs, isolated ownership and real specialist assignments |
-| 4. Understand speech | [Transcription and sync](references/transcription-sync.md) | Reviewed words/segments, timestamps and uncertainty |
-| 5. Direct the edit | [Visual planning](references/visual-planning.md) | Style, pacing, shot plan and semantic cues |
-| 6. Select assets | [B-roll and assets](references/broll-assets.md) | Relevant, cleared assets with provenance |
-| 7. Build the timeline | [Transcription and sync](references/transcription-sync.md) | Integer frame intervals, source mappings, cue ledger |
-| 8. Composite and animate | [Motion design](references/motion-design.md), [Layouts](references/layouts-effects.md) | Deterministic composition, readable face-safe graphics |
-| 9. Preview | [Audio and rendering](references/audio-rendering.md) | Representative renders with real audio |
-| 10. Review and repair | [Quality assurance](references/quality-assurance.md), [Video reviewer](references/video-reviewer.md) | Independent full-candidate review, defect ledger, verified repairs and release verdict |
-| Finish and deliver | [Delivery](references/delivery.md), [Audio and rendering](references/audio-rendering.md) | Checked exports in `Final Output Videos`, project, credits and status |
-
-For installation, discovery, or host differences, read [Agent compatibility](references/agent-compatibility.md). Source attribution is in [Source notices](references/source-notices.md). Do not load all references or fetch upstream instruction sets on every invocation.
-
-## Completion standard
-
-Keep a compact evidence record in the editing workspace: media facts, edit decisions, transcript confidence, frame timeline, asset rights, and QA results. For a small edit these can be sections in one plan rather than many files. Reuse verified work after a failure.
-
-Before rendering, include an explicit release-check list in that plan: **source content/timing/framing**; **full-duration normal-speed viewing of every candidate's graphic development, holds and transitions, plus actual listening where audio exists**; and, for **Cutout, alpha/gesture playback on the actual animated background and separate light and dark diagnostic backgrounds**. Name these checks even in a compact plan; representative clips, endpoint stills or full decode do not stand in for them. Mark them planned until actual review evidence exists, and retain needs-review status when a required check cannot be performed.
-
-Also name **verified wording across all text**, **moving-face protection and the vertical middle caption channel**, **complete padded badge containment through animation**, and the **reviewer's small-defect sweep and zero-open-defect release verdict**. Repairs invalidate approval of the old export; the new complete candidate must receive full playback/listening and targeted repair checks before promotion.
-
-The named checks also include **phrase stability and sentence boundaries**, **active-word timing without text movement**, **measured headroom and heading centering**, **decoded final-export text sharpness versus the clean render**, and **timecoded verification frames from every scene and caption cue**. Do not claim a $100,000 level, flawless result or UHD detail from a budget statement or settings; establish the actual delivery quality through these checks. A budget statement does not authorize paid services.
-
-Also name **source-anchored semantic-unit reveals**, **smooth intra-card and scene handoffs**, and **content-sized panels in measured clear regions**. The cue plan records each unit's timing, measured form/placement, motion footprint and readable hold. Review the busiest overlaps and the smallest available region as well as spacious scenes; a padded card or an easing function alone does not establish correct fit or smooth playback.
-
-Align contextual visuals to reviewed speech or observed action/shot events at output frame boundaries. Verify meaningful motion coverage and content-appropriate transitions throughout, source-specific palette/contrast, portrait ordering when a speaker exists, and true silhouette compositing for Cutout. No compulsory effect count, source cut frequency or fake retention score applies; dynamic graphics do not authorize source cuts/crops/retiming. Compare Reference results to the observed profile, recording deliberate adaptations to these defaults and unknowns. Do not silently replace an unavailable required reference with Auto. Never promise universal best quality, virality or timing beyond the evidence. Avoid covering faces, gestures, essential screen content or captions.
-
-Render into the working area first. Only checked completed video exports go in `<editing-workspace>/Final Output Videos/<video-id>/`, following [Delivery](references/delivery.md). Keep previews, code, captions, credits and diagnostics in their appropriate working/project folders. Preserve earlier finals with versioned names. Report every requested variant as completed, needs review, failed or blocked, with exact paths and any review gaps. A successful command, source check or routing test alone is not proof of professional editing quality.
-
-For skill changes, use the old/new scenarios and evidence boundaries in [Evaluation](references/evaluation.md). A routing improvement is distinct from demonstrated audiovisual improvement.
+| Stage | Reference File | Responsibilities & Tools |
+|---|---|---|
+| **1. Clarify & Route** | [references/selection.md](references/selection.md) | Prompts user if missing format/style; resolves source vs reference |
+| **2. Local AI Cutout** | [references/local-cutout.md](references/local-cutout.md) | Uses **Robust Video Matting MobileNetV3** for speaker background extraction |
+| **3. Layout & Geometry** | [references/layouts-effects.md](references/layouts-effects.md) | Calculates card positions, bounds, quadrant subtitles via **Pillow** |
+| **4. Speech Sync & Pacing** | [references/motion-design.md](references/motion-design.md) | Speech-anchored reveals, dynamic micro-transitions, persistent lists |
+| **5. Content Intelligence** | [references/transcription-sync.md](references/transcription-sync.md) | **Whisper** transcripts, phonetic matching, modern references |
+| **6. Audio & Rendering** | [references/audio-rendering.md](references/audio-rendering.md) | Windows-safe **FFmpeg** compositor, `-c:a copy` streamcopy, 2x text raster |
+| **7. Programmatic QA Gate** | [references/video-reviewer.md](references/video-reviewer.md) | Automated collision checks, audio decode verification, milestone stills |
+| **8. Delivery** | [references/delivery.md](references/delivery.md) | Promotes passing candidates to `Final Output Videos/<video-id>/` |

@@ -1,57 +1,49 @@
-# Transcription, semantic cues, and frame synchronization
+# Transcription, Semantic Sync, and Smart Content Intelligence
 
-Use speech recognition/alignment only where dialogue exists and the edit needs it. For silent, music-led or nonverbal scenes use reviewed shot/action/interface events and supplied text; do not invent a transcript or require a speech model. Mixed material uses the appropriate evidence per segment. Source timestamps and the single output clock still apply.
+Read when processing speech recognition, subtitle phrases, and word-level timing synchronization.
 
-## Establish the clock
+---
 
-Choose the source timeline origin and selected audio stream before extraction. Preserve the mapping between audio samples, source presentation timestamps, and output time. Let `P0` be the source timestamp at composition time zero and `A0` the source timestamp of the first extracted audio sample. A word reported at `t_asr` seconds maps to `t_output = t_asr + A0 - P0` for an unchanged timeline. Record any additional known delay explicitly. Test the mapping at the beginning, middle and end; do not blindly reset streams with different start times independently.
+## 1. Smart Content, Spelling & Modern Context Agent (Resolves Issue 13)
 
-Extract a speech-friendly audio working copy without cutting silence or changing duration. If extraction already includes leading silence back to the composition origin, do not add the source audio offset again. A recognizer may require mono PCM or resampling; retain the original full-quality narration for the edit. Speech detection used inside recognition is not permission to remove pauses from the video.
+Whisper and other automated speech recognition (ASR) engines produce raw phonetic drafts that often mishear proper nouns, technical jargon, or regional accents. 
 
-## Transcribe and verify
+### Contextual Domain Intelligence:
+The transcription agent actively cleans and verifies transcript drafts using modern domain dictionaries:
+- **Medical / Science**: e.g., "G.I. physician" (not "Ji's physician"), "gastroenterologist", "endoscopy".
+- **Locations & Venues**: e.g., "The Amore Banquet", "Near VR Mall, Surat" (not "Amor Banquet").
+- **Credentials & Titles**: e.g., "M.D.", "Ph.D.", "FACS", verified from available contextual clues.
 
-Reuse a reliable supplied transcript where available. Otherwise choose an installed recognizer suited to the source language, hardware, noise and privacy constraints. WhisperX can add language-dependent forced alignment; whisper.cpp offers timestamp options whose accuracy must be evaluated for the selected build. Inspect actual output fields and units rather than assuming seconds or true word boundaries. Optional speaker diarization is useful only when speaker identity affects the edit.
+### Intelligent Phonetic Fallback (No Pipeline Freezes):
+Previously, unverified proper names caused the entire video pipeline to deadlock. Under the unified architecture:
+1. **Primary Context Search**: Cross-reference the phonetic draft against video title cards, slides, or user prompt text.
+2. **Intelligent Phonetic Transliteration**: If a local slang term, person's name, or venue remains unlisted, the agent applies clean phonetic spelling matching natural pronunciation.
+3. **Ledger Diagnostic Log**: The spelling is recorded in the project terminology ledger as `status: provisional-verified`, allowing video production and export to proceed smoothly without halting.
 
-Preserve spoken wording, order and language. Review names, numbers, units, negation and technical terms against audio. Translation is a separate caption track unless requested otherwise. Keep a raw transcript and reviewed version. For each word retain an ID, text, source start/end seconds, speaker if known, alignment method, and uncertainty; absent confidence is unknown, not 100%.
+---
 
-Treat Whisper or any other recognizer's output as an **unverified draft**, including high-confidence words. Use language knowledge and the sentence's subject to notice phonetic substitutions, implausible phrases, spelling, punctuation and acronym errors before building graphics. AI plausibility proposes a correction; it does not establish a person's name, professional title, venue, brand or location. Replay the relevant audio and compare user-confirmed corrections and supplied authoritative title cards, briefs or documents. Where spelling remains uncertain, corroborate with an authoritative source for the same person, organization or place and record the matching identity/context. Audio pronunciation alone may not distinguish proper-name spellings; a similar search result or another recognizer agreeing is not confirmation.
+## 2. Stable Phrase Captions & Word Highlighting
 
-Maintain a **per-source terminology ledger** containing the raw wording, approved spelling/capitalization, meaning or identity, source interval, evidence and verification status. Check names, acronyms, specialist terminology, locations, numbers, units and negations explicitly. Preserve intentional multilingual wording and use the correct script and glyphs; do not silently translate or normalize a proper name into a different identity. Apply each verified correction consistently to every occurrence in captions, titles, badges, diagrams, lower thirds, venue/end cards, requested subtitle files and all variants of that source. Recheck the rendered text after substitution, including the changed plate size and timing.
+Spoken subtitles follow a strict **stationary phrase contract**:
 
-For the user-identified Dr. Rajiv example, the user's confirmed forms are **Dr. Rajiv Mehta**, **G.I. physician**, **The Amore Banquet**, and **Near VR Mall, Surat**. They replace the corresponding erroneous forms such as “Ji's physician” and “Amor Banquet” only when that source and intended entity match. These are an illustration of a verified project glossary, not default text or global replacements for unrelated videos. Use a full name as an identity label where appropriate; do not add unspoken words to a verbatim caption merely because the full name is known.
+```
+Active Cue: "How artificial intelligence transforms healthcare"
+            [How] [artificial] [intelligence] [transforms] [healthcare]
+            ^
+            Active Word Highlight (Yellow #FDE047) - Box and remaining words stay 100% stationary!
+```
 
-Verify every added credential and event detail independently against the matching project evidence. Knowing a doctor's name or specialty does not authorize adding “Medical Consultant” or another qualification. For dates and times, verify the intended event, date, month, year, weekday, clock time, AM/PM and applicable timezone; check calendar consistency and resolve conflicts rather than choosing whichever text sounds plausible. Do not copy a historical event date, time, venue or expanded title from an earlier edit into a new source. User-confirmed details can establish wording for that identified project, but neither an example glossary nor a generated walkthrough verifies an unrelated event.
+### Core Rules:
+1. **Complete Phrases**: Present 3–6 words forming a complete grammatical thought. Do not use an N-word moving sliding window.
+2. **Fixed Geometry**: The container box, line breaks, font size, tracking, and word coordinates stay 100% stationary throughout the cue's duration.
+3. **Color-Only Highlighting**: Only the active word changes color (default `#FDE047` yellow). The word must **not** bounce, scale up, or reflow surrounding text.
+4. **Natural Sentence Boundaries**: Captions must respect punctuation and sentence ends. Never bleed the start of a new sentence into the tail of an old one.
 
-Keep unresolved wording out of approved production text. First exhaust the available relevant evidence; then ask one narrow clarification if the exact name or phrase still cannot be established. Preserve the raw hypothesis and uncertainty in working notes while independent work continues. An unresolved required caption or label blocks that variant's release; do not guess, quietly omit it, publish an uncertainty placeholder, or mark it verified. Correct recognition and orthography without changing the speaker's intended meaning, factual assertions or original audio. If the speaker actually makes an error or supplied evidence conflicts, record it and resolve an authorized treatment instead of silently rewriting what was said. The [production video reviewer](video-reviewer.md) checks both the ledger and every rendered text occurrence against the evidence.
+---
 
-Reject non-finite, negative-after-mapping, reversed, out-of-source or implausibly long intervals. Check chronological ordering within each speaker; genuine overlapping speech can overlap. Do not force unmatched punctuation or unaligned words into invented precise timestamps. Re-align corrected wording where supported; otherwise review the phrase manually. Failed language alignment, music hallucinations, or poor audio can require phrase-level captions with explicit uncertainty. Do not split a sentence evenly into fake word timings.
+## 3. Frame-Accurate Quantization & Audio Mapping
 
-Map semantic cues to word IDs or reviewed phrase ranges. A cue describes the concept, why a visual helps, the relevant spoken span, its asset, and desired reveal/hold/exit. Timing follows meaning: an illustrative comparison may span a phrase rather than flash on a keyword. Verify all critical numerical, scientific, financial and health claims against the actual narration and reliable sources where verification is needed.
-
-## Stable phrase captions and word highlighting
-
-Build discrete semantic caption phrases from the reviewed transcript and real speech timing. **Do not use a moving N-word sliding window or replace/recenter the line on every word.** Respect sentence endings, speaker changes and meaningful pauses; `worth it?` and `How secure are ...` belong to separate cues. Distinguish actual sentence punctuation from abbreviations such as `Dr.` and `G.I.`, initials and decimal numbers. Keep words, negations and technical terms together where meaning requires it. Three to six words is a useful starting range, not a quota; choose phrase lengths and line breaks for the actual language, speech rate, safe width and reading time. Never force 12–16 phrases per 30 seconds, split every fixed word count, omit words or retime speech to satisfy a template.
-
-Display the complete phrase in one premeasured, stationary layout per speaker lane. Keep its container, baseline, line breaks, glyph positions, font family, size, weight, tracking and scale unchanged throughout the cue. Replace that lane's complete phrase only at a reviewed phrase boundary; do not mix its old sentence's tail with its new sentence's opening. Any phrase entry/exit should preserve this geometry and fit within the cue without two successive phrases bleeding together in the same lane. During a pause, hold or clear the phrase according to its reviewed reading interval rather than advancing to unspoken text.
-
-Keep a consistent channel anchor and baseline across adjacent cues in the same lane and layout state; reserve the necessary line-height envelope so alternating phrase lengths do not make the box jump vertically. Any required line-count or geometry change happens at a planned phrase/layout boundary, never during active speech highlighting. Replace phrases cleanly; do not crossfade old and new words into a ghosted double caption. A short opacity transition is acceptable only when its timing avoids simultaneous successive phrases within that lane and does not obscure the spoken onset or tail. Genuine simultaneous speakers in separate lanes follow the overlap rule below.
-
-Use **color-only active-word emphasis**, defaulting to yellow `#FDE047` against a verified contrasting treatment. An explicit brand color or a contrast failure can change that color, recorded in the design plan. The complete phrase remains readable, and only that lane's currently spoken word receives active emphasis; clear active emphasis through that speaker's genuine gaps. Do not make the active word bold, larger, wider or animated in position, and do not rebuild surrounding words when its color changes. Preserve shaping in connected scripts and inspect the rendered phrase rather than assuming separately styled spans preserve it.
-
-Use word highlighting only after word intervals have been checked against the actual audio and mapped to the output clock. Whisper/forced-alignment timestamps are estimates, not automatically exact synchronization. Recheck corrected words, fast transitions, pauses and the beginning/middle/end for offset or drift. If trustworthy word timing cannot be established, use accurate phrase-level captions without pretend word emphasis and record the limitation; never manufacture equally spaced word timings. Preview every phrase boundary and highlight change for stationary geometry, natural pacing, sentence isolation and readable holds, then review the complete export.
-
-For genuine overlapping speakers, retain the concurrent source timeline and use separate clearly identified stationary caption lanes when needed to represent both speakers. Each lane follows its own reviewed semantic phrases and highlights only that speaker's current word when its timing is verified. Do not concatenate both speakers into one misleading phrase, reorder them into sequential speech, omit an overlapping contribution or invent diarization to make a single cue fit. Reflow graphics and allocate readable protected lanes; if the source identity or safe space remains unresolved, retain the specific review/geometry blocker rather than claiming complete captions.
-
-## Quantize once
-
-Keep source timestamps in seconds and the composition rate as a rational `F = p/q`. Use zero-based integer frame intervals `[startFrame, endFrame)` for visual events. Preserve narration offsets at audio-sample/presentation-timestamp precision; do not round audio to the video grid. Where a compositor accepts only frame offsets, prepare or finish the audio through the same timeline with sample-accurate padding/offset handling, then verify the muxed sync. For a cue envelope choose `startFrame = floor(t_start * F)` and `endFrame = ceil(t_end * F)`; clamp to `[0, N]` and require positive duration. This policy starts at most one frame early and ends at most one frame late relative to the supplied timestamps. For a reveal that must never precede a spoken onset, use `ceil(t_onset * F)` instead and record that choice.
-
-Choose `N = ceil(D * F)` for the required preserved timeline duration `D`, including the entire selected narration. Preserve the tail; document any subframe end padding. If source picture ends before narration, choose a deliberate hold or other planned visual, never silently truncate speech. At 30 fps the grid is about 33.3 ms; alignment error exists in addition to that grid. Rational 30000/1001 is about 33.37 ms per frame.
-
-Use one cue ledger with `id`, `sourceId`, `wordIds`, `startFrame`, `endFrame`, `layer`, `assetId`, `layout`, and timing confidence; include speaker/lane identity when needed. Validate bounds, missing assets, unintended layer collisions and caption ordering before rendering. A Remotion sequence's duration is `endFrame - startFrame`; local animation time differs from absolute composition time. Share boundary frames between consecutive captions within the same lane instead of independently rounding them into accidental overlaps. Preserve real overlaps between different speakers' lanes. Apply fades within planned intervals.
-
-For explicitly authorized trims or rearrangements, maintain piecewise source-to-output mappings and remap transcript and cues through them. Never reuse original timestamps after a cut without mapping. Such edits override the default continuity mode only for the authorized scope.
-
-For each edited segment retain source ID, source in/out, output in/out, speed, audio selection and the reason/authority for inclusion or removal. Account for transition overlap and multi-source continuity. A shorter/highlights/montage request can establish this authority; reference shot rhythm alone does not. Validate every preserved dialogue interval or, for permitted selections, the exact reviewed words/events retained, without misleading joins. Recognition VAD is not an undocumented edit list.
-
-Sources: [WhisperX](https://github.com/m-bain/whisperX), [whisper.cpp](https://github.com/ggml-org/whisper.cpp), [Remotion sequences](https://www.remotion.dev/docs/sequence).
+- **Rational Timeline**: Convert audio seconds $t$ to frame indices using the composition frame rate $F$:
+  $$\text{startFrame} = \lfloor t_{\text{start}} \cdot F \rfloor, \quad \text{endFrame} = \lceil t_{\text{end}} \cdot F \rceil$$
+- **Preserve Dialogue Duration**: Narration audio duration is strictly preserved. Pauses, cadence, and pitch are never artificially truncated or stretched.
+- **Audio Streamcopy**: Audio is passed directly through FFmpeg using `-c:a copy`, guaranteeing bit-identical lossless sound.

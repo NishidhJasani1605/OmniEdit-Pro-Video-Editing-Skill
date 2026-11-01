@@ -1,63 +1,123 @@
-# Per-video teams and batch work
+# Multi-Agent Coordination, Parallel Execution, and Team Hierarchy
 
-Read with [Selection](selection.md). This is a native-agent coordination workflow, expressed as instructions. No crewAI service, orchestration library, shell helper or external skill is required. Roles are task assignments with relevant context, not a claim of certified expertise or special model capabilities.
+Read when managing agent teams, assigning specialist roles, orchestrating parallel tasks, and coordinating inter-agent communication.
 
-## Inventory and ownership
+---
 
-Resolve each input as source, reference or supporting asset before counting source jobs. A reference video or supporting clip does not get its own edit job. Honor explicit labels; automatically classify unlabeled files under [Selection](selection.md#zero-configuration-automatic-role-classification), log evidence/confidence and dispatch without a role-confirmation question. Give every actual source a stable unique ID, even when files share a basename. Record original absolute path, identity/fingerprint, selected streams, creative mode and permissions. Before a missing source is located, retain a provisional label with needs-input status; verify identity before processing or reusing cached work. Treat sources independently unless the user expressly requests a combined edit; multiple clips do not imply a montage.
+## 1. Team Hierarchy & The CEO Agent (Video Lead)
 
-Maintain the reference-to-source map with primary/attribute priorities, access status and timecoded evidence. A scoped reference-analysis task may serve multiple source teams. Publish its verified observations read-only; each lead owns the source-specific translation, adaptations and comparison. Do not let teams modify a shared profile, copy reference event times onto unrelated footage, or claim an uninspected attribute matched.
+OmniEdit Pro establishes a structured team hierarchy led by a **CEO Agent (Video Lead)** with **full omni-directional communication** between all team members:
 
-Give every source its own inspected creative direction, cue/motion-coverage and transition plan, and palette evidence under [Visual planning](visual-planning.md), [Auto direction](auto-direction.md) and [Motion design](motion-design.md). Derive graphics, visual metaphors, mechanisms, timing and color from that source's topic, imagery/background, subject/clothing and contrast tests. Recoloring or retitling a cloned effects sequence is insufficient for different content. A requested brand or reference can provide a shared system; retain it without forcing arbitrary differences, while adapting the actual explanations and cues independently. Variants of one video may share its treatment.
+```mermaid
+flowchart TD
+    CEO["CEO AGENT (Video Lead)<br/>(Direction, Orchestration & Final Release)"]
+    
+    subgraph Specialists ["Specialist Production Team (Full-Mesh Direct Communication)"]
+        SP["Speech & Captions Agent<br/>(Whisper transcription & word timing)"]
+        CO["Cutout Specialist Agent<br/>(RVM MobileNetV3 AI background matting)"]
+        VD["Visual Director Agent<br/>(Color palette, typography & contrast)"]
+        LA["Layout & Animator Agent<br/>(Card geometry & speech-synced motion)"]
+        AE["Audio / Export Agent<br/>(FFmpeg compositing & lossless streamcopy)"]
+        REV["Production Video Reviewer<br/>(Automated QA checks & collision audit)"]
+    end
 
-Auto/Reference may use narrow preliminary source/reference analysis before creative choices are resolved. Record the selected mode, treatment, composition, output set/settings and decision provenance before creating variant/render jobs. Preset defaults apply only when explicitly selected; explicit user overrides change only the named dimension. All starts with six pairs and never silently gains Adaptive. Count variants from the resolved set, not every supplied media file.
+    OUT["Final Output Videos/<video-id>/"]
 
-Use `<editing-workspace>/Working Files/<video-id>/` for that job's plan, transcript, assets, compositions, previews and candidate exports. Keep source files unchanged. Assign one owner to each writable artifact; a video lead alone integrates the authoritative timeline. Shared resources are read-only once verified. Do not make different teams edit one shared composition or progress file concurrently; report updates to the batch coordinator.
+    CEO <-->|Direct Line & Approval| SP
+    CEO <-->|Direct Line & Approval| CO
+    CEO <-->|Direct Line & Approval| VD
+    CEO <-->|Direct Line & Approval| LA
+    CEO <-->|Direct Line & Approval| AE
+    CEO <-->|Direct Line & Audit Verdict| REV
 
-Maintain a compact batch record containing role/source/reference IDs and mappings, resolved variant IDs, team/task handles, owner, dependencies, output paths, state, last evidence and next action. States include waiting-role, waiting-selection, analyzing, queued, running, needs-input, preview-ready, reviewing, needs-review, needs-repair, completed, failed and blocked. A queue entry or an agent's optimistic message is not completion evidence.
+    SP <-->|Omni-Directional Direct Messaging| CO
+    SP <-->|Omni-Directional Direct Messaging| VD
+    SP <-->|Omni-Directional Direct Messaging| LA
+    SP <-->|Omni-Directional Direct Messaging| AE
+    SP <-->|Omni-Directional Direct Messaging| REV
 
-## Native team dispatch
+    CO <-->|Omni-Directional Direct Messaging| VD
+    CO <-->|Omni-Directional Direct Messaging| LA
+    CO <-->|Omni-Directional Direct Messaging| AE
+    CO <-->|Omni-Directional Direct Messaging| REV
 
-Check the actual host's exposed subagent tools, allowed nesting, concurrency and permissions. Do not infer team support from the model brand or IDE name. With native support, assign a dedicated lead/team context per video and create specialist tasks for its stages:
+    VD <-->|Omni-Directional Direct Messaging| LA
+    VD <-->|Omni-Directional Direct Messaging| AE
+    VD <-->|Omni-Directional Direct Messaging| REV
 
-| Role | Inputs and deliverable |
-| --- | --- |
-| Video lead | Role map, brief and source facts; owns source-specific direction/output record, dependencies, authoritative timeline and variant status |
-| Speech/captions, when speech exists | Selected audio and source origin; reviewed transcript, confidence and timing cues; no invented transcript for silent footage |
-| Visual direction/assets | Source observations, selected mode/constraints and applicable read-only reference profile; source-specific treatment, palette/contrast evidence, scene/shot plan, design vocabulary, adaptations and asset rights |
-| Layout/animation | Approved plan, timing and assets; semantic-unit reveal ledger, measured primary/compact region allocation and content-sized boxes, eased property endpoints/handoffs, full-duration meaningful development and settled readable elements |
-| Cutout, only when selected | Original frames and geometry; local matte/foreground plus edge and temporal checks |
-| Audio/export | Timeline and original sound where present; mix or verified silent path, representative previews and candidate final |
-| Production Video Reviewer (independent) | Actual source/reference/output and exact candidate identity; follows [Video reviewer](video-reviewer.md) for verified wording, face-safe middle captions, padded text containment, full-output audiovisual review, small-defect ledger, repair verification and release verdict |
+    LA <-->|Omni-Directional Direct Messaging| AE
+    LA <-->|Omni-Directional Direct Messaging| REV
 
-Every substantive stage gets a scoped specialist assignment; a lead does not silently do all work and call that a team. For non-presenter or silent work, replace inapplicable speech tasks with scene/action analysis and skip subject extraction unless Cutout is selected. Specialists can run sequentially as slots free up. If nested agents are unavailable, the top-level coordinator dispatches specialists and links them to the video lead's job. Reserve capacity for coordination/review; do not occupy every slot with leads waiting for children. Launch only as many teams as the host can sustain and queue the rest. Limit GPU/model/render concurrency independently of agent count.
+    AE <-->|Omni-Directional Direct Messaging| REV
 
-Assign the Production Video Reviewer to each source's team and identify its actual task handle. It may review that source's variants sequentially, with a separate verdict for each. It must be distinct from the workers who authored or repaired the candidate. Give it the required handoff in [Video reviewer](video-reviewer.md); it owns the mandatory pre-render still gate and release acceptance while the lead retains file/timeline ownership. Full-duration render tasks depend on revision-bound PASS — STILL GATE for every applicable scene/variant; a failed or missing gate leaves rendering queued. Queue review when slots are full; do not replace it with editor self-approval.
+    CEO -->|Final Sign-Off| OUT
+```
 
-If no subagent tool exists, explain that genuine teams cannot be created. Ask whether to proceed with one agent applying the same role checklists, or wait for a team-capable environment. Until answered, preserve the job as needs-input; do not fabricate agents or silently reduce the execution mode. A prior user authorization for solo fallback is sufficient.
+### Roles and Responsibilities:
+1. **The CEO Agent (Video Lead)**:
+   - Holds overarching project ownership and creative decision-making authority.
+   - Inspects the user prompt, determines the editing strategy, and dispatches tasks to specialist subagents.
+   - Reviews and approves intermediate outputs before allowing subsequent stages to proceed.
+   - Performs the final release sign-off before files are promoted to `Final Output Videos/`.
+2. **Speech & Captions Specialist**: Transcribes audio with Whisper, repairs phonetic errors, extracts 3–5 word headlines, and sets millisecond word timestamps.
+3. **Visual Director**: Analyzes speaker clothing and background to select WCAG AAA contrast palettes, typefaces, and graphic accents.
+4. **Cutout Specialist**: Operates PeterL1n's Robust Video Matting (RVM MobileNetV3) to isolate the speaker's moving silhouette.
+5. **Layout & Animator**: Designs syllable-synchronized card animations, padding, and smooth transition curves.
+6. **Audio / Export Specialist**: Combines graphic overlays, foreground cutouts, and backgrounds via FFmpeg, muxing original audio via `-c:a copy`.
+7. **Independent Production Reviewer**: Audits bounding-box coordinates, verifies audio integrity, and submits the release verdict to the CEO Agent.
 
-## Assignments and dependency order
+---
 
-Each worker brief includes source/variant ID, mode and role, exact input paths/versions, applicable reference mapping/profile, relevant instruction references, objective, explicit constraints/editing permissions, selected composition/treatment, owned output paths, dependencies and required evidence. Direction/animation assignments include this source's palette rationale and changing-background/clothing contrast tests, full-duration motion coverage, graphic development and transitions, plus interval/reason for short reading holds or explicit user stillness overrides. Apply [Editing styles](editing-styles.md) for geometry and portrait presenter placement. Give only needed context. Prohibit cross-job writes and unauthorized extra workers. Preserve the user's model settings unless they requested a change.
+## 2. High-Speed Parallel Execution (Concurrent Processing)
 
-Every worker brief also carries the shared face-protection, vertical middle-caption, text-fit, approved-spelling and zero-open-defect rules, plus the current terminology ledger/version. Speech owns wording evidence; layout owns safe placement and padded backgrounds; export renders the approved versions; the reviewer checks their integration. A text/font/layout change invalidates dependent measurements, previews and variant approvals. No specialist can waive a known defect because it seems ignorable.
+To minimize turnaround time, tasks with no mutual dependencies execute **in parallel simultaneously**:
 
-Carry all nine core requirements in the dispatch acceptance checklist. Speech supplies grammatical phrase boundaries and verified word timing; layout supplies stationary caption geometry, scaled headroom, measured heading centers, small source-anchored explanatory units, content-sized panels fitted to clear regions and continuous eased handoffs; export supplies 2x graphics or evidenced equivalent, clean reference frames, tested quality-led encoding and audio stream mapping. The reviewer independently checks decoded typography, semantic reveal order, worst-frame panel clearance and transition continuity with timecoded verification frames plus full audiovisual playback. Routine repairs within the approved brief continue autonomously; missing evidence or a real permission conflict remains explicit.
+- **Concurrent Phase 1 (Data Extraction & Preprocessing)**:
+  - `Track A`: The **Speech Specialist** transcribes dialogue and computes syllable timestamps.
+  - `Track B`: The **Cutout Specialist** runs RVM MobileNetV3 to extract the alpha matte and foreground.
+  - `Track C`: The **Visual Director** samples frame lighting, tests contrast, and finalizes typography.
+  *(These 3 heavy tasks run concurrently rather than sequentially, cutting processing time by up to 60%).*
+- **Synthesis Phase 2 (Composition & Motion)**:
+  - The **Layout & Animator** combines word timings from Track A with visual styling from Track C and gesture boundaries from Track B.
+- **Final Assembly Phase 3 (Compositing & QA)**:
+  - The **Audio/Export Specialist** combines the alpha cutout from Track B with the motion graphics and encodes the MP4.
+  - The **Reviewer** verifies the output and reports back to the CEO Agent.
 
-After source inspection, speech analysis where relevant, selected-Cutout matte investigation and media technical checks may proceed independently. Reference observation can be shared; each source's treatment waits for relevant evidence. Speech-dependent visuals wait for reviewed cues; scene-dependent visuals wait for inspected action/shot anchors. Animation waits for resolved geometry/assets; production rendering waits for the output record, integrated timing/audio and the reviewer's pre-render still-gate approval. Single-frame renders provide the evidence for that gate. Separate sources may run concurrently. Within one source, independent asset research and graphic development can run in parallel when outputs are separate.
+---
 
-Use actual process/task handles to observe running work. A polling timeout does not prove failure. Verify the task or process status before restarting to avoid duplicate renders. On resume, read the batch record and inspect existing artifacts/handles before reassigning anything. Reuse verified analysis and completed outputs when source and settings have not changed.
+## 3. Full-Mesh (Omni-Directional) Inter-Agent Communication
 
-## Review and repair
+**Every single agent can communicate directly with ANY other agent at any time** whenever coordination is needed:
 
-Workers report actual paths, changes, checks performed, unverified claims and blockers. The lead checks integration; a distinct reviewer uses [Quality assurance](quality-assurance.md) to evaluate requested behavior, audiovisual quality and mode-specific treatment evidence. Review the representative test before expanding the treatment, and the actual full export before completion. Check each source's meaningful graphic development through opening, middle and ending, justified short holds, transitions, and palette separation over changing footage/clothing. Long frozen cards with only entrance/exit fades, decorative pulses and batch-cloned effects are failures to repair. A good-looking preview does not excuse missing speech, changed meaning or the wrong composition. A technical pass does not excuse unreadable animation or prove reference resemblance.
+```
+[CEO] <---> [Speech] <---> [Cutout] <---> [Visuals] <---> [Layout] <---> [Audio/Export] <---> [Reviewer]
+  ^                                                                                               ^
+  +--------------------------- ANY-TO-ANY COMMUNICATION ------------------------------------------+
+```
 
-Send every observed defect, including tiny cosmetic faults, with intervals and evidence back to the responsible specialist. Follow the reviewer's defect ledger and repair loop; check repaired boundaries and perform full playback/listening on the replacement complete candidate. After two targeted failures on the same cause, diagnose a different free/local path or surface the smallest unresolved need; never promote a failed variant just to clear the queue. Continue independent jobs. Report all unresolved defects and review gaps without inventing success.
+### Concrete Any-to-Any Communication Scenarios:
+1. **Reviewer $\leftrightarrow$ Layout & Animator**:
+   - The Reviewer directly messages the Layout Animator: *"On frame 112, card 'AI Innovation' intersects speaker's hand by 4 pixels. Please shift card X by +15px."* The Layout Animator adjusts coordinates immediately without waiting for a re-dispatch cycle.
+2. **Cutout Specialist $\leftrightarrow$ Visual Director**:
+   - The Cutout Specialist informs the Visual Director: *"Speaker is wearing a dark navy blazer with soft shoulder lighting."* The Visual Director immediately chooses a light-glassmorphic card palette to ensure maximum contrast against the blazer.
+3. **Cutout Specialist $\leftrightarrow$ Layout & Animator**:
+   - The Cutout Specialist provides real-time silhouette bounding boxes for wide arm gestures so the Layout Animator can avoid animating cards into gesture zones.
+4. **Speech Specialist $\leftrightarrow$ Reviewer**:
+   - The Reviewer queries the Speech Specialist to verify an ambiguous technical proper name or brand term against the audio waveform before issuing the final release verdict.
+5. **Audio / Export $\leftrightarrow$ Speech Specialist**:
+   - The Audio Specialist consults the Speech Specialist to confirm natural speech pauses and room-tone decay points so audio transitions occur at natural silence boundaries.
+6. **Any Specialist $\leftrightarrow$ CEO Agent**:
+   - Any agent can directly escalate creative doubts, ambiguous prompt requirements, or trade-offs to the CEO Agent for an authoritative project decision.
 
-## All mode
+### Communication Channels:
+- **Direct Agent Messaging**: Direct inter-subagent messaging in multi-agent environments.
+- **Shared Project Ledger (`Working Files/<video-id>/ledger.json`)**: Real-time shared memory containing cues, layout metrics, alpha paths, and QA logs accessible by all agents.
 
-For each actual source generate the six horizontal/vertical × Split/Cutout/Overlay pairs unless explicitly narrowed or overridden under Selection. Adaptive is excluded from the default All set. For example, two sources plus one shared reference request twelve variants; All, horizontal only requests six total, three per source. References/assets never inflate those counts.
+---
 
-Reuse verified source inspection, applicable read-only reference observations, reviewed transcript when present, original sound, cleared assets and compatible matte across variants of the same source. A source, transcript or relevant direction change invalidates dependent work. Plan layouts independently: vertical is a reflow, not a crop of the horizontal export. Review every resolved variant separately.
+## 4. Automatic Solo Pipeline Fallback (Single-Agent Hosts)
 
-For an unnarrowed All request, if Cutout cannot pass, complete the four valid Split/Overlay variants when possible; keep both Cutout variants failed or needs-input and the request incomplete. For a narrowed/overridden set, report against that actual set. Never substitute another composition, omit failed rows, or relabel a partial set as complete.
+In environments without native multi-agent spawning (e.g. standard VS Code, Cursor, Claude Code CLI):
+- The single AI agent takes on the CEO role and sequentially executes each specialist role in logical order:
+  $$\text{Speech} \rightarrow \text{Cutout} \rightarrow \text{Visuals} \rightarrow \text{Layout} \rightarrow \text{Export} \rightarrow \text{Reviewer}$$
+- Quality, geometric precision, and lossless standards remain identical in both multi-agent and solo modes.

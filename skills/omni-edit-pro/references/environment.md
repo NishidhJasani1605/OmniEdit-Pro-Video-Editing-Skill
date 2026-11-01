@@ -6,14 +6,13 @@ Installing this suite copies instructions and license notices only. Rendering re
 
 Inspect the OS, shell, permitted workspace, free storage, source access, existing project manifest/lockfile and available hardware. Locate executables with `Get-Command` in PowerShell or `command -v` in a POSIX shell; query the versions of tools actually found. Read local package manifests rather than assuming global packages. Avoid using `npx` as a presence check because it can download packages.
 
-| Capability | Preferred tools | Missing-tool response |
+| Capability | Preferred tools | Tool usage directive |
 | --- | --- | --- |
-| Media metadata and preparation | FFprobe and FFmpeg | Use an available equivalent for inspection; disclose missing metadata. Reuse an authorized local path, or identify the specific missing capability before requesting installation. |
-| Main composition | Compatible local Remotion where the intended use requires no paid license; otherwise a suitable free local compositor | Inspect versions, runtime needs and applicable terms. Preserve the selected style/quality when choosing an alternative. |
-| Speech recognition/alignment, when speech exists | Available WhisperX, whisper.cpp, or another evidenced aligner | Reuse a supplied transcript, align where possible, or use manually reviewed phrase cues. Silent/non-presenter footage uses inspected action/scene anchors instead. |
-| Source/reference and export review | Available decoded-frame, video and audio inspection tools | Distinguish still coverage from actual motion/listening. Render artifacts if possible, identify missing review capability and request review of specific intervals; keep required unreviewed candidates needs-review. |
-| Speaker cutout | Existing alpha, local keying, or free local matting/segmentation | Follow [Local cutouts](local-cutout.md); do not call paid background-removal APIs. |
-| Optional assets | User assets, free assets with compatible reuse terms, original code-drawn graphics, available free local generators | Simplify optional graphics within the selected style if a source is unavailable. |
+| Media metadata & FFmpeg execution | FFprobe & FFmpeg | Handles Windows path escaping (`D\:/`), streamcopy audio (`-c:a copy`), split/cutout/overlay filtergraphs. |
+| Text measurement & geometry | PIL/Pillow (`ImageFont`) | Measures exact visible bounding boxes, ascender/descenders, wrapping, padding, visible centering, and collisions. |
+| Speaker background cutout | PeterL1n RVM MobileNetV3 | Fast local AI matting with lightweight 15MB weights; outputs alpha video or RGBA PNG sequence. |
+| Main composition engine | Native FFmpeg + Python PIL | Free local compositor with zero proprietary licensing risk or Chromium crash traps. |
+| Speech recognition / alignment | Whisper / WhisperX | Transcribes dialogue, provides word-level timestamps; supported by contextual domain agent. |
 
 Reference analysis and Auto direction are observation/decision procedures, not additional model requirements. Use available tools to inspect actual media and mark measured, inferred and unknown evidence. A missing/corrupt/inaccessible reference remains unavailable; do not upload it, claim a match or silently select Auto as recovery. Use an explicitly authorized fallback and report it, or identify the missing access/direction decision. A fixed frame-sampling rate cannot certify short events, motion or sound.
 

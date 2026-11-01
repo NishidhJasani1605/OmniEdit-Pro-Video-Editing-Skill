@@ -1,119 +1,76 @@
-# Layouts and effects
+# Layouts, Effects, and Geometric Precision
 
-Read when composing presenter, screen, action or other footage with supporting visuals, captions and informational overlays. Composition is separate from creative treatment. The resolved contract in [Editing styles](editing-styles.md) takes precedence over general layout suggestions here; reference observations cannot override an explicit preset or user choice. Apply [Visual planning](visual-planning.md) and [Motion design](motion-design.md) within that contract.
+Read when composing video footage with graphic cards, titles, subtitle badges, and overlays. Use **Pillow (PIL)** in the workspace for all layout and bounding-box calculations.
 
-## Establish the composition geometry
+---
 
-Set dimensions and display aspect from the resolved output record before variant/render jobs. Explicit user output choices outrank explicitly selected preset defaults, then applicable reference shape, then Auto/source evidence. When no stronger shape applies, Adaptive preserves the source display ratio, including square/custom shapes. Account for rotation and pixel aspect; select compatible encoded dimensions without distorting content. A later orientation override changes that dimension only.
+<a id="geometry-and-layouts"></a>
+## 1. Full-Screen 9:16 Vertical Overlay (Resolves Issue 2)
 
-Define a reusable spacing scale and regions for the main subject, supporting information, captions when present, and source attribution. Inspect actual footage to identify protected regions: moving faces, hands during demonstrations, product details, cursor/action paths, interface controls, existing subtitles, and significant action.
+In Vertical Overlay mode ($1080 \times 1920$):
+- **Intact Camera Footage**: When raw source footage is recorded in 9:16 portrait, it remains **100% full-screen ($1080 \times 1920$)**.
+- **No Shrunken Thumbnail Collapse**: The source footage is **never** shrunken down to fit inside a lower 600px box (which previously produced a 337.5px pillarbox thumbnail with black bars).
+- **Non-Intrusive Layering**: Clean glassmorphic cards, category pills, and title plates layer directly on top of the video in natural empty spaces (headroom, upper canvas, or lower third), keeping the presenter full-size and natural.
 
-For a vertical/Reels scene with a real presenter, follow the shared [portrait ordering](editing-styles.md#reels-presenter-below-animation-above): speaking source or silhouette below, primary animation above in every composition. Fit original footage/background below for Split/Overlay and presenter-led Adaptive; do not silently keep a matching-ratio Overlay full-canvas. Cutout is a lower alpha silhouette over a full-canvas graphic scene, not a lower rectangular panel. Determine sizes from actual framing and readability; a visible or invisible fixed square around the person is not a Cutout geometry rule. An explicit placement override wins, and non-presenter footage keeps appropriate scene layout.
+---
 
-Treat safe areas as delivery-specific. Inspect the intended platform's current interface or supplied template before choosing margins for controls, titles, and captions. A generic percentage is only a starting assumption, not a guarantee. Check the exported video at its likely display size and review each requested aspect ratio independently; a portrait version needs composition decisions rather than a blind center crop.
+## 2. Quadrant-Anchored Horizontal Split Subtitles (Resolves Issue 3)
 
-Measure text with the actual loaded font and language. Reserve space for longer strings, diacritics, right-to-left text, and font fallback. Ensure fonts and assets are loaded before measuring or capturing preview frames. Prefer a simpler stable layout when automatic tracking or reliable measurement is unavailable. Apply the text-background containment contract below to every badge, caption plate, title and label.
+In Horizontal Split mode ($1920 \times 1080$):
+- **Dividing Seam**: The screen is split into two halves: Left Column ($X=0\text{ to }960$) and Right Column ($X=960\text{ to }1920$).
+- **No Seam Collisions**: Subtitles are **never** centered on the dividing line ($X=960$), which collides with the speaker's body.
+- **Quadrant Anchoring**: Subtitles are anchored cleanly within their designated active quadrant:
+  - Inside Speaker Quadrant: Centered at $X \approx 480$ in the lower third.
+  - Inside Graphic Quadrant: Centered at $X \approx 1440$ below the active diagram/card stack.
 
-## Geometry and Layouts
+---
 
-### Horizontal Caption Centering
+## 3. Card-Attached Local Backings (Resolves Issue 5)
 
-In horizontal Overlay, place the subtitle/caption **alignment container across the full canvas**, `left: 0, right: 0`, centered horizontally at the bottom within delivery-safe margins. Its midpoint is `outputWidth / 2`: **X = 960 at 1920×1080**, X = 640 at 1280×720 and X = 1920 at 3840×2160. Other horizontal compositions use the same full-canvas caption center by default; an explicit user placement instruction can override it. Captions must never be trapped inside the left graphics column or centered relative to the scrim/card stack by habit.
+In Overlay and Widescreen layouts:
+- **Card-Attached Backing**: Instead of painting a canvas-wide dark gradient scrim (which cuts off before wide cards or casts an unwanted shadow across the speaker's body), **each text card and badge carries its own local soft blur plate or glassmorphic container**.
+- **100% Contrast Everywhere**: The local backing moves with the card, guaranteeing WCAG AAA contrast regardless of whether the background footage changes from light to dark, while keeping the presenter's clothing and face completely unshaded.
 
-The full-width element is the alignment wrapper, not a compulsory full-width painted background. Keep the visible pill content-sized with measured padding, center that pill and its complete shaped phrase on the full-canvas midpoint, and keep both stationary during word highlights. Balanced left/right visible margins may differ only by unavoidable output-pixel rounding. Validate long/multiline phrases after font loading, including the backing, stroke and shadow. Preserve bottom safe areas and source/gesture protection; use a clear bottom caption band or permitted intact-source fitting/padding if needed. Do not silently move a colliding centered caption into the graphics column or cover the presenter to retain the default. Report an actual unsolved geometry conflict.
+---
 
-### Vertical Headroom & Panel Spacing
+<a id="allocate-space-before-sizing-panels"></a>
+## 4. Text Measurement & Containment Using Pillow (Resolves Issue 8)
 
-At a 1080×1920 portrait output, plan stacked cards in the upper animation area between **Y = 200px and Y = 900px**, with **28–36px proportional gaps** between the full visible card footprints. Scale Y positions and gaps by `outputHeight / 1920` (2× these values at 2160×3840). Use content-sized cards with their own border, category pill, bold title and padding under the [Multi-Box Architecture Contract](reference-analysis.md#multi-box-architecture-contract). These are layout-planning bands within the selected composition, not permission to move the source or conceal content.
+The agent measures text bounds accurately using Python's Pillow library in the workspace:
 
-Keep **more than 100 scaled pixels** between the lowest visible card/animation footprint and the top of the middle caption pill, including borders and shadows. From the complete bottom of that caption pill to the highest presenter forehead throughout the cue, retain the existing **at least 200 scaled pixels** minimum; aim for **more than 200 up to 400 scaled pixels** of clear headroom when the scene permits. The 400px value is a target, not a maximum that forces unnecessary blank space. Hands, hair and other motion still need separate clearance. Do not count supersampled coordinates as final-output pixels.
+```python
+from PIL import ImageFont
 
-Check these distances at reveal/travel/resize/gesture extremes, not just at settled frames. If the upper stack would exceed its region or reduce those gaps, simplify supporting copy, split it into successive groups of distinct cards or redistribute permitted graphic space before rendering; never merge the cards, shrink the presenter to a thumbnail or consume the middle caption channel. Preserve actual Cutout alpha gaps rather than reserving a rectangular lower panel. Explicit placement overrides must be recorded and still pass moving-subject protection; non-presenter footage does not acquire a forehead rule. Horizontal spacing follows its measured geometry, not the portrait 200px headroom test.
+font = ImageFont.truetype("arial.ttf", size=44)
+bbox = font.getbbox("PATIENT CONFIDENTIALITY") # (left, top, right, bottom)
+text_width = bbox[2] - bbox[0]
+text_height = bbox[3] - bbox[1]
 
-## Allocate space before sizing panels
+# Padding specifications:
+min_h_pad = 24  # min 24px horizontal padding per side
+min_v_pad = 16  # min 16px vertical padding top and bottom
 
-Choose the **information form from the usable space**, then size its box from measured content. This applies to every source, scene, aspect ratio and composition, not to a fixed left/right template. A panel can contain its text perfectly and still be too big for the scene. Treat text containment and scene fit as two separate required checks.
+pill_width = text_width + (2 * min_h_pad)
+pill_height = text_height + (2 * min_v_pad)
+```
 
-1. **Map usable regions over time.** Inside the resolved composition and delivery safe area, subtract protected source content, captions, identifiers and other required overlays throughout the graphic's full lifetime, including entrance, exit and overlap with the next state. Use inspected moving occupancy, not one frame, the face alone or the summed area of disconnected gaps. For Cutout use actual alpha occupancy and gestures rather than a rectangular person box. Find contiguous regions whose width, height and shape can contain the whole animated group.
-2. **Reserve visible breathing room.** Record a clearance in final-output pixels before fitting panels. For foreground panels beside a subject, a starting minimum is `ceil(max(0.025 * min(outputWidth, outputHeight), 0.5 * bodyLineHeight))`, using the scene's readable body line height. Increase it for uncertain tracking, broad gestures, shadows and visually crowded backgrounds. Measure from the complete visible graphic edge, including stroke/shadow, to protected occupancy in the worst frame. Apply the separate, larger portrait caption-to-forehead rule below where relevant. A delivery or user requirement can require more space. Empty space is useful; do not fill it merely to balance both sides.
-3. **Establish readable type, then measure alternatives.** Test a readable body/label size at the intended viewing scale using the real loaded font and language. Keep that floor while comparing a detailed unit (heading plus one concise clause), compact keyword/short phrase, and relevant symbol with a label when needed. Preserve semantic qualifications. Measure shaped glyph bounds, line breaks, icons, inter-item gaps, padding, corners, stroke and shadow. Do not scale the entire detailed panel down until it fits a sliver.
-4. **Assign hierarchy by actual fit.** Put the primary explanation in the region that can comfortably fit its width, height and motion. Prefer the larger suitable clear region when more than one fits. A narrow opposite region gets at most a useful short keyword or related symbol with a small measured backing if needed; it gets no second description panel. It can remain empty. Mirror the choice when the source's clear space is mirrored. In portrait, this allocation occurs within the upper graphic area and other permitted clear regions; it does not move the primary explanation beside/over the lower presenter or consume the caption channel.
-5. **Size only the current content group.** Bound panel width by its assigned region, wrap at meaningful boundaries, and calculate height from the actual resulting lines, heading/body gaps and padding. For a simple text group, width is measured line-group width plus left/right padding and height is measured line-group height plus top/bottom padding; account separately for icons, stroke/shadow and rounded-corner clearance. Do not stretch a short keyword into a large empty card. Premeasure the active group or planned short sequence to keep geometry stable, but do not use the maximum paragraph height from the entire video as every card's minimum. Previously revealed rows count toward the active group's space budget; future rows remain hidden under [Motion design](motion-design.md).
-6. **Verify travel and hold, then lock the anchor.** Check the union of the group's animated footprints against the usable region over the corresponding frames, including translation, scale, shadows, masks, resize and old/new overlap. Keep a readable unit stable while active. If motion will consume the region, re-plan before the cue, simplify, or use a timed safe handoff; do not jitter between sides following the face. A handoff must not drag text across the presenter. Recompute when wording, font, language, output ratio, source framing or occupancy changes.
+- **Minimum Horizontal Padding**: At least 24 pixels per side at 1080px canvas width, scaled proportionally with resolution (`scale = max(1.0, width / 1080)`).
+- **Vertical Padding**: At least 16 pixels top and bottom, accounting for font ascenders and descenders.
+- **Visible Bounds Centering**: Headings and titles are centered inside their content boxes by optical visible glyph bounds, compensating for left bearing:
+  $$X_{\text{origin}} = X_{\text{box}} + \frac{W_{\text{box}} - W_{\text{visible}}}{2} - \text{bearing}_{\text{left}}$$
 
-Record per unit: candidate regions after clearance; inspected time range/occupancy evidence; measured detailed/compact dimensions and readable type floor; selected region/form and reason; final box/padding; motion footprint; worst clearance and fallback. Use actual rendered geometry to confirm the plan. Unknown movement or font metrics cannot be recorded as measured fit.
+---
 
-| Space available after protection and clearance | Representation |
-| --- | --- |
-| A detailed unit and its animation fit at the tested readable size | One primary heading/description or diagram, revealed progressively; content-sized panel |
-| Only a compact cue fits | Short keyword/meaningful phrase or clearly relevant symbol; small backing only as needed; no miniature paragraph |
-| Both sides fit, but only one explanation is needed | Primary explanation in the better region; quieter useful compact cue or empty space on the other side |
-| No safe readable cue fits | Omit optional overlay, use another permitted graphic region, or report a concrete conflict for required content; preserve source framing and timing |
+## 5. Automated Collision Avoidance (Resolves Issue 4)
 
-For example, after clearance a scene offers a 734×520 left region and a 274×520 right region. A measured 600×420 explanation fits left; a measured 180×80 keyword may fit right if its complete entrance/exit also fits. A 600px right panel fails even if its resting text is internally padded. Mirrored regions reverse the placement. These are synthetic dimensions, not preset coordinates or a required pair of boxes.
+Before rendering, verify that the card layout rectangle does not intersect the speaker's bounding box:
 
-If neither region fits a description, shorten **explanatory copy** without changing its meaning, break it into source-anchored semantic units, or use a compact cue. Preserve full source speech and accurate captions. Omit optional decoration before compromising readability or presenter clearance. Do not switch composition, crop/zoom the source, shrink the person into a thumbnail, or authorize full-screen replacement to rescue an oversized box. If required information still cannot fit within the user's constraints, report the measured conflict and leave that variant unresolved.
+```python
+def check_collision(box_card, box_speaker):
+    # box format: [x1, y1, x2, y2]
+    overlap_x = max(0, min(box_card[2], box_speaker[2]) - max(box_card[0], box_speaker[0]))
+    overlap_y = max(0, min(box_card[3], box_speaker[3]) - max(box_card[1], box_speaker[1]))
+    return (overlap_x * overlap_y) > 0
 
-## Choose the layout by purpose
-
-| Layout | Best use | Checks |
-| --- | --- | --- |
-| Source-native full frame | Performance, scenery, action, screen detail, or presenter expression | Preserve important picture/action, source aspect, screen text and caption space |
-| Floating overlay | A label, small statistic, icon, or concise diagram | Place in genuine negative space; avoid competing focal points |
-| Picture-in-picture | A demonstration with continuing presenter presence | Keep both the demonstrated detail and face readable |
-| Split screen | A comparison, interview, or simultaneous explanation | Allocate width by information needs; preserve equal scales when comparing |
-| Full-frame supporting visual | A detailed diagram or relevant footage | Preserve the underlying narrative clock and return without a discontinuity |
-
-Use this vocabulary within the chosen composition: Split separates fitted source and explanation regions; Cutout uses only an isolated alpha foreground over the whole graphic scene; Overlay retains original footage/background together, in a lower source region for vertical presenter scenes. The six presets inherit these shared defaults. A reference or difficult passage does not authorize a different composition. Keep continuous source-time playback and one original-sound owner; never freeze or loop visibly speaking footage beneath continuing speech.
-
-## Adaptive composition
-
-Adaptive is available through the main workflow for source-native or scene-specific layouts. Vertical presenter scenes use the same lower-source/upper-animation default; non-presenter scenes may retain a performance or landscape full frame or protect a screen demonstration. Integrate meaningful dynamic graphics appropriate to those scenes. Record every layout state, source interval, purpose and protected region. Adaptive is not automatically added to All's six outputs.
-
-Fit the complete source by default, using deliberate padding when ratios differ. A scene-specific layout may reflow graphics or the fitted source region without cutting, retiming or hiding essential source content. Full-frame B-roll replacement, source cropping, source camera pushes, speed changes, montage and reordered shots require corresponding editing permission. Choosing Adaptive alone does not supply that permission. If the source is a mixed-format file, route layout by the inspected scene and review every state and boundary.
-
-Keep layout geometry coherent while graphic content actively develops. A source-native frame or static card alone does not satisfy the default request for dynamic editing. Use source-anchored highlights, diagrams, tracked callouts or other suitable animation without hiding existing action, and use graphic transitions as ideas change. Readable labels may settle while related visual elements evolve; a brief motivated reading hold is not a whole static scene. An explicit minimal/still treatment can override this default. Do not invent a presenter, captions, matting or audio for material without them. Adapt graphics inside a fixed composition rather than invoking Adaptive as a fallback.
-
-## Cutout occupancy and background space
-
-Size/crop metadata for an alpha asset may be rectangular; visible foreground occupancy is the real silhouette. Render the animated background across the entire canvas behind it. Use the time-varying alpha with a small justified safety margin to place foreground text/callouts; inspect the whole display interval and gestures. Do not use the asset's bounding box as a permanent exclusion rectangle. Verified transparent gaps between an arm and torso and clear space near the head remain available. Graphics can pass behind opaque subject pixels; essential text must stay readable in transparent areas or be reflowed/timed around the person. Preserve hair and semi-transparent moving edges without flicker or colored backing. See [Local cutouts](local-cutout.md).
-
-## Protect faces and captions
-
-Check whether existing captions are burned into pixels or carried in a selectable subtitle track. Avoid duplicate caption layers. Replacing burned-in text requires an explicitly agreed clean source or treatment and visual verification. Never crop off a subtitle band or mask it by default; preserve full framing. Do not assume the underlying picture can be recovered.
-
-**No added text, caption backing, badge, label or foreground graphic may cover or touch the real presenter at any visible frame.** Protect the moving face, eyes, nose, mouth, chin, neck, hair, body and gestures with visible clearance from the inspected source. Protect every other visible person's face as well. Inspect the entire display interval and all entrances, exits, transitions and overshoot; a clear resting frame or a two-frame overlap is not a pass. Keep essential objects, cursors and action clear. This foreground rule allows Cutout background graphics behind the actual alpha subject and in verified transparent gaps; it does not create a rectangular presenter exclusion zone. A placement override changes geometry, not protection. If existing burned-in text already covers a face, record the defect and obtain a clean source or an authorized workable treatment; do not claim it fixed or final while it remains.
-
-For every vertical presenter scene with captions, reserve a **center caption channel between the upper primary animation and the lower speaking footage or silhouette**. This applies to Split, Cutout, Overlay, presenter-led Adaptive and the vertical variants of All. Derive its position and height from the actual moving subject, upper graphics, phrase height and delivery safe areas; the channel is not automatically the canvas midpoint. Keep the whole caption and its backing inside that clear channel throughout each cue. Do not place it over the mouth/chin or simply move it to a blank part of the lower body because that is convenient. An explicit user caption-placement instruction can change the channel's location; record it and still enforce face clearance and readability.
-
-For this upper-caption/lower-presenter arrangement, reserve **at least 200 pixels of vertical clearance at a 1920-pixel output height**, scaling proportionally with the final output height; aim for 250 scaled pixels where the composition permits. Measure from the lowest visible caption pixel, including its plate, outline and shadow, to the highest forehead position reached by any lower presenter throughout the cue. Use the worst frame, not a text anchor, average face position or single still. Thus the minimum is `200 × outputHeight / 1920` in final-output pixels; supersampling coordinates do not change it. Hands/hair reaching into that space still need their own clearance. Anchor the caption channel at the available lower edge of the upper graphics area; `Y = 1045`, a cyan divider and a 60/40 split are source-specific examples, never reusable coordinates. Horizontal/non-presenter layouts do not inherit this vertical distance. An explicit safe caption-placement override uses measured clearance appropriate to that placement and retains the foreground protection rule.
-
-If the channel cannot fit the text safely, first simplify or reflow upper graphics and redistribute available composition space, then use readable phrase wrapping with accurate cue timing. Preserve the entire source and legible person size; shrinking the speaker into a thumbnail, cropping, stretching, deleting words or changing speech timing is not a repair. For Cutout, reserve only the actual caption footprint and its clearance, not a rectangular presenter box or the entire lower half; protect moving alpha and gestures while retaining usable transparent gaps elsewhere. If the requirements still cannot coexist, keep the affected variant unfinished and report the concrete geometry conflict. Do not hide the problem with bouncing captions that chase the face.
-
-Plan all caption regions against face, object, cursor and action motion across the entire cue, not a single screenshot. In horizontal or non-presenter scenes choose a stable clear region appropriate to the source rather than imposing the portrait channel. Silent footage needs no invented transcript, presenter or compulsory caption layer.
-
-Group captions into complete readable phrases using [stable phrase captions](transcription-sync.md#stable-phrase-captions-and-word-highlighting). Premeasure the entire phrase, wrap it once and keep the box, line breaks and every word's position fixed while it is active. Do not recenter remaining words or rebuild a sliding window on each spoken word. Retain accurate timing, spelling, meaning and punctuation. Use sufficient contrast against changing footage, with a restrained backing plate or shadow where needed. Prevent overlap between subtitles, lower thirds, data labels and platform controls. Active-word color is supplemental emphasis; the full caption remains readable without distinguishing colors.
-
-## Fit every text background to its content
-
-Size each colored badge or backing plate from the rendered text's actual width and height, then add deliberate padding on every side. Measure the final font, weight, size, tracking, line height, language shaping and line breaks after fonts load. The complete rendered bounds, including punctuation, accents, descenders, outlines and highlighted-word styling, must remain inside the colored background with padding. A fixed-width box or character-count estimate is not evidence of fit; `PATIENT CONFIDENTIALITY` must be fully contained even when it is the longest phrase.
-
-For pills and badges, use horizontal padding of at least 24 final-output pixels per side at 1080-pixel output width, scaled proportionally by output width, then increase it where font overhang, stroke or rounded corners need more clearance. Choose vertical padding from actual glyph/line bounds and corner radius; a width measurement alone cannot establish containment. Use rendered bounds, including bearings: a font's advance length alone can omit visible italic/accent overhang. A maximum safe width is allowed; an arbitrary fixed background that is unrelated to its measured content is not. A measured plate may stay fixed for the complete phrase so word highlighting does not resize it.
-
-Use the available safe width as a maximum, wrap at sensible word boundaries, and grow the plate's height with the resulting lines. Reflow the surrounding composition when the phrase still does not fit. Do not truncate, clip, omit words or reduce text to an unreadable size to preserve a decorative box. Keep text and backing as a coordinated group through entrance, hold, highlight and exit; neither may reveal an overflowing word while the other is still resizing. For non-caption explanatory text, a stable plate sized for the complete phrase can support a word-by-word reveal. Spoken captions display the complete phrase at its reviewed onset and retain that full plate throughout; only verified active-word color changes.
-
-Remeasure and recheck whenever wording, translation, capitalization, font fallback, emphasis, scale or aspect ratio changes. Inspect every cue and distinct animation state in the actual export, including boundary frames and maximum overshoot. Verify containment, padding, contrast, channel fit and face clearance together; enlarging a plate must not create a new collision. The [production video reviewer](video-reviewer.md) rejects any observed overflow, clipping or face contact, including brief defects.
-
-## Center headings from measured bounds
-
-Center banner headings, scene titles and CTA headers inside their designated content boxes by measurement, not manually guessed X offsets. Measure the actual shaped visible text bounds with the loaded font, stroke and diacritics, including left/right bearings. Place the visible text center at the content-box center; account for a nonzero left bearing rather than treating advance width as visible width. Center each line of multiline headings within the same content box, and center the complete line group vertically when the design calls for vertical centering. If an icon is part of the heading, define and center the intended icon/text group rather than silently centering text in the wrong box.
-
-Check left/right margins in the final decoded output. They should balance within the unavoidable one-output-pixel difference from rounding an odd width; do not introduce a manual aesthetic nudge to conceal a measurement bug. Keep the group's geometry stable through holds and color emphasis. Repeat measurement after wording, font, line-break or output-size changes. This heading default does not recenter intentionally left-aligned paragraphs, data tables, code or lists; honor an explicit user alignment instruction and still verify its declared margins and readability.
-
-## Use effects as information
-
-Anchor callouts to the correct object and verify tracking through movement and occlusion. Do not let arrows imply an unsupported direction or relationship. For split-screen comparisons, keep labels persistent and disclose differing scale, time, or conditions when relevant. Limit blur, glow, and decoration when they weaken evidence or text clarity.
-
-Transitions should signal a justified change in topic, time, place, or visual focus. Apply graphic transitions without shortening the protected source track. Translate reference motion to the current content's anchors rather than copying sample event times; a reference cut rhythm cannot override preserved source timing. Keep a consistent layer order and inspect mask edges, transparency, fit boundaries and overlap at entry/exit. Render the most crowded composition and hardest relevant motion before duplicating it, then check the final frame with captions, identifiers and source notes together. Inspect normal-speed playback as well as stills.
-
-Measurement reference: [Pillow ImageFont bounding boxes and advance lengths](https://pillow.readthedocs.io/en/stable/reference/ImageFont.html). Use equivalent verified rendered-bound measurements in the selected compositor.
+# If collision detected: apply an automatic 10px-20px offset or shift to opposite quadrant
+```
